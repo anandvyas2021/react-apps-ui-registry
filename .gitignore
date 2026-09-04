@@ -1,0 +1,15 @@
+# Dependency directories
+node_modules/
+
+# Expo / React Native testing files
+.expo/
+.expo-shared/
+dist/
+npm-debug.log
+yarn-error.log
+playgrounds/
+
+# Mac OS
+.DS_Store
+
+# Note: DO NOT ignore the __registry__ folder! 
