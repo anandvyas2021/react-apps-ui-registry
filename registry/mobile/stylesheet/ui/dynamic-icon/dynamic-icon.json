@@ -1,0 +1,12 @@
+{
+    "name": "dynamic-icon",
+    "type": "components:ui",
+    "dependencies": ["lucide-react-native"],
+    "registryDependencies": [],
+    "files": [
+        {
+            "name": "dynamic-icon.tsx",
+            "url": "mobile/stylesheet/ui/dynamic-icon/dynamic-icon.tsx"
+        }
+    ]
+}

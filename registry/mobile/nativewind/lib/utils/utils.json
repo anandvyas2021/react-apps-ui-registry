@@ -1,0 +1,9 @@
+{
+    "name": "utils",
+    "type": "lib",
+    "dependencies": ["clsx", "tailwind-merge"],
+    "registryDependencies": [],
+    "files": [
+        { "name": "utils.ts", "url": "mobile/nativewind/lib/utils/utils.ts" }
+    ]
+}

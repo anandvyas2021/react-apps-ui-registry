@@ -1,0 +1,12 @@
+{
+    "name": "wave-dots-loader",
+    "type": "components:ui",
+    "dependencies": ["react-native-reanimated"],
+    "registryDependencies": [],
+    "files": [
+        {
+            "name": "wave-dots-loader.tsx",
+            "url": "mobile/stylesheet/ui/wave-dots-loader/wave-dots-loader.tsx"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "name": "action-button",
+    "type": "components:ui",
+    "dependencies": [],
+    "registryDependencies": [
+        "wave-dots-loader",
+        "dynamic-icon",
+        "theme-provider"
+    ],
+    "files": [
+        {
+            "name": "action-button.tsx",
+            "url": "mobile/stylesheet/ui/action-button/action-button.tsx"
+        }
+    ]
+}
