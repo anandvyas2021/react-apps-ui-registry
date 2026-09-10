@@ -32,7 +32,8 @@
             "files": [
                 {
                     "name": "action-button.tsx",
-                    "url": "mobile/stylesheet/ui/action-button.tsx"
+                    "url": "mobile/stylesheet/ui/action-button.tsx",
+                    "target": "components/ui/action-button.tsx"
                 }
             ]
         }

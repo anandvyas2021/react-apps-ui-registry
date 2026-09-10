@@ -8,7 +8,8 @@
             "files": [
                 {
                     "name": "dynamic-icon.tsx",
-                    "url": "mobile/nativewind/ui/dynamic-icon.tsx"
+                    "url": "mobile/nativewind/ui/dynamic-icon.tsx",
+                    "target": "components/ui/action-button.tsx"
                 }
             ]
         },
@@ -18,7 +19,8 @@
             "files": [
                 {
                     "name": "dynamic-icon.tsx",
-                    "url": "mobile/stylesheet/ui/dynamic-icon.tsx"
+                    "url": "mobile/stylesheet/ui/dynamic-icon.tsx",
+                    "target": "components/ui/dynamic-icon.tsx"
                 }
             ]
         }
