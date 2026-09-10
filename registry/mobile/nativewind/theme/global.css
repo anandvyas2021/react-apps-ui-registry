@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* your-lib:theme:start — do not edit by hand, regenerate via `npx your-cli update theme` */
+:root {
+    --background: #f9fafb;
+    --surface: #ffffff;
+    --surface-muted: #f3f4f6;
+    --button-surface: #f3f4f6;
+
+    --foreground: #121212;
+    --foreground-muted: #64748b;
+    --foreground-disabled: #9ca3af;
+
+    --border: #e5e7eb;
+    --border-subtle: #f3f4f6;
+
+    --primary: #5f84e0;
+    --primary-lighter: #5f84e01a;
+    --primary-foreground: #ffffff;
+
+    --secondary: transparent;
+    --secondary-foreground: #111827;
+
+    --success: #10b981;
+    --success-background: #10b9811a;
+    --destructive: #ef4444;
+    --destructive-background: #ef44441a;
+}
+/* your-lib:theme:end */

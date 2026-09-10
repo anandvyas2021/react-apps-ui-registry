@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Text, TouchableOpacityProps } from "react-native";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "../../lib/utils/utils";
+import { cn } from "../../lib/utils";
 import { WaveDotsLoader } from "../wave-dots-loader/wave-dots-loader";
 import { DynamicIcon } from "../dynamic-icon/dynamic-icon";
 
@@ -34,12 +34,15 @@ const textVariants = cva("text-lg font-bold", {
 });
 
 export interface ActionButtonProps
-    extends TouchableOpacityProps, VariantProps<typeof buttonVariants> {
+    extends
+        React.ComponentPropsWithoutRef<typeof TouchableOpacity>,
+        VariantProps<typeof buttonVariants> {
     title: string;
     icon?: string;
     iconPosition?: "pre" | "post";
     isLoading?: boolean;
-    textStyles?: string;
+    textStyles?: any;
+    className?: string; // Explicitly for NativeWind IntelliSense
 }
 
 export const ActionButton = React.forwardRef<

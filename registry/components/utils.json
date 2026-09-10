@@ -1,0 +1,19 @@
+{
+  "name": "utils",
+  "category": "lib",
+  "engines": {
+    "mobile-nativewind": {
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "name": "utils.ts",
+          "url": "../shared/lib/utils.ts"
+        }
+      ]
+    }
+  }
+}

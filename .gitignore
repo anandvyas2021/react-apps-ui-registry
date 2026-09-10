@@ -8,6 +8,7 @@ dist/
 npm-debug.log
 yarn-error.log
 playgrounds/
+app/
 
 # Mac OS
 .DS_Store

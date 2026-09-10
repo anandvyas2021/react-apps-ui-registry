@@ -1,0 +1,26 @@
+{
+    "name": "dynamic-icon",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": ["lucide-react-native"],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "dynamic-icon.tsx",
+                    "url": "mobile/nativewind/ui/dynamic-icon.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": ["lucide-react-native"],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "dynamic-icon.tsx",
+                    "url": "mobile/stylesheet/ui/dynamic-icon.tsx"
+                }
+            ]
+        }
+    }
+}

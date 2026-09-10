@@ -1,0 +1,26 @@
+{
+  "name": "wave-dots-loader",
+  "category": "ui",
+  "engines": {
+    "mobile-nativewind": {
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "name": "wave-dots-loader.tsx",
+          "url": "mobile/nativewind/ui/wave-dots-loader.tsx"
+        }
+      ]
+    },
+    "mobile-stylesheet": {
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "name": "wave-dots-loader.tsx",
+          "url": "mobile/stylesheet/ui/wave-dots-loader.tsx"
+        }
+      ]
+    }
+  }
+}

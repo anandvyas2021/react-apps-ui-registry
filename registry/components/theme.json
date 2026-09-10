@@ -1,0 +1,36 @@
+{
+  "name": "theme",
+  "category": "core",
+  "engines": {
+    "mobile-nativewind": {
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "name": "global.css",
+          "url": "mobile/nativewind/theme/global.css",
+          "type": "css",
+          "target": "global.css"
+        },
+        {
+          "name": "tailwind-preset.js",
+          "url": "../theme/tailwind-preset.js"
+        }
+      ]
+    },
+    "mobile-stylesheet": {
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "name": "tokens.ts",
+          "url": "../theme/tokens.ts"
+        },
+        {
+          "name": "ThemeProvider.tsx",
+          "url": "mobile/stylesheet/theme/ThemeProvider.tsx"
+        }
+      ]
+    }
+  }
+}
