@@ -1,26 +1,33 @@
 import React, { useMemo } from "react";
 import {
-    StyleSheet,
     Text,
-    TouchableOpacity,
-    TouchableOpacityProps,
     ViewStyle,
     TextStyle,
+    StyleSheet,
+    TouchableOpacity,
+    TouchableOpacityProps,
 } from "react-native";
-import { useTheme } from "../../theme/ThemeProvider";
 
-import { DynamicIcon } from "../dynamic-icon/dynamic-icon";
-import { WaveDotsLoader } from "../wave-dots-loader/wave-dots-loader";
+import { DynamicIcon } from "./dynamic-icon";
+import { WaveDotsLoader } from "./wave-dots-loader";
 
-export interface ActionButtonProps extends TouchableOpacityProps {
+import { useTheme } from "../theme/ThemeProvider";
+import type { ThemeTokens } from "../../../../theme/tokens";
+
+export interface ActionButtonProps extends Omit<
+    TouchableOpacityProps,
+    "style"
+> {
     title: string;
     icon?: string;
     variant?: "primary" | "secondary";
     iconPosition?: "pre" | "post";
     isLoading?: boolean;
-    extraStyles?: ViewStyle;
+    disabled?: boolean;
+    style?: ViewStyle;
     textStyles?: TextStyle;
-    borderRadius?: number;
+    className?: never;
+    // borderRadius?: number;
 }
 
 export const ActionButton = React.forwardRef<
@@ -31,14 +38,13 @@ export const ActionButton = React.forwardRef<
         {
             title,
             icon,
-            onPress,
-            disabled,
             variant = "primary",
             iconPosition = "post",
             isLoading = false,
-            extraStyles,
-            textStyles,
-            borderRadius = 30,
+            disabled = false,
+            style,
+            textStyle,
+            // borderRadius = 30,
             ...props
         },
         ref,
@@ -49,24 +55,23 @@ export const ActionButton = React.forwardRef<
         const isSecondary = variant === "secondary";
 
         const iconColor = isDisabled
-            ? theme.colors.foregroundDisabled
+            ? theme.foregroundDisabled
             : isSecondary
-              ? theme.colors.secondary.foreground
-              : theme.colors.primary.foreground;
+              ? theme.secondaryForeground
+              : theme.primaryForeground;
 
         return (
             <TouchableOpacity
                 ref={ref}
-                style={[
-                    styles.actionButton,
-                    { borderRadius },
-                    isSecondary && styles.actionButtonSecondary,
-                    isDisabled && styles.actionButtonDisabled,
-                    extraStyles,
-                ]}
-                onPress={onPress}
                 activeOpacity={0.8}
                 disabled={isDisabled}
+                style={[
+                    styles.base,
+                    // { borderRadius },
+                    isSecondary ? styles.secondary : styles.primary,
+                    isDisabled && styles.disabled,
+                    style,
+                ]}
                 {...props}
             >
                 {isLoading ? (
@@ -82,10 +87,10 @@ export const ActionButton = React.forwardRef<
                         )}
                         <Text
                             style={[
-                                styles.actionButtonText,
-                                isSecondary && styles.actionButtonTextSecondary,
-                                isDisabled && styles.disabledButtonText,
-                                textStyles,
+                                styles.textBase,
+                                isSecondary && styles.textSecondary,
+                                isDisabled && styles.textDisabled,
+                                textStyle,
                             ]}
                         >
                             {title}
@@ -105,33 +110,41 @@ export const ActionButton = React.forwardRef<
 );
 ActionButton.displayName = "ActionButton";
 
-const createStyles = (theme: any) =>
+const createStyles = (theme: ThemeTokens) =>
     StyleSheet.create({
-        actionButton: {
+        base: {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: theme.colors.primary.DEFAULT,
-            paddingVertical: 16,
             gap: 8,
             width: "100%",
             marginBottom: 12,
-        },
-        actionButtonSecondary: {
-            backgroundColor: theme.colors.secondary.DEFAULT,
+            borderRadius: 16,
+            minHeight: 52,
             borderWidth: 1,
-            borderColor: theme.colors.secondary.foreground,
         },
-        actionButtonText: {
-            color: theme.colors.primary.foreground,
-            fontSize: 14,
-            fontFamily: "Inter_700Bold",
+        primary: {
+            backgroundColor: theme.primary,
+            borderColor: "transparent",
         },
-        actionButtonTextSecondary: { color: theme.colors.secondary.foreground },
-        actionButtonDisabled: {
-            backgroundColor: theme.colors.surface.muted,
+        secondary: {
+            backgroundColor: theme.secondary,
+            borderColor: theme.secondaryForeground,
+        },
+        disabled: {
+            backgroundColor: theme.surfaceMuted,
             borderColor: "transparent",
             opacity: 0.5,
         },
-        disabledButtonText: { color: theme.colors.foregroundDisabled },
+        textBase: {
+            fontSize: 16,
+            fontWeight: "700",
+            color: theme.primaryForeground,
+        },
+        textSecondary: {
+            color: theme.secondaryForeground,
+        },
+        textDisabled: {
+            color: theme.foregroundDisabled,
+        },
     });

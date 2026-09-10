@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "CommonJS",
+        "lib": ["DOM", "ESNext"],
+        "jsx": "react-native",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "types": ["node"]
+    },
+    "include": ["scripts/**/*", "registry/**/*"],
+    "exclude": ["node_modules", "playgrounds"]
+}

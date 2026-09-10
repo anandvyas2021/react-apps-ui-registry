@@ -1,0 +1,39 @@
+{
+  "name": "action-button",
+  "category": "ui",
+  "engines": {
+    "mobile-nativewind": {
+      "dependencies": [
+        "class-variance-authority",
+        "tailwind-merge",
+        "clsx"
+      ],
+      "registryDependencies": [
+        "theme",
+        "wave-dots-loader",
+        "dynamic-icon",
+        "utils"
+      ],
+      "files": [
+        {
+          "name": "action-button.tsx",
+          "url": "mobile/nativewind/ui/action-button.tsx"
+        }
+      ]
+    },
+    "mobile-stylesheet": {
+      "dependencies": [],
+      "registryDependencies": [
+        "theme",
+        "wave-dots-loader",
+        "dynamic-icon"
+      ],
+      "files": [
+        {
+          "name": "action-button.tsx",
+          "url": "mobile/stylesheet/ui/action-button.tsx"
+        }
+      ]
+    }
+  }
+}
