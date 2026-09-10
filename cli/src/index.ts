@@ -70,18 +70,67 @@ program
 
             console.log(chalk.green(`✓ Found theme provider. Installing...`));
 
-            // 4. Loop through the files (tokens.ts and ThemeProvider.tsx) and create them!
+            // Check if the user's project uses a 'src' directory
+            const hasSrcDir = fs.existsSync(path.join(process.cwd(), "src"));
+
+            // 4. Loop through the files and write them smartly
             for (const file of themeComponent.files) {
-                // file.target is exactly what we wrote earlier (e.g., "theme/tokens.ts")
-                const targetPath = path.join(process.cwd(), file.target);
+                let finalTargetPath = path.join(process.cwd(), file.target);
 
-                // Ensure the folder exists (e.g., creates the "theme/" folder if it doesn't exist)
-                fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+                // SMART ROUTING: If they use 'src/' and it's not a root config file, put it inside src/
+                const isRootConfig =
+                    file.target.includes("tailwind") ||
+                    file.target.endsWith(".config.js") ||
+                    file.target.endsWith(".json");
+                if (hasSrcDir && !isRootConfig) {
+                    finalTargetPath = path.join(
+                        process.cwd(),
+                        "src",
+                        file.target,
+                    );
+                }
 
-                // Write the raw React code to their hard drive!
-                fs.writeFileSync(targetPath, file.content, "utf-8");
+                // Ensure the folder exists
+                fs.mkdirSync(path.dirname(finalTargetPath), {
+                    recursive: true,
+                });
 
-                console.log(chalk.green(`Created ${file.target}`));
+                // SAFE WRITE: Check if the file already exists
+                if (fs.existsSync(finalTargetPath)) {
+                    if (
+                        file.type === "css" ||
+                        finalTargetPath.endsWith(".css")
+                    ) {
+                        console.log(
+                            chalk.yellow(
+                                `  ⚠️  ${file.target} already exists. Appending theme variables safely...`,
+                            ),
+                        );
+                        const existingContent = fs.readFileSync(
+                            finalTargetPath,
+                            "utf-8",
+                        );
+
+                        // Only append if it doesn't already contain our theme variables to prevent infinite duplication
+                        if (!existingContent.includes("--background:")) {
+                            fs.appendFileSync(
+                                finalTargetPath,
+                                `\n/* React Apps UI Theme */\n${file.content}`,
+                                "utf-8",
+                            );
+                        }
+                    } else {
+                        console.log(
+                            chalk.yellow(
+                                `  ⚠️  ${file.target} already exists. Skipping to prevent overwrite.`,
+                            ),
+                        );
+                    }
+                } else {
+                    // File doesn't exist, safe to write normally
+                    fs.writeFileSync(finalTargetPath, file.content, "utf-8");
+                    console.log(chalk.green(`  Created ${file.target}`));
+                }
             }
 
             console.log(chalk.blue("\n🎉 Initialization complete!"));
