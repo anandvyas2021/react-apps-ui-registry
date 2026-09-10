@@ -75,16 +75,18 @@ program
 
             // 4. Loop through the files and write them smartly
             for (const file of themeComponent.files) {
-                // DEFENSIVE FALLBACK: If 'target' is missing from the JSON, use the file.name
-                // This ensures path.join() never receives 'undefined' again.
-                const safeTarget = file.target || file.name;
+                // A. Force the target to be a string so it can never be undefined
+                const safeTarget = String(
+                    file.target || file.name || "unknown-file",
+                );
                 let finalTargetPath = path.join(process.cwd(), safeTarget);
 
-                // SMART ROUTING: If they use 'src/' and it's not a root config file, put it inside src/
+                //B. Safely check includes on the guaranteed string
                 const isRootConfig =
                     safeTarget.includes("tailwind") ||
                     safeTarget.endsWith(".config.js") ||
                     safeTarget.endsWith(".json");
+
                 if (hasSrcDir && !isRootConfig) {
                     finalTargetPath = path.join(
                         process.cwd(),
@@ -109,17 +111,32 @@ program
                                 `  ⚠️  ${file.target} already exists. Appending theme variables safely...`,
                             ),
                         );
-                        const existingContent = fs.readFileSync(
-                            finalTargetPath,
-                            "utf-8",
-                        );
 
-                        // Only append if it doesn't already contain our theme variables to prevent infinite duplication
-                        if (!existingContent.includes("--background:")) {
-                            fs.appendFileSync(
+                        try {
+                            // C. Read the file and forcefully convert it to a String
+                            const rawContent = fs.readFileSync(
                                 finalTargetPath,
-                                `\n/* React Apps UI Theme */\n${file.content}`,
                                 "utf-8",
+                            );
+                            const safeExistingContent = String(
+                                rawContent || "",
+                            );
+
+                            // D. Safely check includes (This line can no longer crash!)
+                            if (
+                                !safeExistingContent.includes("--background:")
+                            ) {
+                                fs.appendFileSync(
+                                    finalTargetPath,
+                                    `\n/* React Apps UI Theme */\n${file.content || ""}`,
+                                    "utf-8",
+                                );
+                            }
+                        } catch (err) {
+                            console.log(
+                                chalk.red(
+                                    `  ❌ Error reading or appending to ${safeTarget}`,
+                                ),
                             );
                         }
                     } else {
