@@ -82,9 +82,9 @@ program
 
                 // SMART ROUTING: If they use 'src/' and it's not a root config file, put it inside src/
                 const isRootConfig =
-                    file.target.includes("tailwind") ||
-                    file.target.endsWith(".config.js") ||
-                    file.target.endsWith(".json");
+                    safeTarget.includes("tailwind") ||
+                    safeTarget.endsWith(".config.js") ||
+                    safeTarget.endsWith(".json");
                 if (hasSrcDir && !isRootConfig) {
                     finalTargetPath = path.join(
                         process.cwd(),
