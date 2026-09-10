@@ -75,7 +75,10 @@ program
 
             // 4. Loop through the files and write them smartly
             for (const file of themeComponent.files) {
-                let finalTargetPath = path.join(process.cwd(), file.target);
+                // DEFENSIVE FALLBACK: If 'target' is missing from the JSON, use the file.name
+                // This ensures path.join() never receives 'undefined' again.
+                const safeTarget = file.target || file.name;
+                let finalTargetPath = path.join(process.cwd(), safeTarget);
 
                 // SMART ROUTING: If they use 'src/' and it's not a root config file, put it inside src/
                 const isRootConfig =
@@ -86,7 +89,7 @@ program
                     finalTargetPath = path.join(
                         process.cwd(),
                         "src",
-                        file.target,
+                        safeTarget,
                     );
                 }
 
@@ -129,7 +132,7 @@ program
                 } else {
                     // File doesn't exist, safe to write normally
                     fs.writeFileSync(finalTargetPath, file.content, "utf-8");
-                    console.log(chalk.green(`  Created ${file.target}`));
+                    console.log(chalk.green(`  Created ${safeTarget}`));
                 }
             }
 
