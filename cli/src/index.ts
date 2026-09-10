@@ -4,6 +4,7 @@ import chalk from "chalk";
 import prompts from "prompts";
 import fs from "fs";
 import path from "path";
+import { execSync } from "child_process";
 
 // base URL to GitHub Raw folder
 const REGISTRY_URL =
@@ -275,6 +276,41 @@ program
                             ),
                         );
                     }
+                }
+            }
+
+            // 5. INSTALL NPM DEPENDENCIES
+            const depsToInstall = new Set<string>();
+
+            // Collect all dependencies from the components we just added
+            for (const compName of componentsToAdd) {
+                const compData = registry.find((c: any) => c.name === compName);
+                if (compData && compData.dependencies) {
+                    compData.dependencies.forEach((dep: string) =>
+                        depsToInstall.add(dep),
+                    );
+                }
+            }
+
+            if (depsToInstall.size > 0) {
+                const depList = Array.from(depsToInstall).join(" ");
+                console.log(
+                    chalk.blue(
+                        `\n📦 Installing NPM dependencies: ${depList}...`,
+                    ),
+                );
+                try {
+                    // This runs 'npm install' directly in the user's terminal
+                    execSync(`npm install ${depList}`, { stdio: "inherit" });
+                    console.log(
+                        chalk.green("✓ Dependencies installed successfully."),
+                    );
+                } catch (err) {
+                    console.log(
+                        chalk.red(
+                            "❌ Failed to install dependencies. You may need to install them manually.",
+                        ),
+                    );
                 }
             }
 

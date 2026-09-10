@@ -9,7 +9,7 @@
                 {
                     "name": "utils.ts",
                     "url": "../shared/lib/utils.ts",
-                    "target": "utils/utils.ts"
+                    "target": "lib/utils.ts"
                 }
             ]
         }

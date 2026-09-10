@@ -1,6 +1,6 @@
 {
     "name": "dynamic-icon",
-    "category": "ui",
+    "category": "custom",
     "engines": {
         "mobile-nativewind": {
             "dependencies": ["lucide-react-native"],
@@ -8,8 +8,8 @@
             "files": [
                 {
                     "name": "dynamic-icon.tsx",
-                    "url": "mobile/nativewind/ui/dynamic-icon.tsx",
-                    "target": "components/ui/action-button.tsx"
+                    "url": "mobile/nativewind/custom/dynamic-icon.tsx",
+                    "target": "components/custom/dynamic-icon.tsx"
                 }
             ]
         },
@@ -19,8 +19,8 @@
             "files": [
                 {
                     "name": "dynamic-icon.tsx",
-                    "url": "mobile/stylesheet/ui/dynamic-icon.tsx",
-                    "target": "components/ui/dynamic-icon.tsx"
+                    "url": "mobile/stylesheet/custom/dynamic-icon.tsx",
+                    "target": "components/custom/dynamic-icon.tsx"
                 }
             ]
         }

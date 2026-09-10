@@ -1,9 +1,11 @@
 import React from "react";
-import { TouchableOpacity, Text, TouchableOpacityProps } from "react-native";
+import { TouchableOpacity, Text } from "react-native";
 import { cva, type VariantProps } from "class-variance-authority";
+
+import { DynamicIcon } from "@/components/custom/dynamic-icon";
+import { WaveDotsLoader } from "@/components/loaders/wave-dots-loader";
+
 import { cn } from "@/lib/utils";
-import { WaveDotsLoader } from "./wave-dots-loader";
-import { DynamicIcon } from "./dynamic-icon";
 
 const buttonVariants = cva(
     "flex-row items-center justify-center gap-2 mb-3 w-full rounded-2xl border min-h-[52px]",
