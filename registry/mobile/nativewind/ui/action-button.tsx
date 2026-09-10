@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Text, TouchableOpacityProps } from "react-native";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "../lib/utils";
+import { cn } from "@/lib/utils";
 import { WaveDotsLoader } from "./wave-dots-loader";
 import { DynamicIcon } from "./dynamic-icon";
 
