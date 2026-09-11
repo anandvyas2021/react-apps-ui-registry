@@ -8,11 +8,11 @@ import {
     TouchableOpacityProps,
 } from "react-native";
 
-import { DynamicIcon } from "./dynamic-icon";
-import { WaveDotsLoader } from "./wave-dots-loader";
+import { DynamicIcon } from "@/components/custom/dynamic-icon";
+import { WaveDotsLoader } from "@/components/loaders/wave-dots-loader";
 
-import { useTheme } from "../theme/ThemeProvider";
-import type { ThemeTokens } from "../../../../theme/tokens";
+import { useTheme } from "@/theme/ThemeProvider";
+import type { ThemeTokens } from "@/theme/tokens";
 
 export interface ActionButtonProps extends Omit<
     TouchableOpacityProps,

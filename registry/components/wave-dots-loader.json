@@ -1,26 +1,28 @@
 {
-  "name": "wave-dots-loader",
-  "category": "ui",
-  "engines": {
-    "mobile-nativewind": {
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "name": "wave-dots-loader.tsx",
-          "url": "mobile/nativewind/ui/wave-dots-loader.tsx"
+    "name": "wave-dots-loader",
+    "category": "loaders",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "wave-dots-loader.tsx",
+                    "url": "mobile/nativewind/loaders/wave-dots-loader.tsx",
+                    "target": "components/loaders/wave-dots-loader.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "wave-dots-loader.tsx",
+                    "url": "mobile/stylesheet/loaders/wave-dots-loader.tsx",
+                    "target": "components/loaders/wave-dots-loader.tsx"
+                }
+            ]
         }
-      ]
-    },
-    "mobile-stylesheet": {
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "name": "wave-dots-loader.tsx",
-          "url": "mobile/stylesheet/ui/wave-dots-loader.tsx"
-        }
-      ]
     }
-  }
 }
