@@ -1,6 +1,6 @@
 {
     "name": "react-apps-ui",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "description": "A universal, Shadcn-inspired UI component CLI for Web, React Native, and Expo.",
     "author": "Anand Vyas",
     "license": "MIT",
