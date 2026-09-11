@@ -1,0 +1,28 @@
+{
+    "name": "icon-chip",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "icon-chip.tsx",
+                    "url": "mobile/nativewind/ui/icon-chip.tsx",
+                    "target": "components/ui/icon-chip.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "icon-chip.tsx",
+                    "url": "mobile/stylesheet/ui/icon-chip.tsx",
+                    "target": "components/ui/icon-chip.tsx"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "name": "toggle-switch",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": ["react-native-reanimated", "expo-haptics"],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "toggle-switch.tsx",
+                    "url": "mobile/nativewind/ui/toggle-switch.tsx",
+                    "target": "components/ui/toggle-switch.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": ["react-native-reanimated", "expo-haptics"],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "toggle-switch.tsx",
+                    "url": "mobile/stylesheet/ui/toggle-switch.tsx",
+                    "target": "components/ui/toggle-switch.tsx"
+                }
+            ]
+        }
+    }
+}

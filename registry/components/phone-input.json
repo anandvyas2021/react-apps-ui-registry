@@ -1,0 +1,38 @@
+{
+    "name": "phone-input",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "phone-input.tsx",
+                    "url": "mobile/nativewind/ui/phone-input.tsx",
+                    "target": "components/ui/phone-input.tsx"
+                },
+                {
+                    "name": "countries.ts",
+                    "url": "constants/data/countries.ts",
+                    "target": "constants/data/countries.ts"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "phone-input.tsx",
+                    "url": "mobile/stylesheet/ui/phone-input.tsx",
+                    "target": "components/ui/phone-input.tsx"
+                },
+                {
+                    "name": "countries.ts",
+                    "url": "constants/data/countries.ts",
+                    "target": "constants/data/countries.ts"
+                }
+            ]
+        }
+    }
+}

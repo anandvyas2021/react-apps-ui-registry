@@ -1,0 +1,28 @@
+{
+    "name": "otp-input-box",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "otp-input-box.tsx",
+                    "url": "mobile/nativewind/ui/otp-input-box.tsx",
+                    "target": "components/ui/otp-input-box.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "otp-input-box.tsx",
+                    "url": "mobile/stylesheet/ui/otp-input-box.tsx",
+                    "target": "components/ui/otp-input-box.tsx"
+                }
+            ]
+        }
+    }
+}

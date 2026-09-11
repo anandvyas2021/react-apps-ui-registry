@@ -3,17 +3,8 @@
     "category": "ui",
     "engines": {
         "mobile-nativewind": {
-            "dependencies": [
-                "class-variance-authority",
-                "tailwind-merge",
-                "clsx"
-            ],
-            "registryDependencies": [
-                "theme",
-                "wave-dots-loader",
-                "dynamic-icon",
-                "utils"
-            ],
+            "dependencies": [],
+            "registryDependencies": ["wave-dots-loader", "dynamic-icon"],
             "files": [
                 {
                     "name": "action-button.tsx",
@@ -24,11 +15,7 @@
         },
         "mobile-stylesheet": {
             "dependencies": [],
-            "registryDependencies": [
-                "theme",
-                "wave-dots-loader",
-                "dynamic-icon"
-            ],
+            "registryDependencies": ["wave-dots-loader", "dynamic-icon"],
             "files": [
                 {
                     "name": "action-button.tsx",

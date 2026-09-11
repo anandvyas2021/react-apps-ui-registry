@@ -18,6 +18,24 @@ program
     .version("1.0.0");
 
 // --- THE INIT COMMAND ---
+
+// 1. Define the foundational architecture for each engine
+const BASE_DEPS: Record<string, { npm: string[]; registry: string[] }> = {
+    "mobile-nativewind": {
+        npm: [
+            "class-variance-authority",
+            "tailwind-merge",
+            "clsx",
+            "lucide-react-native", // Added for the IconName type
+        ],
+        registry: ["theme", "utils"], // Pulls your cn() utility and theme
+    },
+    "mobile-stylesheet": {
+        npm: ["lucide-react-native"], // Added for the IconName type
+        registry: ["theme", "utils"],
+    },
+};
+
 program
     .command("init")
     .description("Configure your Expo project and install the ThemeProvider")
@@ -46,6 +64,9 @@ program
             return;
         }
 
+        const engineKey = response.engine as keyof typeof BASE_DEPS;
+        const setup = BASE_DEPS[engineKey];
+
         // 2. USE THE REGISTRY_URL to fetch the correct JSON manifest
         const manifestUrl = `${REGISTRY_URL}/${response.engine}.json`;
         console.log(chalk.dim(`\nFetching registry from GitHub...`));
@@ -56,101 +77,132 @@ program
                 throw new Error(`Failed to fetch registry: ${res.statusText}`);
 
             const registry = await res.json();
-
-            // 3. Find the "theme" component inside the giant JSON
-            const themeComponent = registry.find(
-                (item: any) => item.name === "theme",
-            );
-
-            if (!themeComponent) {
-                console.log(
-                    chalk.red("Error: Could not find 'theme' in the registry."),
-                );
-                return;
-            }
-
-            console.log(chalk.green(`✓ Found theme provider. Installing...`));
-
             // Check if the user's project uses a 'src' directory
             const hasSrcDir = fs.existsSync(path.join(process.cwd(), "src"));
 
-            // 4. Loop through the files and write them smartly
-            for (const file of themeComponent.files) {
-                // A. Force the target to be a string so it can never be undefined
-                const safeTarget = String(
-                    file.target || file.name || "unknown-file",
+            // 3. Loop through the required BASE REGISTRY components (theme, utils, etc.)
+            for (const compName of setup.registry) {
+                const componentData = registry.find(
+                    (item: any) => item.name === compName,
                 );
-                let finalTargetPath = path.join(process.cwd(), safeTarget);
 
-                //B. Safely check includes on the guaranteed string
-                const isRootConfig =
-                    safeTarget.includes("tailwind") ||
-                    safeTarget.endsWith(".config.js") ||
-                    safeTarget.endsWith(".json");
-
-                if (hasSrcDir && !isRootConfig) {
-                    finalTargetPath = path.join(
-                        process.cwd(),
-                        "src",
-                        safeTarget,
+                if (!componentData) {
+                    console.log(
+                        chalk.red(
+                            `Error: Could not find '${compName}' in the registry.`,
+                        ),
                     );
+                    continue;
                 }
 
-                // Ensure the folder exists
-                fs.mkdirSync(path.dirname(finalTargetPath), {
-                    recursive: true,
-                });
+                console.log(chalk.green(`✓ Found ${compName}. Installing...`));
 
-                // SAFE WRITE: Check if the file already exists
-                if (fs.existsSync(finalTargetPath)) {
-                    if (
-                        file.type === "css" ||
-                        finalTargetPath.endsWith(".css")
-                    ) {
-                        console.log(
-                            chalk.yellow(
-                                `  ⚠️  ${file.target} already exists. Appending theme variables safely...`,
-                            ),
+                // 4. Loop through the files and write them smartly
+                for (const file of componentData.files) {
+                    // A. Force the target to be a string so it can never be undefined
+                    const safeTarget = String(
+                        file.target || file.name || "unknown-file",
+                    );
+                    let finalTargetPath = path.join(process.cwd(), safeTarget);
+
+                    //B. Safely check includes on the guaranteed string
+                    const isRootConfig =
+                        safeTarget.includes("tailwind") ||
+                        safeTarget.endsWith(".config.js") ||
+                        safeTarget.endsWith(".json");
+
+                    if (hasSrcDir && !isRootConfig) {
+                        finalTargetPath = path.join(
+                            process.cwd(),
+                            "src",
+                            safeTarget,
                         );
+                    }
 
-                        try {
-                            // C. Read the file and forcefully convert it to a String
-                            const rawContent = fs.readFileSync(
-                                finalTargetPath,
-                                "utf-8",
-                            );
-                            const safeExistingContent = String(
-                                rawContent || "",
+                    // Ensure the folder exists
+                    fs.mkdirSync(path.dirname(finalTargetPath), {
+                        recursive: true,
+                    });
+
+                    // SAFE WRITE: Check if the file already exists
+                    if (fs.existsSync(finalTargetPath)) {
+                        if (
+                            file.type === "css" ||
+                            finalTargetPath.endsWith(".css")
+                        ) {
+                            console.log(
+                                chalk.yellow(
+                                    `  ⚠️  ${file.target} already exists. Appending theme variables safely...`,
+                                ),
                             );
 
-                            // D. Safely check includes (This line can no longer crash!)
-                            if (
-                                !safeExistingContent.includes("--background:")
-                            ) {
-                                fs.appendFileSync(
+                            try {
+                                // C. Read the file and forcefully convert it to a String
+                                const rawContent = fs.readFileSync(
                                     finalTargetPath,
-                                    `\n/* React Apps UI Theme */\n${file.content || ""}`,
                                     "utf-8",
                                 );
+                                const safeExistingContent = String(
+                                    rawContent || "",
+                                );
+
+                                // D. Safely check includes (This line can no longer crash!)
+                                if (
+                                    !safeExistingContent.includes(
+                                        "--background:",
+                                    )
+                                ) {
+                                    fs.appendFileSync(
+                                        finalTargetPath,
+                                        `\n/* React Apps UI Theme */\n${file.content || ""}`,
+                                        "utf-8",
+                                    );
+                                }
+                            } catch (err) {
+                                console.log(
+                                    chalk.red(
+                                        `  ❌ Error reading or appending to ${safeTarget}`,
+                                    ),
+                                );
                             }
-                        } catch (err) {
+                        } else {
                             console.log(
-                                chalk.red(
-                                    `  ❌ Error reading or appending to ${safeTarget}`,
+                                chalk.yellow(
+                                    `  ⚠️  ${file.target} already exists. Skipping to prevent overwrite.`,
                                 ),
                             );
                         }
                     } else {
-                        console.log(
-                            chalk.yellow(
-                                `  ⚠️  ${file.target} already exists. Skipping to prevent overwrite.`,
-                            ),
+                        // File doesn't exist, safe to write normally
+                        fs.writeFileSync(
+                            finalTargetPath,
+                            file.content,
+                            "utf-8",
                         );
+                        console.log(chalk.green(`  Created ${safeTarget}`));
                     }
-                } else {
-                    // File doesn't exist, safe to write normally
-                    fs.writeFileSync(finalTargetPath, file.content, "utf-8");
-                    console.log(chalk.green(`  Created ${safeTarget}`));
+                }
+            }
+
+            // 5. INSTALL FOUNDATIONAL NPM DEPENDENCIES
+            if (setup.npm.length > 0) {
+                const depList = setup.npm.join(" ");
+                console.log(
+                    chalk.blue(
+                        `\n📦 Installing foundational NPM dependencies: ${depList}...`,
+                    ),
+                );
+                try {
+                    execSync(`npm install ${depList}`, { stdio: "inherit" });
+                    console.log(
+                        chalk.green("✓ Dependencies installed successfully."),
+                    );
+                } catch (err) {
+                    console.log(
+                        chalk.red(
+                            "❌ Failed to install dependencies. You may need to install them manually.",
+                        ),
+                    );
                 }
             }
 

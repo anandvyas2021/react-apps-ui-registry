@@ -1,0 +1,28 @@
+{
+    "name": "countdown-timer",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "countdown-timer.tsx",
+                    "url": "mobile/nativewind/ui/countdown-timer.tsx",
+                    "target": "components/ui/countdown-timer.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "countdown-timer.tsx",
+                    "url": "mobile/stylesheet/ui/countdown-timer.tsx",
+                    "target": "components/ui/countdown-timer.tsx"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "name": "icon-only-button",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "icon-only-button.tsx",
+                    "url": "mobile/nativewind/ui/icon-only-button.tsx",
+                    "target": "components/ui/icon-only-button.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "icon-only-button.tsx",
+                    "url": "mobile/stylesheet/ui/icon-only-button.tsx",
+                    "target": "components/ui/icon-only-button.tsx"
+                }
+            ]
+        }
+    }
+}

@@ -64,11 +64,11 @@ The code is now yours! You will find it beautifully organized in your project fo
 import { ActionButton } from "@/components/ui/action-button";
 
 export default function App() {
-  return (
-    <ActionButton onPress="{()"> console.log("Pressed!")}>
-      Click Me
-    </ActionButton>
-  );
+    return (
+        <ActionButton onPress={() => console.log("Pressed!")}>
+            Click Me
+        </ActionButton>
+    );
 }
 ```
 

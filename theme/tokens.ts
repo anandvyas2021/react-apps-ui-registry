@@ -8,7 +8,7 @@ export const defaultThemeValues = {
     background: "#f9fafb",
     surface: "#ffffff",
     surfaceMuted: "#f3f4f6",
-    buttonSurface: "#f3f4f6",
+    surfaceButton: "#f3f4f6",
 
     foreground: "#121212",
     foregroundMuted: "#64748b",

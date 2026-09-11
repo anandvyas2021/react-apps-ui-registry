@@ -1,0 +1,28 @@
+{
+    "name": "floating-double-chip",
+    "category": "custom",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "floating-double-chip.tsx",
+                    "url": "mobile/nativewind/custom/floating-double-chip.tsx",
+                    "target": "components/custom/floating-double-chip.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "floating-double-chip.tsx",
+                    "url": "mobile/stylesheet/custom/floating-double-chip.tsx",
+                    "target": "components/custom/floating-double-chip.tsx"
+                }
+            ]
+        }
+    }
+}

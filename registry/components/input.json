@@ -1,0 +1,28 @@
+{
+    "name": "input",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": ["react-hook-form"],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "input.tsx",
+                    "url": "mobile/nativewind/ui/input.tsx",
+                    "target": "components/ui/input.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": ["react-hook-form"],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "input.tsx",
+                    "url": "mobile/stylesheet/ui/input.tsx",
+                    "target": "components/ui/input.tsx"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "name": "spinner-loader",
+    "category": "loaders",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": ["react-native-reanimated"],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "spinner-loader.tsx",
+                    "url": "mobile/nativewind/loaders/spinner-loader.tsx",
+                    "target": "components/loaders/spinner-loader.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": ["react-native-reanimated"],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "spinner-loader.tsx",
+                    "url": "mobile/stylesheet/loaders/spinner-loader.tsx",
+                    "target": "components/loaders/spinner-loader.tsx"
+                }
+            ]
+        }
+    }
+}

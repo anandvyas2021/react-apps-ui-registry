@@ -1,0 +1,28 @@
+{
+    "name": "slide-to-action",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "slide-to-action.tsx",
+                    "url": "mobile/nativewind/ui/slide-to-action.tsx",
+                    "target": "components/ui/slide-to-action.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "slide-to-action.tsx",
+                    "url": "mobile/stylesheet/ui/slide-to-action.tsx",
+                    "target": "components/ui/slide-to-action.tsx"
+                }
+            ]
+        }
+    }
+}
