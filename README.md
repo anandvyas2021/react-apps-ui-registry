@@ -1,24 +1,27 @@
 # React Apps UI 🚀
 
-Beautiful, highly customizable React Native components designed for a seamless developer experience. 
+Beautiful, highly customizable UI components designed for a seamless developer experience across **Web and Mobile**. 
 
-Inspired by the Shadcn/UI philosophy, **this is not a traditional component library you install via npm.** Instead, it is a collection of reusable, premium components that download directly into your codebase.
+Inspired by the Shadcn/UI philosophy, **this is not a traditional component library you install via npm.** Instead, it is a universal collection of reusable, premium components that download directly into your codebase, adapting to your specific framework and styling engine.
 
 ## The Philosophy
 
 You should own your UI. Traditional NPM libraries lock you into their design systems, making deep customization a nightmare. This library takes a fundamentally different approach:
 
 * **Total Ownership:** Components are copied directly into your local workspace. You have full control over the styling, physics, and logic.
-* **Engine Agnostic:** Built from the ground up to natively support both NativeWind (Tailwind CSS) and zero-dependency standard React Native `StyleSheet` architectures.
-* **Smart CLI:** The `react-apps-ui` CLI recursively resolves nested dependencies (like icons or loaders), respects your path aliases, and automatically installs required NPM packages.
+* **Universal & Engine Agnostic:** Built from the ground up to natively support:
+  * **Web:** React + Tailwind CSS (Next.js, Vite, etc.)
+  * **Mobile:** React Native + NativeWind (Tailwind CSS)
+  * **Mobile (Zero-Dependency):** React Native + standard `StyleSheet`
+* **Smart CLI:** The `react-apps-ui` CLI recursively resolves nested dependencies (like icons or loaders), respects your path aliases, and automatically installs required NPM packages based on your selected engine.
 
 ---
 
 ## Prerequisites
 
-Before using the CLI, ensure you have an existing React Native or Expo project.
+Before using the CLI, ensure you have an existing React (Web) or React Native (Expo) project.
 
-**Path Aliases:** This library uses the `@/` path alias to ensure imports never break if you move files around. Make sure your `tsconfig.json` at the root of your project is configured to support it:
+**Path Aliases:** This library uses the `@/` path alias to ensure imports never break if you move files around. Make sure your `tsconfig.json` (or `jsconfig.json`) at the root of your project is configured to support it:
 
 ```json
 {
@@ -39,14 +42,14 @@ Before using the CLI, ensure you have an existing React Native or Expo project.
 Get up and running in a fresh project in seconds.
 
 ### 1. Initialize the workspace
-Run the `init` command at the root of your project. This interactive command configures your styling engine, creates your base theme, and sets up your utility files.
+Run the `init` command at the root of your project. This interactive command lets you select your target platform (Web or Mobile) and styling engine, creates your base theme, and sets up your utility files.
 
 ```bash
 npx react-apps-ui@latest init
 ```
 
 ### 2. Add a component
-Use the `add` command to pull a component into your project. The CLI will automatically fetch the component, grab any sub-dependencies (like icons or loaders), and install necessary NPM packages.
+Use the `add` command to pull a component into your project. The CLI will automatically fetch the exact code needed for your specific engine, grab any sub-dependencies, and install necessary NPM packages.
 
 ```bash
 npx react-apps-ui@latest add action-button
