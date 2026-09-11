@@ -1,5 +1,9 @@
 # React Apps UI 🚀
 
+![NPM Version](https://img.shields.io/npm/v/react-apps-ui?color=blue&style=for-the-badge)
+![NPM Downloads](https://img.shields.io/npm/dt/react-apps-ui?color=green&style=for-the-badge)
+![GitHub License](https://img.shields.io/github/license/YOUR_USERNAME/react-apps-ui-registry?style=for-the-badge)
+
 Beautiful, highly customizable UI components designed for a seamless developer experience across **Web and Mobile**. 
 
 Inspired by the Shadcn/UI philosophy, **this is not a traditional component library you install via npm.** Instead, it is a universal collection of reusable, premium components that download directly into your codebase, adapting to your specific framework and styling engine.
