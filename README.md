@@ -2,7 +2,7 @@
 
 ![NPM Version](https://img.shields.io/npm/v/react-apps-ui?color=blue&style=for-the-badge)
 ![NPM Downloads](https://img.shields.io/npm/dt/react-apps-ui?color=green&style=for-the-badge)
-![GitHub License](https://img.shields.io/github/license/YOUR_USERNAME/react-apps-ui-registry?style=for-the-badge)
+![GitHub License](https://img.shields.io/github/license/anandvyas2021/react-apps-ui-registry?style=for-the-badge)
 
 Beautiful, highly customizable UI components designed for a seamless developer experience across **Web and Mobile**. 
 
