@@ -1,7 +1,31 @@
 {
     "name": "react-apps-ui",
-    "version": "1.0.8",
-    "description": "The React Native UI CLI",
+    "version": "1.0.11",
+    "description": "A universal, Shadcn-inspired UI component CLI for Web, React Native, and Expo.",
+    "author": "Anand Vyas",
+    "license": "MIT",
+    "keywords": [
+        "react",
+        "react-native",
+        "expo",
+        "nextjs",
+        "tailwind",
+        "tailwindcss",
+        "nativewind",
+        "shadcn",
+        "shadcn-ui",
+        "ui",
+        "components",
+        "cli"
+    ],
+    "homepage": "https://github.com/anandvyas2021/react-apps-ui-registry#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/anandvyas2021/react-apps-ui-registry.git"
+    },
+    "bugs": {
+        "url": "https://github.com/anandvyas2021/react-apps-ui-registry/issues"
+    },
     "main": "dist/index.js",
     "bin": {
         "react-apps-ui": "./dist/index.js"
@@ -11,9 +35,6 @@
         "dev": "tsx src/index.ts",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
     "dependencies": {
         "chalk": "^5.6.2",
         "commander": "^14.0.3",
