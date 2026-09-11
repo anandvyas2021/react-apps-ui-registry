@@ -19,7 +19,7 @@ export interface FloatingChipProps {
     rightItem: FloatingChipInterface;
 }
 
-export function FloatingDoubleChip({ leftItem, rightItem }: FloatingChipProps) {
+export function FloatingChip({ leftItem, rightItem }: FloatingChipProps) {
     const theme = useTheme();
     const styles = useMemo(() => createStyles(theme), [theme]);
 

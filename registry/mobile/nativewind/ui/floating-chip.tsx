@@ -5,7 +5,7 @@ import { DynamicIcon } from "@/components/custom/dynamic-icon";
 
 import { cn, type IconName } from "@/lib/utils";
 
-export interface DoubleChipInterface {
+export interface FloatingChipInterface {
     label: string;
     value: string;
     icon: IconName | string;
@@ -13,19 +13,19 @@ export interface DoubleChipInterface {
     bgClass?: string; // e.g., "bg-primary-lighter"
 }
 
-export interface FloatingDoubleChipProps extends ViewProps {
-    leftItem: DoubleChipInterface;
-    rightItem: DoubleChipInterface;
+export interface FloatingChipProps extends ViewProps {
+    leftItem: FloatingChipInterface;
+    rightItem: FloatingChipInterface;
 }
 
-export function FloatingDoubleChip({
+export function FloatingChip({
     leftItem,
     rightItem,
     className,
     ...props
-}: FloatingDoubleChipProps) {
+}: FloatingChipProps) {
     // A helper to render each side identically
-    const renderItem = (item: DoubleChipInterface) => (
+    const renderItem = (item: FloatingChipInterface) => (
         <View className="flex-1 flex-row items-center gap-3">
             <View
                 className={cn(
@@ -70,3 +70,5 @@ export function FloatingDoubleChip({
         </View>
     );
 }
+
+FloatingChip.displayName = "FloatingChip";

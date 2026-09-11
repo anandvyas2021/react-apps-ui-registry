@@ -1,0 +1,28 @@
+{
+    "name": "floating-chip",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "floating-chip.tsx",
+                    "url": "mobile/nativewind/ui/floating-chip.tsx",
+                    "target": "components/ui/floating-chip.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "floating-chip.tsx",
+                    "url": "mobile/stylesheet/ui/floating-chip.tsx",
+                    "target": "components/ui/floating-chip.tsx"
+                }
+            ]
+        }
+    }
+}
