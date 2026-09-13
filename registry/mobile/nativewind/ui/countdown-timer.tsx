@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 export interface CountdownTimerProps extends ViewProps {
     initialMinutes?: number;
     initialSeconds?: number;
+    timerText?: string;
     onResend: () => void;
 }
 
@@ -17,6 +18,7 @@ export const CountdownTimer = forwardRef<
         {
             initialMinutes = 0,
             initialSeconds = 60,
+            timerText = "Resend code in",
             onResend,
             className,
             ...props
@@ -57,7 +59,7 @@ export const CountdownTimer = forwardRef<
                 {...props}
             >
                 <Text className="text-sm text-foreground-muted">
-                    Resend code in{" "}
+                    {timerText}{" "}
                 </Text>
                 <TouchableOpacity
                     onPress={handleResendPress}

@@ -36,27 +36,42 @@ export interface IconOnlyButtonProps
     onPress: () => void;
     iconColor?: string;
     className?: string;
+    iconClassName?: string;
 }
 
 export const IconOnlyButton = forwardRef<
     React.ElementRef<typeof TouchableOpacity>,
     IconOnlyButtonProps
->(({ icon, variant, size, iconColor, className, onPress, ...props }, ref) => {
-    return (
-        <TouchableOpacity
-            ref={ref}
-            activeOpacity={0.7}
-            className={cn(iconButtonVariants({ variant, size }), className)}
-            onPress={onPress}
-            {...props}
-        >
-            <DynamicIcon
-                name={icon as string}
-                size={size === "sm" ? 20 : size === "lg" ? 32 : 24}
-                color={iconColor} // or "#94a3b8"
-                className="text-foreground-muted"
-            />
-        </TouchableOpacity>
-    );
-});
+>(
+    (
+        {
+            icon,
+            variant,
+            size,
+            iconColor,
+            className,
+            iconClassName,
+            onPress,
+            ...props
+        },
+        ref,
+    ) => {
+        return (
+            <TouchableOpacity
+                ref={ref}
+                activeOpacity={0.7}
+                className={cn(iconButtonVariants({ variant, size }), className)}
+                onPress={onPress}
+                {...props}
+            >
+                <DynamicIcon
+                    name={icon as string}
+                    size={size === "sm" ? 20 : size === "lg" ? 32 : 24}
+                    color={iconColor} // or "#94a3b8"
+                    className={`text-foreground-muted ${iconClassName}`}
+                />
+            </TouchableOpacity>
+        );
+    },
+);
 IconOnlyButton.displayName = "IconOnlyButton";

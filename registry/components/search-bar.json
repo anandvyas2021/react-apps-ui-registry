@@ -1,0 +1,28 @@
+{
+    "name": "search-bar",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "search-bar.tsx",
+                    "url": "mobile/nativewind/ui/search-bar.tsx",
+                    "target": "components/ui/search-bar.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "search-bar.tsx",
+                    "url": "mobile/stylesheet/ui/search-bar.tsx",
+                    "target": "components/ui/search-bar.tsx"
+                }
+            ]
+        }
+    }
+}
