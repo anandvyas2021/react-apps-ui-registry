@@ -1,0 +1,28 @@
+{
+    "name": "horizontal-scroll",
+    "category": "layout",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "horizontal-scroll.tsx",
+                    "url": "mobile/nativewind/layout/horizontal-scroll.tsx",
+                    "target": "components/layout/horizontal-scroll.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "horizontal-scroll.tsx",
+                    "url": "mobile/stylesheet/layout/horizontal-scroll.tsx",
+                    "target": "components/layout/horizontal-scroll.tsx"
+                }
+            ]
+        }
+    }
+}

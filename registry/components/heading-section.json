@@ -1,5 +1,5 @@
 {
-    "name": "dynamic-icon",
+    "name": "heading-section",
     "category": "custom",
     "engines": {
         "mobile-nativewind": {
@@ -7,9 +7,9 @@
             "registryDependencies": [],
             "files": [
                 {
-                    "name": "dynamic-icon.tsx",
-                    "url": "mobile/nativewind/custom/dynamic-icon.tsx",
-                    "target": "components/custom/dynamic-icon.tsx"
+                    "name": "heading-section.tsx",
+                    "url": "mobile/nativewind/custom/heading-section.tsx",
+                    "target": "components/custom/heading-section.tsx"
                 }
             ]
         },
@@ -18,9 +18,9 @@
             "registryDependencies": [],
             "files": [
                 {
-                    "name": "dynamic-icon.tsx",
-                    "url": "mobile/stylesheet/custom/dynamic-icon.tsx",
-                    "target": "components/custom/dynamic-icon.tsx"
+                    "name": "heading-section.tsx",
+                    "url": "mobile/stylesheet/custom/heading-section.tsx",
+                    "target": "components/custom/heading-section.tsx"
                 }
             ]
         }

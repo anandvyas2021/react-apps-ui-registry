@@ -1,0 +1,28 @@
+{
+    "name": "filter-chips",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": ["horizontal-scroll"],
+            "files": [
+                {
+                    "name": "filter-chips.tsx",
+                    "url": "mobile/nativewind/ui/filter-chips.tsx",
+                    "target": "components/ui/filter-chips.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": ["horizontal-scroll"],
+            "files": [
+                {
+                    "name": "filter-chips.tsx",
+                    "url": "mobile/stylesheet/ui/filter-chips.tsx",
+                    "target": "components/ui/filter-chips.tsx"
+                }
+            ]
+        }
+    }
+}

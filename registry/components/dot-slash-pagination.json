@@ -1,0 +1,28 @@
+{
+    "name": "dot-slash-pagination",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": ["react-native-reanimated"],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "dot-slash-pagination.tsx",
+                    "url": "mobile/nativewind/ui/dot-slash-pagination.tsx",
+                    "target": "components/ui/dot-slash-pagination.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": ["react-native-reanimated"],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "dot-slash-pagination.tsx",
+                    "url": "mobile/stylesheet/ui/dot-slash-pagination.tsx",
+                    "target": "components/ui/dot-slash-pagination.tsx"
+                }
+            ]
+        }
+    }
+}

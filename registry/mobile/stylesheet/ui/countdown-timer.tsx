@@ -83,7 +83,7 @@ const createStyles = (theme: ThemeTokens) =>
         prefixText: {
             fontSize: 14,
             fontWeight: "500",
-            color: theme.mutedForeground,
+            color: theme.foregroundMuted,
         },
         timerText: {
             fontSize: 16,

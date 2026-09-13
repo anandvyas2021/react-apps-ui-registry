@@ -1,0 +1,28 @@
+{
+    "name": "main-wrapper",
+    "category": "layout",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": ["react-native-safe-area-context"],
+            "registryDependencies": ["navigator-header", "home-header"],
+            "files": [
+                {
+                    "name": "main-wrapper.tsx",
+                    "url": "mobile/nativewind/layout/main-wrapper.tsx",
+                    "target": "components/layout/main-wrapper.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": ["react-native-safe-area-context"],
+            "registryDependencies": ["navigator-header", "home-header"],
+            "files": [
+                {
+                    "name": "main-wrapper.tsx",
+                    "url": "mobile/stylesheet/layout/main-wrapper.tsx",
+                    "target": "components/layout/main-wrapper.tsx"
+                }
+            ]
+        }
+    }
+}

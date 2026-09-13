@@ -1,0 +1,28 @@
+{
+    "name": "watermark-grid-card",
+    "category": "cards",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": ["react-native-reanimated"],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "watermark-grid-card.tsx",
+                    "url": "mobile/nativewind/cards/watermark-grid-card.tsx",
+                    "target": "components/cards/watermark-grid-card.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": ["react-native-reanimated"],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "watermark-grid-card.tsx",
+                    "url": "mobile/stylesheet/cards/watermark-grid-card.tsx",
+                    "target": "components/cards/watermark-grid-card.tsx"
+                }
+            ]
+        }
+    }
+}

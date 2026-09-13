@@ -1,0 +1,28 @@
+{
+    "name": "section-card",
+    "category": "card",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon", "toggle-switch"],
+            "files": [
+                {
+                    "name": "section-card.tsx",
+                    "url": "mobile/nativewind/cards/section-card.tsx",
+                    "target": "components/cards/section-card.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon", "toggle-switch"],
+            "files": [
+                {
+                    "name": "section-card.tsx",
+                    "url": "mobile/stylesheet/cards/section-card.tsx",
+                    "target": "components/cards/section-card.tsx"
+                }
+            ]
+        }
+    }
+}

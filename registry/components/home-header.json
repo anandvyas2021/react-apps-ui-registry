@@ -1,0 +1,36 @@
+{
+    "name": "home-header",
+    "category": "layout",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [
+                "expo-router",
+                "react-native-reanimated",
+                "react-native-safe-area-context"
+            ],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "home-header.tsx",
+                    "url": "mobile/nativewind/layout/home-header.tsx",
+                    "target": "components/layout/home-header.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [
+                "expo-router",
+                "react-native-reanimated",
+                "react-native-safe-area-context"
+            ],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "home-header.tsx",
+                    "url": "mobile/stylesheet/layout/home-header.tsx",
+                    "target": "components/layout/home-header.tsx"
+                }
+            ]
+        }
+    }
+}

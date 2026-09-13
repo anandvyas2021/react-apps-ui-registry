@@ -1,0 +1,28 @@
+{
+    "name": "page-scrollview",
+    "category": "layout",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "page-scrollview.tsx",
+                    "url": "mobile/nativewind/layout/page-scrollview.tsx",
+                    "target": "components/layout/page-scrollview.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "page-scrollview.tsx",
+                    "url": "mobile/stylesheet/layout/page-scrollview.tsx",
+                    "target": "components/layout/page-scrollview.tsx"
+                }
+            ]
+        }
+    }
+}

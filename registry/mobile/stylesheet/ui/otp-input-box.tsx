@@ -130,7 +130,7 @@ const createStyles = (theme: ThemeTokens) =>
             borderColor: "transparent",
         },
         digitBoxFocused: {
-            backgroundColor: `${theme.primary}1A`, // 10% opacity
+            backgroundColor: theme.primaryLighter,
             borderColor: theme.primary,
         },
         digitText: {

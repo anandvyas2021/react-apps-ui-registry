@@ -98,7 +98,7 @@ const createStyles = (theme: ThemeTokens) =>
             fontSize: 12,
             fontWeight: "500",
             marginBottom: 2,
-            color: theme.mutedForeground,
+            color: theme.foregroundMuted,
         },
         value: {
             fontSize: 16,

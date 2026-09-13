@@ -1,0 +1,28 @@
+{
+    "name": "page-container",
+    "category": "layout",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": ["page-scrollview"],
+            "files": [
+                {
+                    "name": "page-container.tsx",
+                    "url": "mobile/nativewind/layout/page-container.tsx",
+                    "target": "components/layout/page-container.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": ["page-scrollview"],
+            "files": [
+                {
+                    "name": "page-container.tsx",
+                    "url": "mobile/stylesheet/layout/page-container.tsx",
+                    "target": "components/layout/page-container.tsx"
+                }
+            ]
+        }
+    }
+}

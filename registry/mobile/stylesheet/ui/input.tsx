@@ -144,7 +144,7 @@ const createStyles = (theme: ThemeTokens) =>
         label: {
             fontSize: 12,
             fontWeight: "500",
-            color: theme.mutedForeground,
+            color: theme.foregroundMuted,
             marginBottom: 8,
         },
         inputContainer: {
