@@ -97,7 +97,7 @@ const createStyles = (theme: ThemeTokens) =>
             backgroundColor: theme.surfaceMuted,
             borderRadius: 16,
             paddingHorizontal: 16,
-            height: 48,
+            paddingVertical: 4,
             borderWidth: 0.5,
             borderColor: theme.border,
         },
@@ -107,10 +107,9 @@ const createStyles = (theme: ThemeTokens) =>
         input: {
             flex: 1,
             fontSize: 14,
-            fontWeight: "500",
+            fontWeight: "700",
             color: theme.foreground,
             height: "100%",
-            paddingVertical: 0,
         },
         iconButton: {
             marginLeft: 8,

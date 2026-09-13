@@ -30,7 +30,7 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
         return (
             <View
                 className={cn(
-                    "flex-row items-center bg-surface-muted rounded-2xl px-4 h-12 border-[0.5px] border-border",
+                    "flex-row items-center bg-surface-muted rounded-2xl px-4 py-1 border-[0.5px] border-border",
                     containerClassName,
                 )}
             >
@@ -47,7 +47,7 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
                     placeholder={placeholder}
                     placeholderTextColor="#94a3b8"
                     className={cn(
-                        "flex-1 text-sm font-medium text-foreground h-full py-0",
+                        "flex-1 text-sm font-medium text-foreground",
                         className,
                     )}
                     {...props}
