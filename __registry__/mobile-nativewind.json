@@ -31,11 +31,25 @@
     ]
   },
   {
+    "name": "dot-slash-pagination",
+    "category": "ui",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "name": "dot-slash-pagination.tsx",
+        "url": "mobile/nativewind/ui/dot-slash-pagination.tsx",
+        "target": "components/ui/dot-slash-pagination.tsx",
+        "content": "import React from \"react\";\r\nimport { View } from \"react-native\";\r\nimport Animated, {\r\n    useAnimatedStyle,\r\n    withTiming,\r\n} from \"react-native-reanimated\";\r\n\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface DotSlashPaginationProps {\r\n    data: any[];\r\n    activeIndex: number;\r\n    className?: string;\r\n}\r\n\r\nexport function DotSlashPagination({\r\n    data,\r\n    activeIndex,\r\n    className,\r\n}: DotSlashPaginationProps) {\r\n    return (\r\n        <View className={cn(\"flex-row items-center gap-1.5\", className)}>\r\n            {data?.map((_, index) => {\r\n                const isActive = activeIndex === index;\r\n\r\n                // Smoothly animate the width transition\r\n                const animatedStyle = useAnimatedStyle(() => ({\r\n                    width: withTiming(isActive ? 24 : 8, { duration: 300 }),\r\n                }));\r\n\r\n                return (\r\n                    <Animated.View\r\n                        key={index}\r\n                        style={animatedStyle}\r\n                        className={cn(\r\n                            \"h-2 rounded-full\",\r\n                            isActive ? \"bg-primary\" : \"bg-slate-200\", // Tailwind equivalent of #E2E8F0\r\n                        )}\r\n                    />\r\n                );\r\n            })}\r\n        </View>\r\n    );\r\n}\r\n"
+      }
+    ]
+  },
+  {
     "name": "dynamic-icon",
     "category": "custom",
-    "dependencies": [
-      "lucide-react-native"
-    ],
+    "dependencies": [],
     "registryDependencies": [],
     "files": [
       {
@@ -43,6 +57,22 @@
         "url": "mobile/nativewind/custom/dynamic-icon.tsx",
         "target": "components/custom/dynamic-icon.tsx",
         "content": "import React from \"react\";\r\nimport * as LucideIcons from \"lucide-react-native\";\r\nimport { cssInterop } from \"nativewind\";\r\n\r\n// Embedded types for 100% portability\r\nexport interface DynamicIconProps {\r\n    name: string;\r\n    size?: number;\r\n    className?: string;\r\n    color?: string;\r\n}\r\n\r\nconst interopedIcons = new Set<string>();\r\n\r\nexport function DynamicIcon({\r\n    name,\r\n    className,\r\n    color,\r\n    size = 20,\r\n}: DynamicIconProps) {\r\n    // Grab the specific icon from the Lucide object using bracket notation\r\n    const IconComponent = LucideIcons[name as keyof typeof LucideIcons] as any;\r\n\r\n    // Fallback just in case a typo is passed\r\n    if (!IconComponent) {\r\n        console.warn(`Icon \"${name}\" does not exist in lucide-react-native.`);\r\n        return null;\r\n    }\r\n\r\n    if (!interopedIcons.has(name)) {\r\n        cssInterop(IconComponent, {\r\n            className: {\r\n                target: \"style\",\r\n                nativeStyleToProp: {\r\n                    color: true,\r\n                    opacity: true,\r\n                },\r\n            },\r\n        });\r\n        // Add to cache so this block never runs for this icon again\r\n        interopedIcons.add(name);\r\n    }\r\n\r\n    // Note: We pass color here as a fallback in case className doesn't dictate it\r\n    return <IconComponent className={className} size={size} color={color} />;\r\n}\r\n"
+      }
+    ]
+  },
+  {
+    "name": "filter-chips",
+    "category": "ui",
+    "dependencies": [],
+    "registryDependencies": [
+      "horizontal-scroll"
+    ],
+    "files": [
+      {
+        "name": "filter-chips.tsx",
+        "url": "mobile/nativewind/ui/filter-chips.tsx",
+        "target": "components/ui/filter-chips.tsx",
+        "content": "import React from \"react\";\r\nimport { Text, TouchableOpacity } from \"react-native\";\r\n\r\nimport { HorizontalScroll } from \"@/components/layout/horizontal-scroll\";\r\n\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface FilterChipsProps {\r\n    filters: { label: string; value: string }[];\r\n    activeFilter: string;\r\n    onFilterChange: (filter: string) => void;\r\n    className?: string;\r\n}\r\n\r\nexport function FilterChips({\r\n    filters,\r\n    activeFilter,\r\n    onFilterChange,\r\n    className,\r\n}: FilterChipsProps) {\r\n    return (\r\n        <HorizontalScroll className={className}>\r\n            {filters?.map((filter) => {\r\n                const isActive = activeFilter === filter?.value;\r\n                return (\r\n                    <TouchableOpacity\r\n                        key={filter?.value}\r\n                        onPress={() => onFilterChange(filter?.value)}\r\n                        activeOpacity={0.7}\r\n                        className={cn(\r\n                            \"px-4 py-3 rounded-2xl border-[1.3px]\",\r\n                            isActive\r\n                                ? \"border-primary bg-primary\"\r\n                                : \"bg-transparent border-primary\",\r\n                        )}\r\n                    >\r\n                        <Text\r\n                            className={cn(\r\n                                \"text-xs font-black\",\r\n                                isActive\r\n                                    ? \"text-primary-foreground\"\r\n                                    : \"text-foreground\",\r\n                            )}\r\n                        >\r\n                            {filter?.label}\r\n                        </Text>\r\n                    </TouchableOpacity>\r\n                );\r\n            })}\r\n        </HorizontalScroll>\r\n    );\r\n}\r\n"
       }
     ]
   },
@@ -59,6 +89,54 @@
         "url": "mobile/nativewind/ui/floating-chip.tsx",
         "target": "components/ui/floating-chip.tsx",
         "content": "import React from \"react\";\r\nimport { View, Text, ViewProps } from \"react-native\";\r\n\r\nimport { DynamicIcon } from \"@/components/custom/dynamic-icon\";\r\n\r\nimport { cn, type IconName } from \"@/lib/utils\";\r\n\r\nexport interface FloatingChipInterface {\r\n    label: string;\r\n    value: string;\r\n    icon: IconName | string;\r\n    colorClass?: string; // e.g., \"text-primary\"\r\n    bgClass?: string; // e.g., \"bg-primary-lighter\"\r\n}\r\n\r\nexport interface FloatingChipProps extends ViewProps {\r\n    leftItem: FloatingChipInterface;\r\n    rightItem: FloatingChipInterface;\r\n}\r\n\r\nexport function FloatingChip({\r\n    leftItem,\r\n    rightItem,\r\n    className,\r\n    ...props\r\n}: FloatingChipProps) {\r\n    // A helper to render each side identically\r\n    const renderItem = (item: FloatingChipInterface) => (\r\n        <View className=\"flex-1 flex-row items-center gap-3\">\r\n            <View\r\n                className={cn(\r\n                    \"w-11 h-11 rounded-xl items-center justify-center\",\r\n                    item.bgClass || \"bg-primary-lighter\",\r\n                )}\r\n            >\r\n                <DynamicIcon\r\n                    name={item.icon as string}\r\n                    size={20}\r\n                    className={cn(item.colorClass || \"text-primary\")}\r\n                />\r\n            </View>\r\n\r\n            {/* The Text Stack */}\r\n            <View className=\"flex-1 justify-center\">\r\n                <Text className=\"text-xs font-medium text-foreground-muted mb-0.5\">\r\n                    {item.label}\r\n                </Text>\r\n                <Text\r\n                    className=\"text-base font-bold text-foreground tracking-tight\"\r\n                    numberOfLines={1}\r\n                    adjustsFontSizeToFit\r\n                >\r\n                    {item.value}\r\n                </Text>\r\n            </View>\r\n        </View>\r\n    );\r\n\r\n    return (\r\n        <View\r\n            className={cn(\r\n                \"flex-row items-center justify-between p-3 bg-surface rounded-[24px] border-[0.5px] border-border shadow-sm\",\r\n                className,\r\n            )}\r\n            {...props}\r\n        >\r\n            {renderItem(leftItem)}\r\n            <View className=\"w-[1px] h-10 bg-border mx-3\" />\r\n            {renderItem(rightItem)}\r\n        </View>\r\n    );\r\n}\r\n\r\nFloatingChip.displayName = \"FloatingChip\";\r\n"
+      }
+    ]
+  },
+  {
+    "name": "heading-section",
+    "category": "custom",
+    "dependencies": [],
+    "registryDependencies": [],
+    "files": [
+      {
+        "name": "heading-section.tsx",
+        "url": "mobile/nativewind/custom/heading-section.tsx",
+        "target": "components/custom/heading-section.tsx",
+        "content": "import React from \"react\";\r\nimport { Text, View } from \"react-native\";\r\n\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface HeadingSectionProps {\r\n    title?: string;\r\n    desc?: string;\r\n    children?: React.ReactNode;\r\n    className?: string;\r\n}\r\n\r\nexport function HeadingSection({\r\n    title,\r\n    desc,\r\n    children,\r\n    className,\r\n}: HeadingSectionProps) {\r\n    return (\r\n        <View className={cn(\"w-full items-center\", className)}>\r\n            <Text className=\"text-3xl my-3 font-bold tracking-tight text-foreground\">\r\n                {title}\r\n            </Text>\r\n            {children ? (\r\n                <>{children}</>\r\n            ) : (\r\n                <Text className=\"text-center text-sm font-medium text-foreground-muted\">\r\n                    {desc}\r\n                </Text>\r\n            )}\r\n        </View>\r\n    );\r\n}\r\n"
+      }
+    ]
+  },
+  {
+    "name": "home-header",
+    "category": "layout",
+    "dependencies": [
+      "expo-router",
+      "react-native-reanimated",
+      "react-native-safe-area-context"
+    ],
+    "registryDependencies": [
+      "dynamic-icon"
+    ],
+    "files": [
+      {
+        "name": "home-header.tsx",
+        "url": "mobile/nativewind/layout/home-header.tsx",
+        "target": "components/layout/home-header.tsx",
+        "content": "import React, { useEffect } from \"react\";\r\nimport { View, Text, TouchableOpacity, ViewProps } from \"react-native\";\r\nimport Animated, {\r\n    Easing,\r\n    withRepeat,\r\n    withTiming,\r\n    withSequence,\r\n    useSharedValue,\r\n    useAnimatedStyle,\r\n} from \"react-native-reanimated\";\r\nimport { useRouter } from \"expo-router\";\r\nimport { useSafeAreaInsets } from \"react-native-safe-area-context\";\r\n\r\nimport { DynamicIcon } from \"@/components/custom/dynamic-icon\";\r\n\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface HomeHeaderProps {\r\n    inMainWrapper?: boolean;\r\n    title?: string;\r\n    hasNotifications?: boolean;\r\n    onNotificationPress?: () => void;\r\n    onProfilePress?: () => void;\r\n    className: string;\r\n}\r\n\r\nexport function HomeHeader({\r\n    inMainWrapper = true,\r\n    title = \"App Name\",\r\n    hasNotifications = true,\r\n    onNotificationPress,\r\n    onProfilePress,\r\n    className,\r\n    ...props\r\n}: HomeHeaderProps) {\r\n    const router = useRouter();\r\n    const insets = useSafeAreaInsets();\r\n    const dotOpacity = useSharedValue(0.3);\r\n\r\n    useEffect(() => {\r\n        if (hasNotifications) {\r\n            dotOpacity.value = withRepeat(\r\n                withSequence(\r\n                    withTiming(1, {\r\n                        duration: 1000,\r\n                        easing: Easing.inOut(Easing.ease),\r\n                    }),\r\n                    withTiming(0.3, {\r\n                        duration: 1000,\r\n                        easing: Easing.inOut(Easing.ease),\r\n                    }),\r\n                ),\r\n                -1,\r\n                true,\r\n            );\r\n        } else {\r\n            dotOpacity.value = 0;\r\n        }\r\n    }, [hasNotifications]);\r\n\r\n    const animatedDotStyle = useAnimatedStyle(() => ({\r\n        opacity: dotOpacity.value,\r\n    }));\r\n\r\n    return (\r\n        <View\r\n            className={cn(\"px-3 py-2 mx-3 rounded-2xl z-50\", className)}\r\n            style={{ marginTop: inMainWrapper ? 0 : insets.top + 20 }}\r\n            {...props}\r\n        >\r\n            <View className=\"w-full flex-row items-center justify-between\">\r\n                {/* Logo & Name */}\r\n                <View className=\"flex-row items-center gap-2\">\r\n                    <View className=\"w-12 h-12 items-center justify-center rounded-2xl shadow-sm bg-primary\">\r\n                        <DynamicIcon\r\n                            name=\"Hexagon\"\r\n                            size={24}\r\n                            className=\"text-primary-foreground\"\r\n                        />\r\n                    </View>\r\n                    <Text className=\"text-xl font-extrabold text-primary tracking-tight\">\r\n                        {title}\r\n                    </Text>\r\n                </View>\r\n\r\n                {/* Actions */}\r\n                <View className=\"flex-row items-center gap-3\">\r\n                    <TouchableOpacity\r\n                        activeOpacity={0.9}\r\n                        onPress={() =>\r\n                            onNotificationPress\r\n                                ? onNotificationPress()\r\n                                : router.push(\"/notifications\")\r\n                        }\r\n                        className=\"p-2 items-center justify-center rounded-xl border-[0.5px] border-primary bg-background\"\r\n                    >\r\n                        <DynamicIcon\r\n                            name=\"Bell\"\r\n                            size={26}\r\n                            className=\"text-primary fill-primary\"\r\n                        />\r\n                        <Animated.View\r\n                            style={[\r\n                                animatedDotStyle,\r\n                                { position: \"absolute\", top: 9, right: 10 },\r\n                            ]}\r\n                            className=\"w-2.5 h-2.5 bg-destructive rounded-full border border-border\"\r\n                        />\r\n                    </TouchableOpacity>\r\n\r\n                    <TouchableOpacity\r\n                        activeOpacity={0.8}\r\n                        onPress={() =>\r\n                            onProfilePress\r\n                                ? onProfilePress()\r\n                                : router.push(\"/profile\")\r\n                        }\r\n                        className=\"p-2 items-center justify-center rounded-xl border-[0.5px] border-primary bg-background\"\r\n                    >\r\n                        <DynamicIcon\r\n                            name=\"User\"\r\n                            size={26}\r\n                            className=\"text-primary fill-primary\"\r\n                        />\r\n                    </TouchableOpacity>\r\n                </View>\r\n            </View>\r\n        </View>\r\n    );\r\n}\r\n"
+      }
+    ]
+  },
+  {
+    "name": "horizontal-scroll",
+    "category": "layout",
+    "dependencies": [],
+    "registryDependencies": [],
+    "files": [
+      {
+        "name": "horizontal-scroll.tsx",
+        "url": "mobile/nativewind/layout/horizontal-scroll.tsx",
+        "target": "components/layout/horizontal-scroll.tsx",
+        "content": "import React, { forwardRef } from \"react\";\r\nimport { ScrollView, ScrollViewProps } from \"react-native\";\r\n\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface HorizontalScrollProps extends ScrollViewProps {\r\n    children: React.ReactNode;\r\n    contentClassName?: string;\r\n}\r\n\r\nexport const HorizontalScroll = forwardRef<ScrollView, HorizontalScrollProps>(\r\n    ({ children, className, contentClassName, ...props }, ref) => {\r\n        return (\r\n            <ScrollView\r\n                ref={ref}\r\n                horizontal\r\n                showsHorizontalScrollIndicator={false}\r\n                className={cn(\"mt-6 mb-5\", className)}\r\n                contentContainerClassName={cn(\"gap-3 px-4\", contentClassName)}\r\n                {...props}\r\n            >\r\n                {children}\r\n            </ScrollView>\r\n        );\r\n    },\r\n);\r\nHorizontalScroll.displayName = \"HorizontalScroll\";\r\n"
       }
     ]
   },
@@ -113,6 +191,44 @@
     ]
   },
   {
+    "name": "main-wrapper",
+    "category": "layout",
+    "dependencies": [
+      "react-native-safe-area-context"
+    ],
+    "registryDependencies": [
+      "navigator-header",
+      "home-header"
+    ],
+    "files": [
+      {
+        "name": "main-wrapper.tsx",
+        "url": "mobile/nativewind/layout/main-wrapper.tsx",
+        "target": "components/layout/main-wrapper.tsx",
+        "content": "import React from \"react\";\r\nimport { View, ViewProps } from \"react-native\";\r\nimport { useSafeAreaInsets } from \"react-native-safe-area-context\";\r\n\r\nimport { HomeHeader } from \"./home-header\";\r\nimport { NavigatorHeader } from \"./navigator-header\";\r\n\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface MainWrapperProps extends ViewProps {\r\n    children: React.ReactNode;\r\n    homeHeader?: boolean;\r\n    navigatorHeader?: boolean;\r\n    heading?: string;\r\n    topSpacing?: boolean;\r\n    className?: string;\r\n    fullScreen?: boolean;\r\n}\r\n\r\nexport function MainWrapper({\r\n    children,\r\n    homeHeader = false,\r\n    navigatorHeader = true,\r\n    heading,\r\n    topSpacing,\r\n    className,\r\n    fullScreen = false,\r\n    ...props\r\n}: MainWrapperProps) {\r\n    const insets = useSafeAreaInsets();\r\n    const safeBottomPadding = Math.max(insets.bottom, 10);\r\n\r\n    return (\r\n        <View\r\n            className={cn(\"flex-1 bg-background\", className)}\r\n            style={{\r\n                paddingTop: fullScreen\r\n                    ? 0\r\n                    : topSpacing\r\n                      ? insets.top + 30\r\n                      : insets.top + 16,\r\n                paddingBottom: fullScreen ? 0 : safeBottomPadding,\r\n            }}\r\n            {...props}\r\n        >\r\n            <View className=\"flex-1\">\r\n                {homeHeader ? (\r\n                    <HomeHeader inMainWrapper />\r\n                ) : navigatorHeader ? (\r\n                    <NavigatorHeader title={heading ?? \"\"} inMainWrapper />\r\n                ) : heading ? (\r\n                    <NavigatorHeader\r\n                        title={heading ?? \"\"}\r\n                        inMainWrapper\r\n                        haveBackButton={false}\r\n                    />\r\n                ) : null}\r\n\r\n                {children}\r\n            </View>\r\n        </View>\r\n    );\r\n}\r\n"
+      }
+    ]
+  },
+  {
+    "name": "navigator-header",
+    "category": "layout",
+    "dependencies": [
+      "expo-router",
+      "react-native-safe-area-context"
+    ],
+    "registryDependencies": [
+      "dynamic-icon"
+    ],
+    "files": [
+      {
+        "name": "navigator-header.tsx",
+        "url": "mobile/nativewind/layout/navigator-header.tsx",
+        "target": "components/layout/navigator-header.tsx",
+        "content": "import React from \"react\";\r\nimport { View, Text, TouchableOpacity, ViewProps } from \"react-native\";\r\nimport { useRouter } from \"expo-router\";\r\nimport { useSafeAreaInsets } from \"react-native-safe-area-context\";\r\n\r\nimport { DynamicIcon } from \"@/components/custom/dynamic-icon\";\r\n\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface NavigatorHeaderProps extends ViewProps {\r\n    title?: string;\r\n    haveBackButton?: boolean;\r\n    inMainWrapper?: boolean;\r\n    onBackPress?: () => void;\r\n}\r\n\r\nexport function NavigatorHeader({\r\n    title,\r\n    haveBackButton = true,\r\n    inMainWrapper = true,\r\n    onBackPress,\r\n    className,\r\n    ...props\r\n}: NavigatorHeaderProps) {\r\n    const router = useRouter();\r\n    const insets = useSafeAreaInsets();\r\n\r\n    const handleBack = () => {\r\n        if (onBackPress) onBackPress();\r\n        else router.back();\r\n    };\r\n\r\n    return (\r\n        <View\r\n            className={cn(\r\n                \"w-full flex-row items-center justify-between pb-2 px-6 bg-transparent z-10\",\r\n                className,\r\n            )}\r\n            style={{ paddingTop: inMainWrapper ? 0 : insets.top + 16 }}\r\n            {...props}\r\n        >\r\n            {haveBackButton ? (\r\n                <TouchableOpacity\r\n                    onPress={handleBack}\r\n                    activeOpacity={0.7}\r\n                    className=\"w-12 h-12 items-center justify-center rounded-2xl bg-surface\"\r\n                >\r\n                    <DynamicIcon\r\n                        name=\"ArrowLeft\"\r\n                        size={20}\r\n                        className=\"text-foreground\"\r\n                    />\r\n                </TouchableOpacity>\r\n            ) : (\r\n                <View className=\"w-12 h-12\" />\r\n            )}\r\n\r\n            <Text\r\n                className={cn(\r\n                    \"text-lg font-bold\",\r\n                    haveBackButton ? \"text-foreground\" : \"text-primary\",\r\n                )}\r\n            >\r\n                {title}\r\n            </Text>\r\n\r\n            <View className=\"w-12 h-12\" />\r\n        </View>\r\n    );\r\n}\r\n"
+      }
+    ]
+  },
+  {
     "name": "otp-input-box",
     "category": "ui",
     "dependencies": [],
@@ -123,6 +239,36 @@
         "url": "mobile/nativewind/ui/otp-input-box.tsx",
         "target": "components/ui/otp-input-box.tsx",
         "content": "import React, { useRef, forwardRef, useImperativeHandle } from \"react\";\r\nimport { View, Text, TextInput, Pressable, ViewProps } from \"react-native\";\r\n\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface OTPInputBoxProps extends ViewProps {\r\n    code: string;\r\n    setCode: (code: string) => void;\r\n    length?: number;\r\n}\r\n\r\nexport interface OTPInputRef {\r\n    focus: () => void;\r\n    blur: () => void;\r\n    clear: () => void;\r\n}\r\n\r\nexport const OTPInputBox = forwardRef<OTPInputRef, OTPInputBoxProps>(\r\n    ({ code, setCode, length = 6, className, ...props }, ref) => {\r\n        const inputRef = useRef<TextInput>(null);\r\n\r\n        useImperativeHandle(ref, () => ({\r\n            focus: () => inputRef.current?.focus(),\r\n            blur: () => inputRef.current?.blur(),\r\n            clear: () => setCode(\"\"),\r\n        }));\r\n\r\n        const handlePress = () => {\r\n            if (inputRef.current?.isFocused()) {\r\n                inputRef.current.blur();\r\n                setTimeout(() => {\r\n                    inputRef.current?.focus();\r\n                }, 50);\r\n            } else {\r\n                inputRef.current?.focus();\r\n            }\r\n        };\r\n\r\n        return (\r\n            <View className={cn(\"w-full items-center\", className)} {...props}>\r\n                <Pressable\r\n                    className=\"w-full flex-row justify-between\"\r\n                    onPress={handlePress}\r\n                >\r\n                    {Array(length)\r\n                        .fill(0)\r\n                        .map((_, index) => {\r\n                            const digit = code[index] || \"\";\r\n                            const isCurrentDigit = index === code.length;\r\n                            const isLastDigit = index === length - 1;\r\n                            const isCodeComplete = code.length === length;\r\n                            const isFocused =\r\n                                isCurrentDigit ||\r\n                                (isCodeComplete && isLastDigit);\r\n\r\n                            return (\r\n                                <View\r\n                                    key={index}\r\n                                    className={cn(\r\n                                        \"h-16 w-14 items-center justify-center rounded-xl border-2\",\r\n                                        isFocused\r\n                                            ? \"border-primary bg-primary-lighter\"\r\n                                            : \"bg-surface border-transparent\",\r\n                                    )}\r\n                                >\r\n                                    <Text\r\n                                        className={cn(\r\n                                            \"text-2xl font-medium\",\r\n                                            isFocused\r\n                                                ? \"text-primary\"\r\n                                                : \"text-foreground\",\r\n                                        )}\r\n                                    >\r\n                                        {digit}\r\n                                    </Text>\r\n                                </View>\r\n                            );\r\n                        })}\r\n                </Pressable>\r\n\r\n                <TextInput\r\n                    ref={inputRef}\r\n                    value={code}\r\n                    onChangeText={(text) => {\r\n                        const numericValue = text.replace(/[^0-9]/g, \"\");\r\n                        if (numericValue.length <= length)\r\n                            setCode(numericValue);\r\n                    }}\r\n                    keyboardType=\"number-pad\"\r\n                    autoFocus\r\n                    textContentType=\"oneTimeCode\"\r\n                    className=\"absolute h-0 w-0 opacity-0\"\r\n                />\r\n            </View>\r\n        );\r\n    },\r\n);\r\nOTPInputBox.displayName = \"OTPInputBox\";\r\n"
+      }
+    ]
+  },
+  {
+    "name": "page-container",
+    "category": "layout",
+    "dependencies": [],
+    "registryDependencies": [
+      "page-scrollview"
+    ],
+    "files": [
+      {
+        "name": "page-container.tsx",
+        "url": "mobile/nativewind/layout/page-container.tsx",
+        "target": "components/layout/page-container.tsx",
+        "content": "import React, { forwardRef } from \"react\";\r\nimport { View, ViewProps } from \"react-native\";\r\n\r\nimport { PageScrollView } from \"./page-scrollview\";\r\n\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface PageContainerProps extends ViewProps {\r\n    children: React.ReactNode;\r\n    topSpacing?: number;\r\n    extraBottom?: number;\r\n    isScrollable?: boolean;\r\n}\r\n\r\nexport const PageContainer = forwardRef<View, PageContainerProps>(\r\n    (\r\n        {\r\n            children,\r\n            extraBottom = 0,\r\n            topSpacing = 0,\r\n            isScrollable = false,\r\n            className,\r\n            style,\r\n            ...props\r\n        },\r\n        ref,\r\n    ) => {\r\n        return (\r\n            <View\r\n                ref={ref}\r\n                className={cn(\"flex-1 px-5 bg-background\", className)}\r\n                style={[\r\n                    { paddingTop: topSpacing, paddingBottom: extraBottom },\r\n                    style,\r\n                ]}\r\n                {...props}\r\n            >\r\n                {isScrollable ? (\r\n                    <PageScrollView>{children}</PageScrollView>\r\n                ) : (\r\n                    children\r\n                )}\r\n            </View>\r\n        );\r\n    },\r\n);\r\nPageContainer.displayName = \"PageContainer\";\r\n"
+      }
+    ]
+  },
+  {
+    "name": "page-scrollview",
+    "category": "layout",
+    "dependencies": [],
+    "registryDependencies": [],
+    "files": [
+      {
+        "name": "page-scrollview.tsx",
+        "url": "mobile/nativewind/layout/page-scrollview.tsx",
+        "target": "components/layout/page-scrollview.tsx",
+        "content": "import React, { forwardRef } from \"react\";\r\nimport { ScrollView, ScrollViewProps } from \"react-native\";\r\n\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface PageScrollViewProps extends ScrollViewProps {\r\n    children: React.ReactNode;\r\n    nestedScroll?: boolean;\r\n}\r\n\r\nexport const PageScrollView = forwardRef<ScrollView, PageScrollViewProps>(\r\n    (\r\n        { children, nestedScroll, className, contentContainerStyle, ...props },\r\n        ref,\r\n    ) => {\r\n        return (\r\n            <ScrollView\r\n                ref={ref}\r\n                className={cn(\"flex-1\", className)}\r\n                contentContainerStyle={[\r\n                    { flexGrow: 1, paddingTop: 10, paddingBottom: 20 },\r\n                    contentContainerStyle,\r\n                ]}\r\n                showsVerticalScrollIndicator={false}\r\n                nestedScrollEnabled={nestedScroll}\r\n                contentInsetAdjustmentBehavior={\r\n                    nestedScroll ? \"automatic\" : \"never\"\r\n                }\r\n                keyboardShouldPersistTaps=\"handled\"\r\n                keyboardDismissMode=\"interactive\"\r\n                {...props}\r\n            >\r\n                {children}\r\n            </ScrollView>\r\n        );\r\n    },\r\n);\r\nPageScrollView.displayName = \"PageScrollView\";\r\n"
       }
     ]
   },
@@ -161,6 +307,23 @@
         "url": "mobile/nativewind/ui/search-bar.tsx",
         "target": "components/ui/search-bar.tsx",
         "content": "import React, { forwardRef } from \"react\";\r\nimport {\r\n    View,\r\n    TextInput,\r\n    TouchableOpacity,\r\n    TextInputProps,\r\n} from \"react-native\";\r\n\r\nimport { DynamicIcon } from \"@/components/custom/dynamic-icon\";\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface SearchBarProps extends TextInputProps {\r\n    onFilterPress?: () => void;\r\n    containerClassName?: string; // Allows overriding the outer wrapper\r\n}\r\n\r\nexport const SearchBar = forwardRef<TextInput, SearchBarProps>(\r\n    (\r\n        {\r\n            value,\r\n            onChangeText,\r\n            onFilterPress,\r\n            containerClassName,\r\n            placeholder = \"Search...\",\r\n            className,\r\n            ...props\r\n        },\r\n        ref,\r\n    ) => {\r\n        return (\r\n            <View\r\n                className={cn(\r\n                    \"flex-row items-center bg-surface-muted rounded-2xl px-4 py-1 border-[0.5px] border-border\",\r\n                    containerClassName,\r\n                )}\r\n            >\r\n                <DynamicIcon\r\n                    name=\"Search\"\r\n                    size={20}\r\n                    className=\"text-foreground-muted mr-3\"\r\n                />\r\n\r\n                <TextInput\r\n                    ref={ref}\r\n                    value={value}\r\n                    onChangeText={onChangeText}\r\n                    placeholder={placeholder}\r\n                    placeholderTextColor=\"#94a3b8\"\r\n                    className={cn(\r\n                        \"flex-1 text-sm font-medium text-foreground\",\r\n                        className,\r\n                    )}\r\n                    {...props}\r\n                />\r\n\r\n                {/* Auto-render Clear button if there is text */}\r\n                {!!value && value.length > 0 && (\r\n                    <TouchableOpacity\r\n                        onPress={() => onChangeText?.(\"\")}\r\n                        hitSlop={10}\r\n                        className=\"ml-2\"\r\n                    >\r\n                        <DynamicIcon\r\n                            name=\"XCircle\"\r\n                            size={18}\r\n                            className=\"text-foreground-muted\"\r\n                        />\r\n                    </TouchableOpacity>\r\n                )}\r\n\r\n                {/* Auto-render Filter button & Divider if onFilterPress is provided */}\r\n                {onFilterPress && (\r\n                    <>\r\n                        <View className=\"w-[1px] h-6 bg-border mx-3\" />\r\n                        <TouchableOpacity onPress={onFilterPress} hitSlop={10}>\r\n                            <DynamicIcon\r\n                                name=\"SlidersHorizontal\"\r\n                                size={20}\r\n                                className=\"text-foreground\"\r\n                            />\r\n                        </TouchableOpacity>\r\n                    </>\r\n                )}\r\n            </View>\r\n        );\r\n    },\r\n);\r\nSearchBar.displayName = \"SearchBar\";\r\n"
+      }
+    ]
+  },
+  {
+    "name": "section-card",
+    "category": "card",
+    "dependencies": [],
+    "registryDependencies": [
+      "dynamic-icon",
+      "toggle-switch"
+    ],
+    "files": [
+      {
+        "name": "section-card.tsx",
+        "url": "mobile/nativewind/cards/section-card.tsx",
+        "target": "components/cards/section-card.tsx",
+        "content": "import React from \"react\";\r\nimport { View, Text, TouchableOpacity } from \"react-native\";\r\n\r\nimport { DynamicIcon } from \"@/components/custom/dynamic-icon\";\r\nimport { ToggleSwitch } from \"@/components/ui/toggle-switch\";\r\n\r\nimport { cn, type IconName } from \"@/lib/utils\";\r\n\r\nexport interface SectionCardProps {\r\n    title?: string;\r\n    children: React.ReactNode;\r\n    className?: string;\r\n}\r\n\r\nexport function SectionCard({ title, children, className }: SectionCardProps) {\r\n    return (\r\n        <View className={cn(\"mb-6 w-full\", className)}>\r\n            {title && (\r\n                <Text className=\"text-sm font-bold text-primary mb-2 ml-1\">\r\n                    {title}\r\n                </Text>\r\n            )}\r\n            <View className=\"px-4 rounded-2xl border-[0.4px] border-border shadow-sm bg-surface overflow-hidden\">\r\n                {children}\r\n            </View>\r\n        </View>\r\n    );\r\n}\r\n\r\nexport interface SectionRowProps {\r\n    icon: IconName | string;\r\n    title: string;\r\n    subtitle?: string;\r\n    titlePosition?: \"top\" | \"bottom\";\r\n    onPress?: () => void;\r\n    disabled?: boolean;\r\n    type?: \"info\" | \"navigate\" | \"toggle\" | \"custom\";\r\n    toggleValue?: boolean;\r\n    onToggle?: (val: boolean) => void;\r\n    rightElement?: React.ReactNode;\r\n    isLast?: boolean;\r\n    customToggleIcons?: { iconOn?: IconName; iconOff?: IconName };\r\n}\r\n\r\nexport const SectionRow = ({\r\n    icon,\r\n    title,\r\n    subtitle,\r\n    titlePosition = \"bottom\",\r\n    onPress,\r\n    disabled = false,\r\n    type = \"info\",\r\n    toggleValue,\r\n    onToggle,\r\n    rightElement,\r\n    isLast = false,\r\n    customToggleIcons,\r\n}: SectionRowProps) => {\r\n    const isClickable = (type === \"navigate\" || onPress) && type !== \"toggle\";\r\n\r\n    const RowContent = (\r\n        <View\r\n            className={cn(\r\n                \"flex-row items-center justify-between py-2.5\",\r\n                disabled && \"opacity-50\",\r\n            )}\r\n        >\r\n            <View className=\"w-11 h-11 items-center justify-center mr-4 rounded-xl bg-primary/10\">\r\n                <DynamicIcon\r\n                    name={icon as string}\r\n                    size={20}\r\n                    className=\"text-primary\"\r\n                />\r\n            </View>\r\n\r\n            <View className=\"flex-1 justify-center\">\r\n                {titlePosition === \"top\" ? (\r\n                    <>\r\n                        <Text className=\"text-[10px] font-medium text-slate-400 mb-0.5\">\r\n                            {title}\r\n                        </Text>\r\n                        {subtitle && (\r\n                            <Text className=\"text-sm font-bold text-foreground-muted\">\r\n                                {subtitle}\r\n                            </Text>\r\n                        )}\r\n                    </>\r\n                ) : (\r\n                    <>\r\n                        <Text className=\"text-[14px] font-bold text-foreground mb-0.5\">\r\n                            {title}\r\n                        </Text>\r\n                        {subtitle && (\r\n                            <Text className=\"text-xs font-medium text-foreground-muted\">\r\n                                {subtitle}\r\n                            </Text>\r\n                        )}\r\n                    </>\r\n                )}\r\n            </View>\r\n\r\n            <View className=\"ml-2\">\r\n                {type === \"navigate\" && (\r\n                    <DynamicIcon\r\n                        name=\"ChevronRight\"\r\n                        size={20}\r\n                        className=\"text-foreground-muted\"\r\n                    />\r\n                )}\r\n                {type === \"toggle\" && (\r\n                    <ToggleSwitch\r\n                        value={!!toggleValue}\r\n                        onValueChange={(val) => onToggle?.(val)}\r\n                        disabled={disabled}\r\n                        customIcons={customToggleIcons}\r\n                    />\r\n                )}\r\n                {type === \"custom\" && rightElement}\r\n            </View>\r\n        </View>\r\n    );\r\n\r\n    return (\r\n        <View>\r\n            {isClickable ? (\r\n                <TouchableOpacity\r\n                    activeOpacity={0.7}\r\n                    onPress={onPress}\r\n                    disabled={disabled}\r\n                >\r\n                    {RowContent}\r\n                </TouchableOpacity>\r\n            ) : (\r\n                <View>{RowContent}</View>\r\n            )}\r\n            {!isLast && <View className=\"border-b-[0.4px] border-border\" />}\r\n        </View>\r\n    );\r\n};\r\n"
       }
     ]
   },
@@ -250,6 +413,24 @@
         "url": "../shared/lib/utils.ts",
         "target": "lib/utils.ts",
         "content": "import { type ClassValue, clsx } from \"clsx\";\r\nimport { twMerge } from \"tailwind-merge\";\r\nimport * as LucideIcons from \"lucide-react-native\";\r\n\r\nexport function cn(...inputs: ClassValue[]) {\r\n    return twMerge(clsx(inputs));\r\n}\r\n\r\n// Global Icon Type for the component registry\r\nexport type IconName = keyof typeof LucideIcons;\r\n"
+      }
+    ]
+  },
+  {
+    "name": "watermark-grid-card",
+    "category": "cards",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "registryDependencies": [
+      "dynamic-icon"
+    ],
+    "files": [
+      {
+        "name": "watermark-grid-card.tsx",
+        "url": "mobile/nativewind/cards/watermark-grid-card.tsx",
+        "target": "components/cards/watermark-grid-card.tsx",
+        "content": "import React from \"react\";\r\nimport { View, Text, Pressable } from \"react-native\";\r\nimport Animated, {\r\n    withSpring,\r\n    useSharedValue,\r\n    useAnimatedStyle,\r\n} from \"react-native-reanimated\";\r\n\r\nimport { DynamicIcon } from \"@/components/custom/dynamic-icon\";\r\n\r\nimport { cn, type IconName } from \"@/lib/utils\";\r\n\r\nexport interface WatermarkGridCardProps {\r\n    title: string;\r\n    subtitle?: string;\r\n    icon: IconName | string;\r\n    onPress: () => void;\r\n    iconClassName?: string; // Allows passing a specific Tailwind text color\r\n    iconColor?: string; // Allows passing a raw hex color\r\n    className?: string; // Controls the outer wrapper (default w-[48%])\r\n}\r\n\r\nexport function WatermarkGridCard({\r\n    title,\r\n    subtitle,\r\n    icon,\r\n    onPress,\r\n    iconClassName,\r\n    iconColor,\r\n    className,\r\n}: WatermarkGridCardProps) {\r\n    const scale = useSharedValue(1);\r\n\r\n    const animatedStyle = useAnimatedStyle(() => ({\r\n        transform: [{ scale: scale.value }],\r\n    }));\r\n\r\n    return (\r\n        <Animated.View\r\n            style={animatedStyle}\r\n            className={cn(\"w-[48%] mb-4\", className)}\r\n        >\r\n            <Pressable\r\n                onPressIn={() => (scale.value = withSpring(0.94))}\r\n                onPressOut={() => (scale.value = withSpring(1))}\r\n                onPress={onPress}\r\n                className=\"w-full h-40 bg-surface border border-border rounded-3xl p-4 overflow-hidden justify-between relative shadow-sm\"\r\n            >\r\n                {/* THE ABSTRACT TILTED WATERMARK */}\r\n                <View\r\n                    className=\"absolute -right-2 -bottom-2 opacity-10\"\r\n                    style={{ transform: [{ rotate: \"-15deg\" }] }}\r\n                >\r\n                    <DynamicIcon\r\n                        name={icon as string}\r\n                        size={50}\r\n                        className=\"text-primary\"\r\n                    />\r\n                </View>\r\n\r\n                {/* CARD CONTENT */}\r\n                <View className=\"w-16 h-16 rounded-full items-center justify-center border-[0.5px] border-border bg-background\">\r\n                    <DynamicIcon\r\n                        name={icon as string}\r\n                        size={30}\r\n                        className={iconClassName}\r\n                        color={iconColor}\r\n                    />\r\n                </View>\r\n\r\n                <View>\r\n                    {subtitle && (\r\n                        <Text className=\"text-[10px] font-medium text-foreground-muted uppercase\">\r\n                            {subtitle}\r\n                        </Text>\r\n                    )}\r\n                    <Text className=\"text-base font-bold text-foreground\">\r\n                        {title}\r\n                    </Text>\r\n                </View>\r\n            </Pressable>\r\n        </Animated.View>\r\n    );\r\n}\r\n"
       }
     ]
   },
