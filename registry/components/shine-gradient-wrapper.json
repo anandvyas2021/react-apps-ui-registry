@@ -1,0 +1,28 @@
+{
+    "name": "shine-gradient-wrapper",
+    "category": "layout",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": ["expo-linear-gradient", "react-native-reanimated"],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "shine-gradient-wrapper.tsx",
+                    "url": "mobile/nativewind/layout/shine-gradient-wrapper.tsx",
+                    "target": "components/layout/shine-gradient-wrapper.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": ["expo-linear-gradient", "react-native-reanimated"],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "shine-gradient-wrapper.tsx",
+                    "url": "mobile/stylesheet/layout/shine-gradient-wrapper.tsx",
+                    "target": "components/layout/shine-gradient-wrapper.tsx"
+                }
+            ]
+        }
+    }
+}

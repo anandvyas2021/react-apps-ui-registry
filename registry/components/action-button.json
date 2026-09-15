@@ -4,7 +4,11 @@
     "engines": {
         "mobile-nativewind": {
             "dependencies": [],
-            "registryDependencies": ["wave-dots-loader", "dynamic-icon"],
+            "registryDependencies": [
+                "wave-dots-loader",
+                "dynamic-icon",
+                "shine-gradient-wrapper"
+            ],
             "files": [
                 {
                     "name": "action-button.tsx",
@@ -15,7 +19,11 @@
         },
         "mobile-stylesheet": {
             "dependencies": [],
-            "registryDependencies": ["wave-dots-loader", "dynamic-icon"],
+            "registryDependencies": [
+                "wave-dots-loader",
+                "dynamic-icon",
+                "shine-gradient-wrapper"
+            ],
             "files": [
                 {
                     "name": "action-button.tsx",
