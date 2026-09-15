@@ -18,6 +18,7 @@ export interface ShineGradientWrapperProps {
     className?: string;
     style?: ViewStyle;
     isShining?: boolean;
+    hasGradient?: boolean;
 }
 
 export function ShineGradientWrapper({
@@ -26,6 +27,7 @@ export function ShineGradientWrapper({
     className,
     style,
     isShining = true,
+    hasGradient = false,
 }: ShineGradientWrapperProps) {
     const shimmerPosition = useSharedValue(-300);
 
@@ -57,35 +59,37 @@ export function ShineGradientWrapper({
             style={style}
         >
             <LinearGradient
-                colors={colors}
-                pointerEvents="none"
-                style={StyleSheet.absoluteFillObject}
-            />
+                colors={hasGradient ? colors : ["transparent", "transparent"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={{ width: "100%", justifyContent: "center" }}
+            >
+                {isShining && (
+                    <Animated.View
+                        style={[StyleSheet.absoluteFill, shimmerStyle]}
+                        pointerEvents="none"
+                    >
+                        <LinearGradient
+                            colors={[
+                                "rgba(255,255,255,0)",
+                                "rgba(255,255,255,0.4)",
+                                "rgba(255,255,255,0)",
+                            ]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}
+                            style={[
+                                StyleSheet.absoluteFill,
+                                {
+                                    width: 150,
+                                    transform: [{ skewX: "-20deg" }],
+                                },
+                            ]}
+                        />
+                    </Animated.View>
+                )}
 
-            {isShining && (
-                <Animated.View
-                    style={[StyleSheet.absoluteFillObject, shimmerStyle]}
-                    pointerEvents="none"
-                >
-                    <LinearGradient
-                        colors={[
-                            "rgba(255,255,255,0)",
-                            "rgba(255,255,255,0.4)",
-                            "rgba(255,255,255,0)",
-                        ]}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                        style={[
-                            StyleSheet.absoluteFillObject,
-                            { width: 150, transform: [{ skewX: "-20deg" }] },
-                        ]}
-                    />
-                </Animated.View>
-            )}
-
-            <View className="z-10 w-full h-full justify-center">
-                {children}
-            </View>
+                <View className="z-10 w-full justify-center">{children}</View>
+            </LinearGradient>
         </View>
     );
 }

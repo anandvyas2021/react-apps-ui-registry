@@ -55,9 +55,8 @@ export interface ActionButtonProps extends VariantProps<typeof buttonVariants> {
     onPress?: () => void;
     className?: string;
     textClassName?: string;
-    withShine?: boolean;
-    shineColors?: [string, string, ...string[]];
-    roundness: "default";
+    hasGradient?: boolean;
+    GradientColors?: [string, string, ...string[]];
 }
 
 export const ActionButton = React.forwardRef<
@@ -76,13 +75,15 @@ export const ActionButton = React.forwardRef<
             className,
             textClassName,
             withShine = false,
-            shineColors = ["#3B82F6", "#2563EB", "#1E3A8A"],
+            hasGradient = false,
+            GradientColors = ["#8870e6", "#5f84e0", "#5f84e0"],
             roundness = "default",
             ...props
         },
         ref,
     ) => {
         const isDisabled = disabled || isLoading;
+        const isWrapped = (withShine || hasGradient) && !isDisabled;
 
         const buttonContent = (
             <TouchableOpacity
@@ -94,8 +95,9 @@ export const ActionButton = React.forwardRef<
                     buttonVariants({ variant, disabled: isDisabled }),
                     className,
                     isLoading ? "opacity-80" : "",
-                    withShine && !isDisabled
-                        ? "bg-transparent shadow-none border-transparent mb-0"
+                    isWrapped ? "mb-0" : "",
+                    hasGradient && !isDisabled
+                        ? "bg-transparent shadow-none border-transparent"
                         : "",
                 )}
                 {...props}
@@ -143,11 +145,10 @@ export const ActionButton = React.forwardRef<
             </TouchableOpacity>
         );
 
-        if (withShine && !isDisabled) {
+        if (isWrapped) {
             return (
                 <ShineGradientWrapper
-                    colors={shineColors}
-                    // Pass the border-radius, width, and margin to the wrapper so it fits perfectly
+                    colors={GradientColors}
                     className={cn(
                         "w-full rounded-full mb-3",
                         roundness === "full"
@@ -159,6 +160,8 @@ export const ActionButton = React.forwardRef<
                                 : "rounded-2xl",
                         className,
                     )}
+                    isShining={withShine}
+                    hasGradient={hasGradient}
                 >
                     {buttonContent}
                 </ShineGradientWrapper>

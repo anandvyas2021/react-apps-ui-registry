@@ -26,7 +26,8 @@ export interface ActionButtonProps {
     style?: ViewStyle;
     textStyle?: TextStyle;
     withShine?: boolean;
-    shineColors?: [string, string, ...string[]];
+    hasGradient?: boolean;
+    gradientColors?: [string, string, ...string[]];
     roundness?: "default" | "full" | "sm" | "none";
 }
 
@@ -46,7 +47,8 @@ export const ActionButton = forwardRef<
             style,
             textStyle,
             withShine = false,
-            shineColors = ["#3B82F6", "#2563EB", "#1E3A8A"],
+            hasGradient = false,
+            gradientColors = ["#3B82F6", "#2563EB", "#1E3A8A"],
             roundness = "default",
             ...props
         },
@@ -56,6 +58,8 @@ export const ActionButton = forwardRef<
         const styles = useMemo(() => createStyles(theme), [theme]);
 
         const isDisabled = disabled || isLoading;
+        const isWrapped = (withShine || hasGradient) && !isDisabled;
+
         const radiusMap = {
             default: 16,
             full: 9999,
@@ -72,7 +76,8 @@ export const ActionButton = forwardRef<
                 : styles.secondaryButton,
             isDisabled && styles.disabledButton,
             isLoading && styles.loadingButton,
-            withShine && !isDisabled && styles.shineOverride,
+            isWrapped && styles.wrappedOverride,
+            hasGradient && !isDisabled && styles.gradientOverride,
             style,
         ];
 
@@ -83,7 +88,6 @@ export const ActionButton = forwardRef<
             textStyle,
         ];
 
-        // We derive color from the flattened text style array for the icon
         const activeColor = isDisabled
             ? theme.foregroundMuted
             : variant === "primary"
@@ -95,6 +99,7 @@ export const ActionButton = forwardRef<
                 ref={ref}
                 activeOpacity={0.8}
                 disabled={isDisabled}
+                onPress={onPress}
                 style={buttonStyles}
                 {...props}
             >
@@ -125,12 +130,10 @@ export const ActionButton = forwardRef<
         if (withShine && !isDisabled) {
             return (
                 <ShineGradientWrapper
-                    colors={shineColors}
-                    style={[
-                        styles.shineWrapper,
-                        { borderRadius: activeRadius },
-                        style,
-                    ]}
+                    colors={gradientColors}
+                    isShining={withShine}
+                    hasGradient={hasGradient}
+                    style={[styles.wrapper, { borderRadius: activeRadius }]}
                 >
                     {buttonContent}
                 </ShineGradientWrapper>
@@ -177,14 +180,16 @@ const createStyles = (theme: ThemeTokens) =>
         loadingButton: {
             opacity: 0.8,
         },
-        shineOverride: {
+        wrappedOverride: {
+            marginBottom: 0,
+        },
+        gradientOverride: {
             backgroundColor: "transparent",
             borderColor: "transparent",
             elevation: 0,
             shadowOpacity: 0,
-            marginBottom: 0,
         },
-        shineWrapper: {
+        wrapper: {
             width: "100%",
             marginBottom: 12,
         },

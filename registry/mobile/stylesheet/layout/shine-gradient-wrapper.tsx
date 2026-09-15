@@ -15,13 +15,15 @@ export interface ShineGradientWrapperProps {
     children: React.ReactNode;
     style?: ViewStyle;
     isShining?: boolean;
+    hasGradient?: boolean;
 }
 
 export function ShineGradientWrapper({
     colors,
     children,
     style,
-    isShining = true,
+    isShining = false,
+    hasGradient = false,
 }: ShineGradientWrapperProps) {
     const styles = useMemo(() => createStyles(), []);
     const shimmerPosition = useSharedValue(-300);
@@ -51,33 +53,34 @@ export function ShineGradientWrapper({
     return (
         <View style={[styles.container, style]}>
             <LinearGradient
-                colors={colors}
-                pointerEvents="none"
-                style={StyleSheet.absoluteFillObject}
-            />
+                colors={hasGradient ? colors : ["transparent", "transparent"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.gradientContainer}
+            >
+                {isShining && (
+                    <Animated.View
+                        style={[StyleSheet.absoluteFill, shimmerStyle]}
+                        pointerEvents="none"
+                    >
+                        <LinearGradient
+                            colors={[
+                                "rgba(255,255,255,0)",
+                                "rgba(255,255,255,0.4)",
+                                "rgba(255,255,255,0)",
+                            ]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}
+                            style={[
+                                StyleSheet.absoluteFill,
+                                styles.shimmerGradient,
+                            ]}
+                        />
+                    </Animated.View>
+                )}
 
-            {isShining && (
-                <Animated.View
-                    style={[StyleSheet.absoluteFillObject, shimmerStyle]}
-                    pointerEvents="none"
-                >
-                    <LinearGradient
-                        colors={[
-                            "rgba(255,255,255,0)",
-                            "rgba(255,255,255,0.4)",
-                            "rgba(255,255,255,0)",
-                        ]}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                        style={[
-                            StyleSheet.absoluteFillObject,
-                            styles.shimmerGradient,
-                        ]}
-                    />
-                </Animated.View>
-            )}
-
-            <View style={styles.content}>{children}</View>
+                <View style={styles.content}>{children}</View>
+            </LinearGradient>
         </View>
     );
 }
@@ -88,6 +91,10 @@ const createStyles = () =>
             overflow: "hidden",
             position: "relative",
         },
+        gradientContainer: {
+            width: "100%",
+            justifyContent: "center",
+        },
         shimmerGradient: {
             width: 150,
             transform: [{ skewX: "-20deg" }],
@@ -95,7 +102,6 @@ const createStyles = () =>
         content: {
             zIndex: 10,
             width: "100%",
-            height: "100%",
             justifyContent: "center",
         },
     });
