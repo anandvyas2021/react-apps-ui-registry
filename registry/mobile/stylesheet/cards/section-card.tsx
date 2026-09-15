@@ -72,7 +72,7 @@ export const SectionRow = ({
                 <DynamicIcon
                     name={icon as string}
                     size={20}
-                    color={theme.primary}
+                    className="text-white"
                 />
             </View>
 
@@ -151,8 +151,8 @@ const createStyles1 = (theme: ThemeTokens) =>
         },
         card: {
             paddingHorizontal: 16,
-            borderRadius: 16,
-            borderWidth: 0.4,
+            borderRadius: 36,
+            borderWidth: 0.8,
             borderColor: theme.border,
             backgroundColor: theme.surface,
             overflow: "hidden",
@@ -164,13 +164,14 @@ const createStyles1 = (theme: ThemeTokens) =>
         },
     });
 
+// styles for section-card row
 const createStyles2 = (theme: ThemeTokens) =>
     StyleSheet.create({
         row: {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
-            paddingVertical: 10,
+            paddingVertical: 14,
         },
         disabled: {
             opacity: 0.5,
@@ -181,8 +182,8 @@ const createStyles2 = (theme: ThemeTokens) =>
             alignItems: "center",
             justifyContent: "center",
             marginRight: 16,
-            borderRadius: 12,
-            backgroundColor: theme.primaryLighter,
+            borderRadius: "100%",
+            backgroundColor: theme.primary,
         },
         textContainer: {
             flex: 1,
@@ -200,8 +201,8 @@ const createStyles2 = (theme: ThemeTokens) =>
             color: theme.foreground,
         },
         bottomTitle: {
-            fontSize: 14,
-            fontWeight: "700",
+            fontSize: 12,
+            fontWeight: 600,
             color: theme.foreground,
             marginBottom: 2,
         },
@@ -214,9 +215,9 @@ const createStyles2 = (theme: ThemeTokens) =>
             marginLeft: 8,
         },
         separator: {
-            borderBottomWidth: 0.4,
+            width: "85%",
+            alignSelf: "flex-end",
+            borderBottomWidth: 0.8,
             borderColor: theme.border,
         },
     });
-
-// styles for section-card row

@@ -135,7 +135,7 @@ export const ToggleSwitch = forwardRef<
                         thumbAnimatedStyle,
                         { width: dimensions.thumb, height: dimensions.thumb },
                     ]}
-                    className="bg-white rounded-full items-center justify-center shadow-sm"
+                    className="bg-white rounded-full items-center justify-center"
                 >
                     {value ? (
                         <DynamicIcon
