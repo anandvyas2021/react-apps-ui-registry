@@ -192,6 +192,22 @@
     ]
   },
   {
+    "name": "keyboard-wrapper",
+    "category": "layout",
+    "dependencies": [],
+    "registryDependencies": [
+      "page-scrollview"
+    ],
+    "files": [
+      {
+        "name": "keyboard-wrapper.tsx",
+        "url": "mobile/stylesheet/layout/keyboard-wrapper.tsx",
+        "target": "components/layout/keyboard-wrapper.tsx",
+        "content": "import React, { forwardRef, useMemo } from \"react\";\r\nimport {\r\n    View,\r\n    Platform,\r\n    Keyboard,\r\n    KeyboardAvoidingView,\r\n    TouchableWithoutFeedback,\r\n    StyleSheet,\r\n    ViewStyle,\r\n} from \"react-native\";\r\n\r\nimport { PageScrollView } from \"./page-scrollview\";\r\n\r\nimport { useTheme } from \"@/theme/ThemeProvider\";\r\nimport type { ThemeTokens } from \"@/theme/tokens\";\r\n\r\nexport interface KeyboardWrapperProps {\r\n    children: React.ReactNode;\r\n    style?: ViewStyle;\r\n    contentContainerStyle?: ViewStyle;\r\n    keyboardOffset?: number;\r\n    behavior?: \"padding\" | \"height\" | \"position\";\r\n    dismissKeyboardOnTap?: boolean;\r\n    scrollable?: boolean;\r\n}\r\n\r\nexport const KeyboardWrapper = forwardRef<View, KeyboardWrapperProps>(\r\n    (\r\n        {\r\n            children,\r\n            style,\r\n            contentContainerStyle,\r\n            keyboardOffset = Platform.OS === \"ios\" ? 10 : 0,\r\n            behavior = Platform.OS === \"ios\" ? \"padding\" : undefined,\r\n            dismissKeyboardOnTap = true,\r\n            scrollable = true,\r\n        },\r\n        ref,\r\n    ) => {\r\n        const theme = useTheme();\r\n        const styles = useMemo(() => createStyles(theme), [theme]);\r\n\r\n        return (\r\n            <KeyboardAvoidingView\r\n                ref={ref}\r\n                style={[styles.container, style]}\r\n                behavior={behavior}\r\n                keyboardVerticalOffset={keyboardOffset}\r\n            >\r\n                {scrollable ? (\r\n                    <PageScrollView\r\n                        contentContainerStyle={contentContainerStyle}\r\n                        keyboardDismissMode={\r\n                            dismissKeyboardOnTap ? \"interactive\" : \"none\"\r\n                        }\r\n                    >\r\n                        {children}\r\n                    </PageScrollView>\r\n                ) : (\r\n                    <TouchableWithoutFeedback\r\n                        onPress={\r\n                            dismissKeyboardOnTap ? Keyboard.dismiss : undefined\r\n                        }\r\n                        accessible={false}\r\n                    >\r\n                        <View style={styles.inner}>{children}</View>\r\n                    </TouchableWithoutFeedback>\r\n                )}\r\n            </KeyboardAvoidingView>\r\n        );\r\n    },\r\n);\r\nKeyboardWrapper.displayName = \"KeyboardWrapper\";\r\n\r\nconst createStyles = (theme: ThemeTokens) =>\r\n    StyleSheet.create({\r\n        container: {\r\n            flex: 1,\r\n            backgroundColor: theme.background,\r\n        },\r\n        inner: {\r\n            flex: 1,\r\n        },\r\n    });\r\n"
+      }
+    ]
+  },
+  {
     "name": "main-wrapper",
     "category": "layout",
     "dependencies": [

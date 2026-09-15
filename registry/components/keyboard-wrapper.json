@@ -1,0 +1,28 @@
+{
+    "name": "keyboard-wrapper",
+    "category": "layout",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": ["page-scrollview"],
+            "files": [
+                {
+                    "name": "keyboard-wrapper.tsx",
+                    "url": "mobile/nativewind/layout/keyboard-wrapper.tsx",
+                    "target": "components/layout/keyboard-wrapper.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": ["page-scrollview"],
+            "files": [
+                {
+                    "name": "keyboard-wrapper.tsx",
+                    "url": "mobile/stylesheet/layout/keyboard-wrapper.tsx",
+                    "target": "components/layout/keyboard-wrapper.tsx"
+                }
+            ]
+        }
+    }
+}
