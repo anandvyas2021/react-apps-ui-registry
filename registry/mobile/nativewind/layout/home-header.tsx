@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity, ViewProps } from "react-native";
+import { useEffect } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import Animated, {
     Easing,
     withRepeat,
@@ -8,7 +8,6 @@ import Animated, {
     useSharedValue,
     useAnimatedStyle,
 } from "react-native-reanimated";
-import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { DynamicIcon } from "@/components/custom/dynamic-icon";
@@ -19,21 +18,18 @@ export interface HomeHeaderProps {
     inMainWrapper?: boolean;
     title?: string;
     hasNotifications?: boolean;
-    onNotificationPress?: () => void;
-    onProfilePress?: () => void;
-    className: string;
+    onItemPress?: (route: string) => void;
+    className?: string;
 }
 
 export function HomeHeader({
     inMainWrapper = true,
     title = "App Name",
     hasNotifications = true,
-    onNotificationPress,
-    onProfilePress,
+    onItemPress,
     className,
     ...props
 }: HomeHeaderProps) {
-    const router = useRouter();
     const insets = useSafeAreaInsets();
     const dotOpacity = useSharedValue(0.3);
 
@@ -71,7 +67,7 @@ export function HomeHeader({
             <View className="w-full flex-row items-center justify-between">
                 {/* Logo & Name */}
                 <View className="flex-row items-center gap-2">
-                    <View className="w-12 h-12 items-center justify-center rounded-2xl shadow-sm bg-primary">
+                    <View className="size-11 items-center justify-center pl-3 rounded-2xl shadow-sm bg-primary">
                         <DynamicIcon
                             name="Hexagon"
                             size={24}
@@ -87,11 +83,7 @@ export function HomeHeader({
                 <View className="flex-row items-center gap-3">
                     <TouchableOpacity
                         activeOpacity={0.9}
-                        onPress={() =>
-                            onNotificationPress
-                                ? onNotificationPress()
-                                : router.push("/notifications")
-                        }
+                        onPress={() => onItemPress("/notifications")}
                         className="p-2 items-center justify-center rounded-xl border-[0.5px] border-primary bg-background"
                     >
                         <DynamicIcon
@@ -110,11 +102,7 @@ export function HomeHeader({
 
                     <TouchableOpacity
                         activeOpacity={0.8}
-                        onPress={() =>
-                            onProfilePress
-                                ? onProfilePress()
-                                : router.push("/profile")
-                        }
+                        onPress={() => onItemPress("/profile")}
                         className="p-2 items-center justify-center rounded-xl border-[0.5px] border-primary bg-background"
                     >
                         <DynamicIcon

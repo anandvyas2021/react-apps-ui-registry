@@ -3,7 +3,7 @@
     "category": "layout",
     "engines": {
         "mobile-nativewind": {
-            "dependencies": ["react-native-safe-area-context"],
+            "dependencies": ["expo-router", "react-native-safe-area-context"],
             "registryDependencies": ["navigator-header", "home-header"],
             "files": [
                 {
@@ -14,7 +14,7 @@
             ]
         },
         "mobile-stylesheet": {
-            "dependencies": ["react-native-safe-area-context"],
+            "dependencies": ["expo-router", "react-native-safe-area-context"],
             "registryDependencies": ["navigator-header", "home-header"],
             "files": [
                 {

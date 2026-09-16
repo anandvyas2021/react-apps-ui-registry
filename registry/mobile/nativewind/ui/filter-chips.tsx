@@ -28,18 +28,16 @@ export function FilterChips({
                         onPress={() => onFilterChange(filter?.value)}
                         activeOpacity={0.7}
                         className={cn(
-                            "px-4 py-3 rounded-2xl border-[1.3px]",
+                            "px-4 py-2.5 rounded-[18px] border-[1.3px]",
                             isActive
-                                ? "border-primary bg-primary"
-                                : "bg-transparent border-primary",
+                                ? "border-primary bg-primary-lighter"
+                                : "border-transparent bg-surface-muted ",
                         )}
                     >
                         <Text
                             className={cn(
-                                "text-xs font-black",
-                                isActive
-                                    ? "text-primary-foreground"
-                                    : "text-foreground",
+                                "text-xs font-semibold",
+                                isActive ? "text-primary" : "text-foreground",
                             )}
                         >
                             {filter?.label}

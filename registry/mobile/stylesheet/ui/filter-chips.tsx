@@ -57,23 +57,24 @@ const createStyles = (theme: ThemeTokens) =>
     StyleSheet.create({
         chip: {
             paddingHorizontal: 16,
-            paddingVertical: 12,
-            borderRadius: 16,
+            paddingVertical: 10,
+            borderRadius: 18,
             borderWidth: 1.3,
-            borderColor: theme.primary,
         },
         chipActive: {
-            backgroundColor: theme.primary,
+            borderColor: theme.primary,
+            backgroundColor: theme.primaryLighter,
         },
         chipInactive: {
-            backgroundColor: "transparent",
+            borderColor: "transparent",
+            backgroundColor: theme.surfaceMuted,
         },
         text: {
             fontSize: 12,
-            fontWeight: "900",
+            fontWeight: "600",
         },
         textActive: {
-            color: theme.primaryForeground,
+            color: theme.primary,
         },
         textInactive: {
             color: theme.foreground,

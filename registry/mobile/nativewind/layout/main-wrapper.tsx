@@ -1,5 +1,6 @@
 import React from "react";
 import { View, ViewProps } from "react-native";
+import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { HomeHeader } from "./home-header";
@@ -15,6 +16,9 @@ export interface MainWrapperProps extends ViewProps {
     topSpacing?: boolean;
     className?: string;
     fullScreen?: boolean;
+    navigatorOptions?: {
+        rightBlock?: [{ name?: string; onPress?: () => void; icon?: string }];
+    };
 }
 
 export function MainWrapper({
@@ -25,10 +29,17 @@ export function MainWrapper({
     topSpacing,
     className,
     fullScreen = false,
+    navigatorOptions,
     ...props
 }: MainWrapperProps) {
+    const router = useRouter();
     const insets = useSafeAreaInsets();
-    const safeBottomPadding = Math.max(insets.bottom, 10);
+
+    const safeBottomPadding = Math.min(insets.bottom, 10);
+
+    const handleHomeHeaderRedirects = (route: string) => {
+        router.push(route);
+    };
 
     return (
         <View
@@ -38,21 +49,30 @@ export function MainWrapper({
                     ? 0
                     : topSpacing
                       ? insets.top + 30
-                      : insets.top + 16,
+                      : insets.top + 10,
                 paddingBottom: fullScreen ? 0 : safeBottomPadding,
             }}
             {...props}
         >
             <View className="flex-1">
                 {homeHeader ? (
-                    <HomeHeader inMainWrapper />
+                    <HomeHeader
+                        inMainWrapper
+                        title="Zudhan"
+                        onItemPress={handleHomeHeaderRedirects}
+                    />
                 ) : navigatorHeader ? (
-                    <NavigatorHeader title={heading ?? ""} inMainWrapper />
+                    <NavigatorHeader
+                        title={heading ?? ""}
+                        inMainWrapper
+                        navigatorOptions={navigatorOptions}
+                    />
                 ) : heading ? (
                     <NavigatorHeader
                         title={heading ?? ""}
                         inMainWrapper
                         haveBackButton={false}
+                        navigatorOptions={navigatorOptions}
                     />
                 ) : null}
 

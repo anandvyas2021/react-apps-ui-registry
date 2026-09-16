@@ -55,6 +55,7 @@ export interface ActionButtonProps extends VariantProps<typeof buttonVariants> {
     onPress?: () => void;
     className?: string;
     textClassName?: string;
+    withShine?: boolean;
     hasGradient?: boolean;
     GradientColors?: [string, string, ...string[]];
 }
@@ -92,7 +93,11 @@ export const ActionButton = React.forwardRef<
                 disabled={isDisabled}
                 onPress={onPress}
                 className={cn(
-                    buttonVariants({ variant, disabled: isDisabled }),
+                    buttonVariants({
+                        variant,
+                        disabled: isDisabled,
+                        roundness,
+                    }),
                     className,
                     isLoading ? "opacity-80" : "",
                     isWrapped ? "mb-0" : "",

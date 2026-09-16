@@ -1,11 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    ViewProps,
-    StyleSheet,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Animated, {
     Easing,
     withRepeat,
@@ -14,7 +8,6 @@ import Animated, {
     useSharedValue,
     useAnimatedStyle,
 } from "react-native-reanimated";
-import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { DynamicIcon } from "@/components/custom/dynamic-icon";
@@ -22,24 +15,21 @@ import { DynamicIcon } from "@/components/custom/dynamic-icon";
 import { useTheme } from "@/theme/ThemeProvider";
 import type { ThemeTokens } from "@/theme/tokens";
 
-export interface HomeHeaderProps extends ViewProps {
+export interface HomeHeaderProps {
     inMainWrapper?: boolean;
     title?: string;
     hasNotifications?: boolean;
-    onNotificationPress?: () => void;
-    onProfilePress?: () => void;
+    onItemPress?: (route: string) => void;
 }
 
 export function HomeHeader({
     inMainWrapper = true,
     title = "App Name",
     hasNotifications = true,
-    onNotificationPress,
-    onProfilePress,
+    onItemPress,
     style,
     ...props
 }: HomeHeaderProps) {
-    const router = useRouter();
     const insets = useSafeAreaInsets();
     const theme = useTheme();
     const styles = useMemo(() => createStyles(theme), [theme]);
@@ -97,11 +87,7 @@ export function HomeHeader({
                 <View style={styles.actionsGroup}>
                     <TouchableOpacity
                         activeOpacity={0.9}
-                        onPress={() =>
-                            onNotificationPress
-                                ? onNotificationPress()
-                                : router.push("/notifications")
-                        }
+                        onPress={() => onItemPress("/notifications")}
                         style={styles.actionButton}
                     >
                         <DynamicIcon
@@ -116,11 +102,7 @@ export function HomeHeader({
 
                     <TouchableOpacity
                         activeOpacity={0.8}
-                        onPress={() =>
-                            onProfilePress
-                                ? onProfilePress()
-                                : router.push("/profile")
-                        }
+                        onPress={() => onItemPress("/profile")}
                         style={styles.actionButton}
                     >
                         <DynamicIcon
@@ -156,8 +138,8 @@ const createStyles = (theme: ThemeTokens) =>
             gap: 8,
         },
         logoContainer: {
-            width: 48,
-            height: 48,
+            width: 44,
+            height: 44,
             alignItems: "center",
             justifyContent: "center",
             borderRadius: 16,
