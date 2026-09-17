@@ -345,6 +345,22 @@
     ]
   },
   {
+    "name": "section-wrapper",
+    "category": "layout",
+    "dependencies": [],
+    "registryDependencies": [
+      "dynamic-icon"
+    ],
+    "files": [
+      {
+        "name": "section-wrapper.tsx",
+        "url": "mobile/nativewind/layout/section-wrapper.tsx",
+        "target": "components/layout/section-wrapper.tsx",
+        "content": "import React from \"react\";\r\nimport { Text, TouchableOpacity, View, ViewStyle } from \"react-native\";\r\n\r\nimport { DynamicIcon } from \"@/components/custom/dynamic-icon\";\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface SectionWrapperProps {\r\n    children: React.ReactNode;\r\n    title?: string;\r\n    showInfoIcon?: boolean;\r\n    onInfoPress?: () => void;\r\n    rightTitle?: string;\r\n    rightType?: \"text\" | \"navigate\" | \"chip\";\r\n    rightAction?: () => void;\r\n    className?: string;\r\n    style?: ViewStyle;\r\n}\r\n\r\nexport function SectionWrapper({\r\n    children,\r\n    title,\r\n    showInfoIcon = false,\r\n    onInfoPress,\r\n    rightTitle,\r\n    rightType = \"text\",\r\n    rightAction,\r\n    className,\r\n    style,\r\n}: SectionWrapperProps) {\r\n    const renderInfoIcon = () => {\r\n        if (!showInfoIcon && !onInfoPress) return null;\r\n\r\n        const IconElement = (\r\n            <DynamicIcon\r\n                name=\"Info\"\r\n                size={16}\r\n                className=\"text-foreground-muted ml-1\"\r\n            />\r\n        );\r\n\r\n        if (onInfoPress) {\r\n            return (\r\n                <TouchableOpacity\r\n                    activeOpacity={0.7}\r\n                    onPress={onInfoPress}\r\n                    hitSlop={10}\r\n                >\r\n                    {IconElement}\r\n                </TouchableOpacity>\r\n            );\r\n        }\r\n        return IconElement;\r\n    };\r\n\r\n    return (\r\n        <View className={cn(\"w-full mb-6\", className)} style={style}>\r\n            {/* Header Row */}\r\n            <View className=\"flex-row items-center justify-between mb-3 px-2\">\r\n                <View className=\"flex-row items-center gap-1.5\">\r\n                    {title && (\r\n                        <Text className=\"text-base font-bold text-foreground tracking-tight\">\r\n                            {title}\r\n                        </Text>\r\n                    )}\r\n                    {renderInfoIcon()}\r\n                </View>\r\n\r\n                {/* Right Action */}\r\n                {rightTitle &&\r\n                    (rightType === \"text\" ? (\r\n                        <Text className=\"text-sm font-bold text-foreground-muted\">\r\n                            {rightTitle}\r\n                        </Text>\r\n                    ) : (\r\n                        <TouchableOpacity\r\n                            className={cn(\r\n                                \"flex-row items-center gap-1 px-3 py-1.5 rounded-full\",\r\n                                rightType === \"chip\" && \"bg-surface-muted\",\r\n                            )}\r\n                            onPress={rightAction}\r\n                            activeOpacity={0.7}\r\n                            disabled={!rightAction}\r\n                        >\r\n                            <Text className=\"text-sm font-bold text-foreground-muted\">\r\n                                {rightTitle}\r\n                            </Text>\r\n                            <DynamicIcon\r\n                                name=\"ChevronRight\"\r\n                                size={12}\r\n                                className=\"text-foreground-muted\"\r\n                            />\r\n                        </TouchableOpacity>\r\n                    ))}\r\n            </View>\r\n\r\n            {/* Content */}\r\n            <View>{children}</View>\r\n        </View>\r\n    );\r\n}\r\n"
+      }
+    ]
+  },
+  {
     "name": "shine-gradient-wrapper",
     "category": "layout",
     "dependencies": [

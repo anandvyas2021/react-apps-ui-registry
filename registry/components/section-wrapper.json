@@ -1,0 +1,28 @@
+{
+    "name": "section-wrapper",
+    "category": "layout",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "section-wrapper.tsx",
+                    "url": "mobile/nativewind/layout/section-wrapper.tsx",
+                    "target": "components/layout/section-wrapper.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "section-wrapper.tsx",
+                    "url": "mobile/stylesheet/layout/section-wrapper.tsx",
+                    "target": "components/layout/section-wrapper.tsx"
+                }
+            ]
+        }
+    }
+}
