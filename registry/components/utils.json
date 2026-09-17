@@ -3,7 +3,7 @@
     "category": "lib",
     "engines": {
         "mobile-nativewind": {
-            "dependencies": ["clsx", "tailwind-merge"],
+            "dependencies": [],
             "registryDependencies": [],
             "files": [
                 {

@@ -221,7 +221,9 @@ program
                     ),
                 );
                 try {
-                    execSync(`npm install ${depList}`, { stdio: "inherit" });
+                    execSync(`npm install ${depList} --legacy-peer-deps`, {
+                        stdio: "inherit",
+                    });
                     console.log(
                         chalk.green("✓ Dependencies installed successfully."),
                     );
@@ -388,7 +390,9 @@ program
                     ),
                 );
                 try {
-                    execSync(`npm install ${depList}`, { stdio: "inherit" });
+                    execSync(`npm install ${depList} --legacy-peer-deps`, {
+                        stdio: "inherit",
+                    });
                     console.log(
                         chalk.green("✓ Dependencies installed successfully."),
                     );

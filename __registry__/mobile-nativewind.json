@@ -452,10 +452,7 @@
   {
     "name": "utils",
     "category": "lib",
-    "dependencies": [
-      "clsx",
-      "tailwind-merge"
-    ],
+    "dependencies": [],
     "registryDependencies": [],
     "files": [
       {
