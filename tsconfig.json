@@ -9,7 +9,12 @@
         "skipLibCheck": true,
         "moduleResolution": "node",
         "resolveJsonModule": true,
-        "types": ["node"]
+        "types": ["node"],
+        "paths": {
+            "@/*": ["./registry/*"],
+            "@/shared/*": ["./shared/*"],
+            "@/theme/*": ["./theme/*"]
+        }
     },
     "include": ["scripts/**/*", "registry/**/*"],
     "exclude": ["node_modules", "playgrounds"]

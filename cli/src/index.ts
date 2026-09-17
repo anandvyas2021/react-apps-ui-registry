@@ -94,7 +94,7 @@ program
         const setup = BASE_DEPS[engineKey];
 
         // 2. USE THE REGISTRY_URL to fetch the correct JSON manifest
-        const manifestUrl = `${REGISTRY_URL}/${response.engine}.json`;
+        const manifestUrl = `${REGISTRY_URL}/${response.engine}.json?t=${Date.now()}`;
         console.log(chalk.dim(`\nFetching registry from GitHub...`));
 
         try {
@@ -281,7 +281,7 @@ program
         const engine = hasTailwind ? "mobile-nativewind" : "mobile-stylesheet";
 
         console.log(chalk.dim(`\nDetected engine: ${engine}`));
-        const manifestUrl = `${REGISTRY_URL}/${engine}.json`;
+        const manifestUrl = `${REGISTRY_URL}/${engine}.json?t=${Date.now()}`;
 
         try {
             // 2. Fetch the massive JSON database
@@ -303,6 +303,10 @@ program
                     compData.registryDependencies.forEach(resolveDependencies);
                 }
             };
+
+            // Force the CLI to always check base dependencies
+            const setup = BASE_DEPS[engine];
+            setup.registry.forEach(resolveDependencies);
 
             // Run the resolver for every component the user typed in the terminal
             components.forEach(resolveDependencies);
