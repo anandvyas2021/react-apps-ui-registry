@@ -449,20 +449,6 @@
     ]
   },
   {
-    "name": "utils",
-    "category": "lib",
-    "dependencies": [],
-    "registryDependencies": [],
-    "files": [
-      {
-        "name": "utils.ts",
-        "url": "mobile/stylesheet/lib/utils.ts",
-        "target": "lib/utils.ts",
-        "content": "import { clsx, type ClassValue } from \"clsx\";\r\nimport { twMerge } from \"tailwind-merge\";\r\nimport { icons } from \"lucide-react-native\";\r\n\r\nexport function cn(...inputs: ClassValue[]) {\r\n    return twMerge(clsx(inputs));\r\n}\r\n\r\nexport type IconName = keyof typeof icons;\r\n"
-      }
-    ]
-  },
-  {
     "name": "watermark-grid-card",
     "category": "cards",
     "dependencies": [
