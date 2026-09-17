@@ -1,6 +1,6 @@
 {
     "name": "react-apps-ui-registry",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "bin": {
         "react-apps-ui": "./dist/index.js"
     },
