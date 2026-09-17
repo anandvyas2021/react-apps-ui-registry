@@ -19,6 +19,7 @@ export interface HomeHeaderProps {
     title?: string;
     hasNotifications?: boolean;
     onItemPress?: (route: string) => void;
+    homeHeaderOptions: any;
     className?: string;
 }
 
@@ -28,6 +29,7 @@ export function HomeHeader({
     hasNotifications = true,
     onItemPress,
     className,
+    homeHeaderOptions,
     ...props
 }: HomeHeaderProps) {
     const insets = useSafeAreaInsets();
@@ -65,16 +67,14 @@ export function HomeHeader({
             {...props}
         >
             <View className="w-full flex-row items-center justify-between">
-                {/* Logo & Name */}
                 <View className="flex-row items-center gap-2">
                     <View className="size-11 items-center justify-center pl-3 rounded-2xl shadow-sm bg-primary">
-                        <DynamicIcon
-                            name="Hexagon"
-                            size={24}
-                            className="text-primary-foreground"
-                        />
+                        {/* logo component here */}
                     </View>
-                    <Text className="text-xl font-extrabold text-primary tracking-tight">
+                    <Text
+                        className="text-xl font-extrabold text-primary tracking-tight"
+                        style={{ color: homeHeaderOptions?.textColor }}
+                    >
                         {title}
                     </Text>
                 </View>
@@ -96,7 +96,7 @@ export function HomeHeader({
                                 animatedDotStyle,
                                 { position: "absolute", top: 9, right: 10 },
                             ]}
-                            className="w-2.5 h-2.5 bg-destructive rounded-full border border-border"
+                            className="size-2.5 bg-destructive rounded-full border border-border"
                         />
                     </TouchableOpacity>
 

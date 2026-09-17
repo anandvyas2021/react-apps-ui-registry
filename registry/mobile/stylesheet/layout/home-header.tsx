@@ -20,6 +20,7 @@ export interface HomeHeaderProps {
     title?: string;
     hasNotifications?: boolean;
     onItemPress?: (route: string) => void;
+    homeHeaderOptions: any;
 }
 
 export function HomeHeader({
@@ -28,6 +29,7 @@ export function HomeHeader({
     hasNotifications = true,
     onItemPress,
     style,
+    homeHeaderOptions,
     ...props
 }: HomeHeaderProps) {
     const insets = useSafeAreaInsets();
@@ -71,16 +73,18 @@ export function HomeHeader({
             {...props}
         >
             <View style={styles.innerRow}>
-                {/* Logo & Name */}
                 <View style={styles.brandingGroup}>
                     <View style={styles.logoContainer}>
-                        <DynamicIcon
-                            name="Hexagon"
-                            size={24}
-                            color={theme.primaryForeground}
-                        />
+                        {/* logo component here */}
                     </View>
-                    <Text style={styles.titleText}>{title}</Text>
+                    <Text
+                        style={[
+                            styles.titleText,
+                            { color: homeHeaderOptions?.textColor },
+                        ]}
+                    >
+                        {title}
+                    </Text>
                 </View>
 
                 {/* Actions */}

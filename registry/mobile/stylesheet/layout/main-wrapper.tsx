@@ -17,9 +17,11 @@ export interface MainWrapperProps extends ViewProps {
     topSpacing?: boolean;
     style: any;
     fullScreen?: boolean;
+    bottomSpacing?: number;
     navigatorOptions?: {
         rightBlock?: [{ name?: string; onPress?: () => void; icon?: string }];
     };
+    homeHeaderOptions?: any;
 }
 
 export function MainWrapper({
@@ -29,9 +31,11 @@ export function MainWrapper({
     heading,
     topSpacing,
     fullScreen = false,
-    style,
     navigatorOptions,
-    ...props
+    bottomSpacing = 10,
+    homeHeaderOptions,
+    style,
+    a,
 }: MainWrapperProps) {
     const router = useRouter();
     const insets = useSafeAreaInsets();
@@ -39,7 +43,7 @@ export function MainWrapper({
     const theme = useTheme();
     const styles = useMemo(() => createStyles(theme), [theme]);
 
-    const safeBottomPadding = Math.min(insets.bottom, 10);
+    const safeBottomPadding = Math.min(insets.bottom, bottomSpacing);
 
     const handleHomeHeaderRedirects = (route: string) => {
         router.push(route);
@@ -65,6 +69,7 @@ export function MainWrapper({
                 {homeHeader ? (
                     <HomeHeader
                         inMainWrapper
+                        homeHeaderOptions={homeHeaderOptions}
                         title="Zudhan"
                         onItemPress={handleHomeHeaderRedirects}
                     />
