@@ -312,7 +312,7 @@ program
             components.forEach(resolveDependencies);
 
             // We don't need to reinstall the theme if it was pulled as a dependency
-            componentsToAdd.delete("theme");
+            // componentsToAdd.delete("theme");
 
             console.log(
                 chalk.blue(
