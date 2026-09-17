@@ -8,7 +8,18 @@
             "files": [
                 {
                     "name": "utils.ts",
-                    "url": "../shared/lib/utils.ts",
+                    "url": "mobile/nativewind/lib/utils.ts",
+                    "target": "lib/utils.ts"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "utils.ts",
+                    "url": "mobile/stylesheet/lib/utils.ts",
                     "target": "lib/utils.ts"
                 }
             ]
