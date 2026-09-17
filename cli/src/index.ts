@@ -17,6 +17,32 @@ program
     .description("Add high-quality components to your React Native app")
     .version("1.0.0");
 
+// Helper to filter out packages that are already in package.json
+function filterMissingDeps(deps: string[]): string[] {
+    const packageJsonPath = path.join(process.cwd(), "package.json");
+    if (!fs.existsSync(packageJsonPath)) return deps;
+
+    try {
+        const pkg = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+        const installed = {
+            ...(pkg.dependencies || {}),
+            ...(pkg.devDependencies || {}),
+        };
+
+        return deps.filter((dep) => {
+            let pkgName = dep;
+            if (dep.startsWith("@")) {
+                pkgName = "@" + dep.slice(1).split("@")[0];
+            } else {
+                pkgName = dep.split("@")[0];
+            }
+            return !installed[pkgName];
+        });
+    } catch {
+        return deps;
+    }
+}
+
 // --- THE INIT COMMAND ---
 
 // 1. Define the foundational architecture for each engine
@@ -184,12 +210,14 @@ program
                 }
             }
 
-            // 5. INSTALL FOUNDATIONAL NPM DEPENDENCIES
-            if (setup.npm.length > 0) {
-                const depList = setup.npm.join(" ");
+            // 5. INSTALL FOUNDATIONAL NPM DEPENDENCIES (Skipping already installed)
+            const missingBaseDeps = filterMissingDeps(setup.npm);
+
+            if (missingBaseDeps.length > 0) {
+                const depList = missingBaseDeps.join(" ");
                 console.log(
                     chalk.blue(
-                        `\n📦 Installing foundational NPM dependencies: ${depList}...`,
+                        `\n📦 Installing missing foundational NPM dependencies: ${depList}...`,
                     ),
                 );
                 try {
@@ -204,6 +232,12 @@ program
                         ),
                     );
                 }
+            } else {
+                console.log(
+                    chalk.green(
+                        "\n✓ All foundational NPM dependencies are already installed. Skipping.",
+                    ),
+                );
             }
 
             console.log(chalk.blue("\n🎉 Initialization complete!"));
@@ -331,7 +365,7 @@ program
                 }
             }
 
-            // 5. INSTALL NPM DEPENDENCIES
+            // 5. INSTALL NPM DEPENDENCIES (Skipping already installed)
             const depsToInstall = new Set<string>();
 
             // Collect all dependencies from the components we just added
@@ -344,15 +378,16 @@ program
                 }
             }
 
-            if (depsToInstall.size > 0) {
-                const depList = Array.from(depsToInstall).join(" ");
+            // Filter out anything already installed in user's package.json
+            const missingDeps = filterMissingDeps(Array.from(depsToInstall));
+            if (missingDeps.length > 0) {
+                const depList = missingDeps.join(" ");
                 console.log(
                     chalk.blue(
-                        `\n📦 Installing NPM dependencies: ${depList}...`,
+                        `\n📦 Installing missing NPM dependencies: ${depList}...`,
                     ),
                 );
                 try {
-                    // This runs 'npm install' directly in the user's terminal
                     execSync(`npm install ${depList}`, { stdio: "inherit" });
                     console.log(
                         chalk.green("✓ Dependencies installed successfully."),
@@ -364,6 +399,12 @@ program
                         ),
                     );
                 }
+            } else if (depsToInstall.size > 0) {
+                console.log(
+                    chalk.green(
+                        "\n✓ Required NPM dependencies are already installed. Skipping.",
+                    ),
+                );
             }
 
             console.log(chalk.blue("\n🎉 Components installed successfully!"));
