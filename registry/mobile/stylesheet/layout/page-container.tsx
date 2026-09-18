@@ -6,7 +6,7 @@ import { PageScrollView } from "./page-scrollview";
 import { useTheme } from "@/theme/ThemeProvider";
 import type { ThemeTokens } from "@/theme/tokens";
 
-export interface PageContainerProps extends ViewProps {
+export interface PageContainerProps {
     children: React.ReactNode;
     topSpacing?: number;
     extraBottom?: number;

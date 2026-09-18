@@ -2,10 +2,13 @@ import { useState, forwardRef, useMemo } from "react";
 import {
     Text,
     View,
+    Platform,
     TextInput,
     StyleSheet,
     TextInputProps,
+    TouchableOpacity,
 } from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Controller, FieldValues, Control, Path } from "react-hook-form";
 
 import { DynamicIcon } from "@/components/custom/dynamic-icon";
@@ -18,7 +21,15 @@ export interface InputProps extends Omit<TextInputProps, "onChangeText"> {
     value: string;
     onChangeText: (text: string) => void;
     error?: string;
-    type?: "mobile" | "email" | "password" | "number" | "text";
+    type?:
+        | "mobile"
+        | "email"
+        | "password"
+        | "number"
+        | "text"
+        | "date"
+        | "money"
+        | string;
     prefix?: string;
     disabled?: boolean;
 }
@@ -43,7 +54,7 @@ export const Input = forwardRef<TextInput, InputProps>(
             error,
             disabled,
             autoFocus = false,
-            prefix = "+91",
+            prefix = type === "mobile" ? "+91" : "",
             ...rest
         },
         ref,
@@ -52,51 +63,89 @@ export const Input = forwardRef<TextInput, InputProps>(
         const styles = useMemo(() => createStyles(theme), [theme]);
 
         const [showSecureText, setShowSecureText] = useState(true);
+        const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
         const hasError = !!error;
+        const isDateType = type === "date";
+
+        const handleConfirm = (date: Date) => {
+            // Format to YYYY-MM-DD securely avoiding timezone shift bugs
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDate()).padStart(2, "0");
+
+            onChangeText(`${year}-${month}-${day}`);
+            setDatePickerVisibility(false);
+        };
+
+        // Dynamically switch wrapper based on type to enable tapping for dates
+        const InputWrapper = isDateType ? TouchableOpacity : View;
 
         return (
             <View style={styles.container}>
                 <Text style={styles.label}>{label}</Text>
 
-                <View
+                <InputWrapper
                     style={[
                         styles.inputContainer,
                         error && styles.inputContainerError,
                         disabled && styles.inputContainerDisabled,
                     ]}
+                    onPress={
+                        isDateType
+                            ? () => setDatePickerVisibility(true)
+                            : undefined
+                    }
+                    activeOpacity={isDateType ? 0.7 : 1}
                 >
-                    {type === "mobile" && (
-                        <View style={styles.prefixContainer}>
+                    {(type === "mobile" || type === "money") && (
+                        <View
+                            style={[
+                                styles.prefixContainer,
+                                {
+                                    borderRightWidth: type === "mobile" && 1,
+                                    borderRightColor:
+                                        type === "mobile" && theme.border,
+                                },
+                            ]}
+                        >
                             <Text style={styles.prefixText}>{prefix}</Text>
                         </View>
                     )}
-
-                    <TextInput
-                        ref={ref}
-                        style={styles.input}
-                        placeholder={placeholder}
-                        maxLength={maxLength}
-                        placeholderTextColor={theme.mutedForeground}
-                        secureTextEntry={type === "password" && showSecureText}
-                        keyboardType={
-                            type === "mobile" || type === "number"
-                                ? "number-pad"
-                                : type === "email"
-                                  ? "email-address"
-                                  : "default"
-                        }
-                        autoCapitalize={
-                            type === "email" || type === "password"
-                                ? "none"
-                                : "sentences"
-                        }
-                        value={value}
-                        onChangeText={onChangeText}
-                        autoFocus={autoFocus}
-                        editable={!disabled}
-                        {...rest}
-                    />
-
+                    <View
+                        style={{ flex: 1 }}
+                        pointerEvents={isDateType ? "none" : "auto"}
+                    >
+                        <TextInput
+                            ref={ref}
+                            style={styles.input}
+                            placeholder={placeholder}
+                            maxLength={maxLength}
+                            placeholderTextColor={theme.mutedForeground}
+                            secureTextEntry={
+                                type === "password" && showSecureText
+                            }
+                            keyboardType={
+                                type === "mobile" ||
+                                type === "money" ||
+                                type === "number"
+                                    ? "number-pad"
+                                    : type === "email"
+                                      ? "email-address"
+                                      : "default"
+                            }
+                            autoCapitalize={
+                                type === "email" || type === "password"
+                                    ? "none"
+                                    : "sentences"
+                            }
+                            value={value}
+                            onChangeText={onChangeText}
+                            autoFocus={autoFocus}
+                            editable={!disabled}
+                            {...rest}
+                        />
+                    </View>
                     {type === "password" && value?.length ? (
                         <DynamicIcon
                             name={showSecureText ? "EyeClosed" : "Eye"}
@@ -106,11 +155,32 @@ export const Input = forwardRef<TextInput, InputProps>(
                             onPress={() => setShowSecureText((prev) => !prev)}
                         />
                     ) : null}
-                </View>
+                    {isDateType ? (
+                        <DynamicIcon
+                            name="Calendar"
+                            size={20}
+                            color={theme.foreground}
+                        />
+                    ) : null}
+                </InputWrapper>
 
                 {hasError ? (
                     <Text style={styles.errorText}>{error}</Text>
                 ) : null}
+
+                {isDateType && (
+                    <DateTimePickerModal
+                        isVisible={isDatePickerVisible}
+                        mode="date"
+                        onConfirm={handleConfirm}
+                        onCancel={() => setDatePickerVisibility(false)}
+                        date={value ? new Date(value) : new Date()}
+                        maximumDate={new Date()} // Restricts future dates
+                        display={Platform.OS === "ios" ? "spinner" : "default"}
+                        isDarkModeEnabled={true}
+                        themeVariant="dark"
+                    />
+                )}
             </View>
         );
     },
@@ -161,13 +231,11 @@ const createStyles = (theme: ThemeTokens) =>
         prefixContainer: {
             justifyContent: "center",
             paddingHorizontal: 16,
-            borderRightWidth: 1,
-            borderRightColor: theme.border,
         },
         prefixText: {
             fontSize: 16,
             fontWeight: "500",
-            color: theme.foreground,
+            color: theme.foregroundMuted,
         },
         input: {
             flex: 1,
@@ -175,7 +243,8 @@ const createStyles = (theme: ThemeTokens) =>
             paddingVertical: 16,
             fontSize: 16,
             fontWeight: "500",
-            color: theme.foreground,
+            color: theme.foregroundMuted,
+            backgroundColor: theme.surface,
         },
         icon: { paddingHorizontal: 16 },
         errorText: {

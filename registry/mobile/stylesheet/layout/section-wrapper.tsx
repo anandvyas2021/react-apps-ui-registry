@@ -137,8 +137,8 @@ const createStyles = (theme: ThemeTokens) =>
             flexDirection: "row",
             alignItems: "center",
             gap: 4,
-            paddingHorizontal: 12,
-            paddingVertical: 6,
+            paddingHorizontal: 10,
+            paddingVertical: 4,
             borderRadius: 9999,
         },
         actionButtonChip: {

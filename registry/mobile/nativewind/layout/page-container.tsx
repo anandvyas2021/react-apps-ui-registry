@@ -5,7 +5,7 @@ import { PageScrollView } from "./page-scrollview";
 
 import { cn } from "@/lib/utils";
 
-export interface PageContainerProps extends ViewProps {
+export interface PageContainerProps {
     children: React.ReactNode;
     topSpacing?: number;
     extraBottom?: number;

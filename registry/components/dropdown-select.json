@@ -1,0 +1,28 @@
+{
+    "name": "dropdown-select",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": ["react-hook-form"],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "dropdown-select.tsx",
+                    "url": "mobile/nativewind/ui/dropdown-select.tsx",
+                    "target": "components/ui/dropdown-select.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": ["react-hook-form"],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "dropdown-select.tsx",
+                    "url": "mobile/stylesheet/ui/dropdown-select.tsx",
+                    "target": "components/ui/dropdown-select.tsx"
+                }
+            ]
+        }
+    }
+}

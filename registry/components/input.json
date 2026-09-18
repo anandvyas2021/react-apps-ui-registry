@@ -3,7 +3,10 @@
     "category": "ui",
     "engines": {
         "mobile-nativewind": {
-            "dependencies": ["react-hook-form"],
+            "dependencies": [
+                "react-hook-form",
+                "react-native-modal-datetime-picker"
+            ],
             "registryDependencies": ["dynamic-icon"],
             "files": [
                 {
@@ -14,7 +17,10 @@
             ]
         },
         "mobile-stylesheet": {
-            "dependencies": ["react-hook-form"],
+            "dependencies": [
+                "react-hook-form",
+                "react-native-modal-datetime-picker"
+            ],
             "registryDependencies": ["dynamic-icon"],
             "files": [
                 {
