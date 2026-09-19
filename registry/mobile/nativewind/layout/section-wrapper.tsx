@@ -2,10 +2,12 @@ import React from "react";
 import { Text, TouchableOpacity, View, ViewStyle } from "react-native";
 
 import { DynamicIcon } from "@/components/custom/dynamic-icon";
+
 import { cn } from "@/lib/utils";
 
 export interface SectionWrapperProps {
     children: React.ReactNode;
+    type?: "default" | "bordered";
     title?: string;
     showInfoIcon?: boolean;
     onInfoPress?: () => void;
@@ -18,6 +20,7 @@ export interface SectionWrapperProps {
 
 export function SectionWrapper({
     children,
+    type = "default",
     title,
     showInfoIcon = false,
     onInfoPress,
@@ -94,7 +97,14 @@ export function SectionWrapper({
             </View>
 
             {/* Content */}
-            <View>{children}</View>
+            <View
+                className={cn(
+                    type === "bordered" &&
+                        "border border-border rounded-2xl p-4 bg-background",
+                )}
+            >
+                {children}
+            </View>
         </View>
     );
 }

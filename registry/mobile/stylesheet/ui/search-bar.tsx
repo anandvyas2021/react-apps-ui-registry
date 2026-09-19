@@ -39,7 +39,7 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
                 <DynamicIcon
                     name="Search"
                     size={20}
-                    color={theme.mutedForeground}
+                    color={theme.foregroundMuted}
                     style={styles.searchIcon}
                 />
 
@@ -48,7 +48,7 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
                     value={value}
                     onChangeText={onChangeText}
                     placeholder={placeholder}
-                    placeholderTextColor={theme.mutedForeground}
+                    placeholderTextColor={theme.foregroundMuted}
                     style={[styles.input, style]}
                     {...props}
                 />
@@ -62,7 +62,7 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
                         <DynamicIcon
                             name="XCircle"
                             size={18}
-                            color={theme.mutedForeground}
+                            color={theme.foregroundMuted}
                         />
                     </TouchableOpacity>
                 )}

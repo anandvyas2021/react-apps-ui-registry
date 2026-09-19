@@ -1,0 +1,28 @@
+{
+    "name": "checkbox-group",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": ["react-hook-form"],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "checkbox-group.tsx",
+                    "url": "mobile/nativewind/ui/checkbox-group.tsx",
+                    "target": "components/ui/checkbox-group.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": ["react-hook-form"],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "checkbox-group.tsx",
+                    "url": "mobile/stylesheet/ui/checkbox-group.tsx",
+                    "target": "components/ui/checkbox-group.tsx"
+                }
+            ]
+        }
+    }
+}

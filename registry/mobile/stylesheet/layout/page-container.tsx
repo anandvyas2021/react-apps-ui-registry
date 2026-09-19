@@ -1,5 +1,5 @@
 import React, { forwardRef, useMemo } from "react";
-import { View, ViewProps, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import { PageScrollView } from "./page-scrollview";
 

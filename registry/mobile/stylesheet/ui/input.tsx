@@ -69,12 +69,12 @@ export const Input = forwardRef<TextInput, InputProps>(
         const isDateType = type === "date";
 
         const handleConfirm = (date: Date) => {
-            // Format to YYYY-MM-DD securely avoiding timezone shift bugs
+            // Format to DD-MM-YYYY securely avoiding timezone shift bugs
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, "0");
             const day = String(date.getDate()).padStart(2, "0");
 
-            onChangeText(`${year}-${month}-${day}`);
+            onChangeText(`${day}-${month}-${year}`);
             setDatePickerVisibility(false);
         };
 
@@ -102,11 +102,13 @@ export const Input = forwardRef<TextInput, InputProps>(
                         <View
                             style={[
                                 styles.prefixContainer,
-                                {
-                                    borderRightWidth: type === "mobile" && 1,
-                                    borderRightColor:
-                                        type === "mobile" && theme.border,
-                                },
+                                type === "mobile"
+                                    ? {
+                                          paddingRight: 16,
+                                          borderRightWidth: 1,
+                                          borderRightColor: theme.border,
+                                      }
+                                    : {},
                             ]}
                         >
                             <Text style={styles.prefixText}>{prefix}</Text>
@@ -118,10 +120,13 @@ export const Input = forwardRef<TextInput, InputProps>(
                     >
                         <TextInput
                             ref={ref}
-                            style={styles.input}
+                            style={[
+                                styles.input,
+                                type === "mobile" ? { paddingLeft: 16 } : {},
+                            ]}
                             placeholder={placeholder}
                             maxLength={maxLength}
-                            placeholderTextColor={theme.mutedForeground}
+                            placeholderTextColor={theme.foregroundMuted}
                             secureTextEntry={
                                 type === "password" && showSecureText
                             }
@@ -150,7 +155,7 @@ export const Input = forwardRef<TextInput, InputProps>(
                         <DynamicIcon
                             name={showSecureText ? "EyeClosed" : "Eye"}
                             size={20}
-                            color={theme.mutedForeground}
+                            color={theme.foregroundMuted}
                             style={styles.icon}
                             onPress={() => setShowSecureText((prev) => !prev)}
                         />
@@ -230,7 +235,7 @@ const createStyles = (theme: ThemeTokens) =>
         inputContainerDisabled: { opacity: 0.5 },
         prefixContainer: {
             justifyContent: "center",
-            paddingHorizontal: 16,
+            paddingLeft: 16,
         },
         prefixText: {
             fontSize: 16,
@@ -240,13 +245,13 @@ const createStyles = (theme: ThemeTokens) =>
         input: {
             flex: 1,
             paddingHorizontal: 16,
-            paddingVertical: 16,
+            paddingRight: 16,
             fontSize: 16,
             fontWeight: "500",
             color: theme.foregroundMuted,
             backgroundColor: theme.surface,
         },
-        icon: { paddingHorizontal: 16 },
+        icon: { paddingHorizontal: 16, color: theme.foregroundMuted },
         errorText: {
             fontSize: 12,
             marginTop: 6,

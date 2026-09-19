@@ -1,0 +1,28 @@
+{
+    "name": "radio-group",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": ["react-hook-form"],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "radio-group.tsx",
+                    "url": "mobile/nativewind/ui/radio-group.tsx",
+                    "target": "components/ui/radio-group.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": ["react-hook-form"],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "radio-group.tsx",
+                    "url": "mobile/stylesheet/ui/radio-group.tsx",
+                    "target": "components/ui/radio-group.tsx"
+                }
+            ]
+        }
+    }
+}

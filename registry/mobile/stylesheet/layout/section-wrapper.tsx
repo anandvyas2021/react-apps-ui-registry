@@ -14,6 +14,7 @@ import type { ThemeTokens } from "@/theme/tokens";
 
 export interface SectionWrapperProps {
     children: React.ReactNode;
+    type?: "default" | "bordered";
     title?: string;
     showInfoIcon?: boolean;
     onInfoPress?: () => void;
@@ -25,6 +26,7 @@ export interface SectionWrapperProps {
 
 export function SectionWrapper({
     children,
+    type = "default",
     title,
     showInfoIcon = false,
     onInfoPress,
@@ -43,7 +45,7 @@ export function SectionWrapper({
             <DynamicIcon
                 name="Info"
                 size={16}
-                color={theme.mutedForeground}
+                color={theme.foregroundMuted}
                 style={styles.infoIcon}
             />
         );
@@ -64,7 +66,7 @@ export function SectionWrapper({
 
     return (
         <View style={[styles.container, style]}>
-            {/* Header Row */}
+            {/* Header Row (Outside the border) */}
             <View style={styles.headerRow}>
                 <View style={styles.titleGroup}>
                     {title && <Text style={styles.title}>{title}</Text>}
@@ -89,14 +91,16 @@ export function SectionWrapper({
                             <DynamicIcon
                                 name="ChevronRight"
                                 size={12}
-                                color={theme.mutedForeground}
+                                color={theme.foregroundMuted}
                             />
                         </TouchableOpacity>
                     ))}
             </View>
 
-            {/* Content */}
-            <View>{children}</View>
+            {/* Content (Only the children receive the border and padding) */}
+            <View style={[type === "bordered" && styles.borderedContent]}>
+                {children}
+            </View>
         </View>
     );
 }
@@ -112,7 +116,14 @@ const createStyles = (theme: ThemeTokens) =>
             alignItems: "center",
             justifyContent: "space-between",
             marginBottom: 12,
-            paddingHorizontal: 8,
+            paddingHorizontal: 8, // Ensures text aligns with the bordered box below
+        },
+        borderedContent: {
+            borderWidth: 1,
+            borderColor: theme.border,
+            borderRadius: 16,
+            padding: 16,
+            backgroundColor: theme.background,
         },
         titleGroup: {
             flexDirection: "row",

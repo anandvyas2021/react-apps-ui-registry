@@ -88,12 +88,12 @@ export const Input = forwardRef<TextInput, InputProps>(
         const isDateType = type === "date";
 
         const handleConfirm = (date: Date) => {
-            // Format to YYYY-MM-DD securely avoiding timezone shift bugs
+            // Format to DD--MM-YYYY securely avoiding timezone shift bugs
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, "0");
             const day = String(date.getDate()).padStart(2, "0");
 
-            onChangeText(`${year}-${month}-${day}`);
+            onChangeText(`${day}-${month}-${year}`);
             setDatePickerVisibility(false);
         };
 
@@ -123,7 +123,7 @@ export const Input = forwardRef<TextInput, InputProps>(
                 >
                     {(type === "mobile" || type === "money") && (
                         <View
-                            className={`justify-center px-4  ${type === "money" ? "" : "border-r border-foreground-muted"}`}
+                            className={`justify-center pl-4 ${type === "money" ? "" : "pr-4 border-r border-foreground-muted"}`}
                         >
                             <Text className="text-base font-medium text-foreground-muted">
                                 {prefix}
@@ -136,7 +136,7 @@ export const Input = forwardRef<TextInput, InputProps>(
                     >
                         <TextInput
                             ref={ref}
-                            className="flex-1 px-4 py-4 text-base font-medium text-foreground-muted bg-surface"
+                            className={`flex-1 pr-4 py-4 text-base font-medium text-foreground-muted bg-surface ${type === "money" ? "" : "pl-4"}`}
                             placeholder={placeholder}
                             maxLength={maxLength}
                             placeholderTextColor="#64748b"
@@ -170,8 +170,7 @@ export const Input = forwardRef<TextInput, InputProps>(
                         <DynamicIcon
                             name={showSecureText ? "EyeClosed" : "Eye"}
                             size={20}
-                            color="#94a3b8"
-                            style={{ paddingHorizontal: 16 }}
+                            className="text-foreground-muted px-4"
                             onPress={() => setShowSecureText((prev) => !prev)}
                         />
                     ) : null}
@@ -179,9 +178,7 @@ export const Input = forwardRef<TextInput, InputProps>(
                         <DynamicIcon
                             name="Calendar"
                             size={20}
-                            // color={"text-foreground"}
-                            className="text-foreground"
-                            // style={{ marginRight: 16 }}
+                            className="text-foreground-muted mr-3"
                         />
                     ) : null}
                 </InputWrapper>

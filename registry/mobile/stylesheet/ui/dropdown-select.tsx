@@ -2,15 +2,14 @@ import React, { useMemo, useState } from "react";
 import {
     View,
     Text,
-    ViewStyle,
-    StyleSheet,
-    ScrollView,
     TouchableOpacity,
+    ScrollView,
+    StyleSheet,
+    ViewStyle,
 } from "react-native";
 import { Controller, FieldValues, UseControllerProps } from "react-hook-form";
 
 import { DynamicIcon } from "@/components/custom/dynamic-icon";
-
 import { useTheme } from "@/theme/ThemeProvider";
 import type { ThemeTokens } from "@/theme/tokens";
 
@@ -78,13 +77,14 @@ export function DropdownSelect({
                         styles.triggerText,
                         !selectedLabel && styles.placeholderText,
                     ]}
+                    numberOfLines={1}
                 >
                     {selectedLabel || placeholder}
                 </Text>
                 <DynamicIcon
                     name={isOpen ? "ChevronUp" : "ChevronDown"}
                     size={20}
-                    color={theme.mutedForeground}
+                    color={theme.foregroundMuted}
                 />
             </TouchableOpacity>
 
@@ -96,7 +96,7 @@ export function DropdownSelect({
                         style={styles.scrollArea}
                         keyboardShouldPersistTaps="handled"
                     >
-                        {options.map((option, index) => {
+                        {options?.map((option, index) => {
                             const isSelected = selectedValue === option.value;
                             return (
                                 <TouchableOpacity
@@ -138,7 +138,7 @@ export function DropdownSelect({
     );
 }
 
-export interface FormDropdownSelectProps<
+export interface ControlledDropdownSelectProps<
     T extends FieldValues,
 > extends UseControllerProps<T> {
     label?: string;
@@ -147,14 +147,14 @@ export interface FormDropdownSelectProps<
     zIndex?: number;
 }
 
-export function FormDropdownSelect<T extends FieldValues>({
+export function ControlledDropdownSelect<T extends FieldValues>({
     control,
     name,
     label,
     options,
     placeholder,
     zIndex,
-}: FormDropdownSelectProps<T>) {
+}: ControlledDropdownSelectProps<T>) {
     return (
         <Controller
             control={control}
@@ -182,7 +182,7 @@ const createStyles = (theme: ThemeTokens) =>
             position: "relative",
         },
         label: {
-            fontSize: 14,
+            fontSize: 12,
             fontWeight: "500",
             color: theme.foregroundMuted,
             marginBottom: 8,
@@ -205,9 +205,11 @@ const createStyles = (theme: ThemeTokens) =>
             borderColor: theme.destructive,
         },
         triggerText: {
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: "500",
             color: theme.foreground,
+            flex: 1,
+            marginRight: 8,
         },
         placeholderText: {
             color: theme.foregroundMuted,
@@ -221,7 +223,7 @@ const createStyles = (theme: ThemeTokens) =>
             backgroundColor: theme.surface,
             borderWidth: 1,
             borderColor: theme.border,
-            borderRadius: 16,
+            borderRadius: 12,
             overflow: "hidden",
             elevation: 5,
             shadowColor: "#000",
@@ -242,12 +244,13 @@ const createStyles = (theme: ThemeTokens) =>
         optionBorder: {
             borderBottomWidth: 1,
             borderBottomColor: theme.border,
+            opacity: 0.5, // Matches the border-border/50 logic
         },
         optionItemSelected: {
-            backgroundColor: `${theme.primary}1A`,
+            backgroundColor: `${theme.primary}1A`, // 10% opacity in hex
         },
         optionText: {
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: "500",
             color: theme.foreground,
         },

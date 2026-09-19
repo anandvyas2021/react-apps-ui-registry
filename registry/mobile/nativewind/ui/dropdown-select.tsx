@@ -58,7 +58,7 @@ export function DropdownSelect({
             style={[{ zIndex: isOpen ? zIndex + 50 : zIndex }, style]}
         >
             {label && (
-                <Text className="text-sm font-medium text-foreground-muted mb-2">
+                <Text className="text-xs font-medium text-foreground-muted mb-2">
                     {label}
                 </Text>
             )}
@@ -67,7 +67,7 @@ export function DropdownSelect({
                 activeOpacity={0.8}
                 onPress={() => setIsOpen(!isOpen)}
                 className={cn(
-                    "flex-row justify-between items-center bg-surface border rounded-2xl px-4 py-3.5",
+                    "flex-row justify-between items-center px-4 py-3.5 rounded-2xl border bg-surface",
                     error
                         ? "border-destructive"
                         : isOpen
@@ -77,11 +77,12 @@ export function DropdownSelect({
             >
                 <Text
                     className={cn(
-                        "text-base font-medium",
+                        "text-sm font-medium",
                         selectedLabel
                             ? "text-foreground"
                             : "text-foreground-disabled",
                     )}
+                    numberOfLines={1}
                 >
                     {selectedLabel || placeholder}
                 </Text>
@@ -100,30 +101,30 @@ export function DropdownSelect({
                         className="max-h-60"
                         keyboardShouldPersistTaps="handled"
                     >
-                        {options.map((option, index) => (
+                        {options?.map((option, index) => (
                             <TouchableOpacity
                                 key={option.value}
                                 activeOpacity={0.7}
                                 onPress={() => handleSelect(option.value)}
                                 className={cn(
                                     "px-4 py-3.5 flex-row items-center justify-between",
-                                    index !== options.length - 1 &&
+                                    index !== options?.length - 1 &&
                                         "border-b border-border/50",
-                                    selectedValue === option.value &&
+                                    selectedValue === option?.value &&
                                         "bg-primary/10",
                                 )}
                             >
                                 <Text
                                     className={cn(
-                                        "text-base",
-                                        selectedValue === option.value
+                                        "text-sm",
+                                        selectedValue === option?.value
                                             ? "text-primary font-bold"
                                             : "text-foreground font-medium",
                                     )}
                                 >
-                                    {option.label}
+                                    {option?.label}
                                 </Text>
-                                {selectedValue === option.value && (
+                                {selectedValue === option?.value && (
                                     <DynamicIcon
                                         name="Check"
                                         size={18}
@@ -145,7 +146,7 @@ export function DropdownSelect({
     );
 }
 
-export interface FormDropdownSelectProps<
+export interface ControlledDropdownSelectProps<
     T extends FieldValues,
 > extends UseControllerProps<T> {
     label?: string;
@@ -155,7 +156,7 @@ export interface FormDropdownSelectProps<
     zIndex?: number;
 }
 
-export function FormDropdownSelect<T extends FieldValues>({
+export function ControlledDropdownSelect<T extends FieldValues>({
     control,
     name,
     label,
@@ -163,7 +164,7 @@ export function FormDropdownSelect<T extends FieldValues>({
     placeholder,
     className,
     zIndex,
-}: FormDropdownSelectProps<T>) {
+}: ControlledDropdownSelectProps<T>) {
     return (
         <Controller
             control={control}

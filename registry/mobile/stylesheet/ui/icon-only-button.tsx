@@ -58,7 +58,7 @@ export const IconOnlyButton = forwardRef<
                 <DynamicIcon
                     name={icon as string}
                     size={iconSize}
-                    color={iconColor || theme.mutedForeground}
+                    color={iconColor || theme.foregroundMuted}
                 />
             </TouchableOpacity>
         );

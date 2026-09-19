@@ -139,7 +139,7 @@ export const ToggleSwitch = forwardRef<
                         <DynamicIcon
                             name={customIcons.iconOff as string}
                             size={dimensions.iconSize}
-                            color={theme.mutedForeground}
+                            color={theme.foregroundMuted}
                         />
                     )}
                 </Animated.View>

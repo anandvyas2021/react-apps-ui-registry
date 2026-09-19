@@ -101,7 +101,7 @@ export const SectionRow = ({
                     <DynamicIcon
                         name="ChevronRight"
                         size={20}
-                        color={theme.mutedForeground}
+                        color={theme.foregroundMuted}
                     />
                 )}
                 {type === "toggle" && (

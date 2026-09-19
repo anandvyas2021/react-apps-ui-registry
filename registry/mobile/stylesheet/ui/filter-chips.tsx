@@ -56,6 +56,7 @@ export function FilterChips({
 const createStyles = (theme: ThemeTokens) =>
     StyleSheet.create({
         chip: {
+            maxHeight: 40,
             paddingHorizontal: 16,
             paddingVertical: 10,
             borderRadius: 18,

@@ -79,7 +79,7 @@ export const PhoneInput = forwardRef<
                         <DynamicIcon
                             name="ChevronDown"
                             size={18}
-                            color={theme.mutedForeground}
+                            color={theme.foregroundMuted}
                         />
                     </TouchableOpacity>
 
@@ -92,7 +92,7 @@ export const PhoneInput = forwardRef<
                         onBlur={() => setIsFocused(false)}
                         keyboardType="number-pad"
                         placeholder="000 000 0000"
-                        placeholderTextColor={theme.mutedForeground}
+                        placeholderTextColor={theme.foregroundMuted}
                         style={styles.textInput}
                         maxLength={selectedCountry.maxLength}
                     />
