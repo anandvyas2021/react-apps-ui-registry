@@ -16,6 +16,7 @@ export interface SectionWrapperProps {
     rightAction?: () => void;
     className?: string;
     style?: ViewStyle;
+    contentClassName?: string;
 }
 
 export function SectionWrapper({
@@ -29,6 +30,7 @@ export function SectionWrapper({
     rightAction,
     className,
     style,
+    contentClassName,
 }: SectionWrapperProps) {
     const renderInfoIcon = () => {
         if (!showInfoIcon && !onInfoPress) return null;
@@ -101,6 +103,7 @@ export function SectionWrapper({
                 className={cn(
                     type === "bordered" &&
                         "border border-border rounded-2xl p-4 bg-background",
+                    contentClassName,
                 )}
             >
                 {children}

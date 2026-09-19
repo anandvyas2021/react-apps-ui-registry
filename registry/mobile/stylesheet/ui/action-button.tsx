@@ -110,16 +110,18 @@ export const ActionButton = forwardRef<
                         {icon && iconPosition === "pre" && (
                             <DynamicIcon
                                 name={icon as string}
-                                size={20}
+                                size={18}
                                 color={activeColor}
+                                strokeWidth={2.5}
                             />
                         )}
                         <Text style={textStylesArray}>{title}</Text>
                         {icon && iconPosition === "post" && (
                             <DynamicIcon
                                 name={icon as string}
-                                size={20}
+                                size={18}
                                 color={activeColor}
+                                strokeWidth={2.5}
                             />
                         )}
                     </>
@@ -154,7 +156,7 @@ const createStyles = (theme: ThemeTokens) =>
             gap: 8,
             width: "100%",
             marginBottom: 12,
-            minHeight: 52,
+            minHeight: 48,
             borderWidth: 1,
         },
         primaryButton: {

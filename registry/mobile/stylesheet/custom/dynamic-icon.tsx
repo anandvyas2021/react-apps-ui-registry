@@ -8,6 +8,7 @@ export interface DynamicIconProps {
     size?: number;
     style?: StyleProp<ViewStyle>;
     onPress?: () => void;
+    strokeWidth?: number;
 }
 
 export function DynamicIcon({
@@ -16,6 +17,7 @@ export function DynamicIcon({
     size = 20,
     style,
     onPress,
+    strokeWidth,
 }: DynamicIconProps) {
     const IconComponent = LucideIcons[name as keyof typeof LucideIcons] as any;
 
@@ -30,6 +32,7 @@ export function DynamicIcon({
             size={size}
             style={style}
             onPress={onPress}
+            strokeWidth={strokeWidth}
         />
     );
 }

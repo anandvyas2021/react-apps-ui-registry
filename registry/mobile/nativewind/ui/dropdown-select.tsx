@@ -1,10 +1,11 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
     View,
     Text,
-    TouchableOpacity,
-    ScrollView,
+    Platform,
     ViewStyle,
+    ScrollView,
+    TouchableOpacity,
 } from "react-native";
 import { Controller, FieldValues, UseControllerProps } from "react-hook-form";
 
@@ -48,14 +49,24 @@ export function DropdownSelect({
     };
 
     const selectedLabel = useMemo(() => {
-        const selected = options.find((opt) => opt.value === selectedValue);
+        const selected = options?.find((opt) => opt?.value === selectedValue);
         return selected ? selected.label : "";
     }, [selectedValue, options]);
+
+    const dynamicZIndex = isOpen ? 999 : zIndex;
 
     return (
         <View
             className={cn("w-full mb-4", className)}
-            style={[{ zIndex: isOpen ? zIndex + 50 : zIndex }, style]}
+            style={[
+                {
+                    zIndex: dynamicZIndex,
+                    // Android requires elevation alongside zIndex to layer above following views
+                    elevation:
+                        Platform.OS === "android" ? dynamicZIndex : undefined,
+                },
+                style,
+            ]}
         >
             {label && (
                 <Text className="text-xs font-medium text-foreground-muted mb-2">
@@ -94,45 +105,53 @@ export function DropdownSelect({
             </TouchableOpacity>
 
             {isOpen && options?.length > 0 && (
-                <View className="absolute top-full left-0 right-0 mt-2 bg-surface border border-border rounded-xl shadow-lg overflow-hidden">
+                <View
+                    className="absolute top-full left-0 right-0 mt-2 bg-surface border border-border rounded-xl overflow-hidden"
+                    style={{
+                        zIndex: 1000,
+                        elevation: Platform.OS === "android" ? 1000 : 10,
+                    }}
+                >
                     <ScrollView
                         nestedScrollEnabled
                         bounces={false}
-                        className="max-h-60"
+                        className="max-h-56"
                         keyboardShouldPersistTaps="handled"
                     >
-                        {options?.map((option, index) => (
-                            <TouchableOpacity
-                                key={option.value}
-                                activeOpacity={0.7}
-                                onPress={() => handleSelect(option.value)}
-                                className={cn(
-                                    "px-4 py-3.5 flex-row items-center justify-between",
-                                    index !== options?.length - 1 &&
-                                        "border-b border-border/50",
-                                    selectedValue === option?.value &&
-                                        "bg-primary/10",
-                                )}
-                            >
-                                <Text
+                        {options?.map((option, index) => {
+                            const isSelected = selectedValue === option?.value;
+                            return (
+                                <TouchableOpacity
+                                    key={option?.value}
+                                    activeOpacity={0.7}
+                                    onPress={() => handleSelect(option?.value)}
                                     className={cn(
-                                        "text-sm",
-                                        selectedValue === option?.value
-                                            ? "text-primary font-bold"
-                                            : "text-foreground font-medium",
+                                        "px-4 py-3.5 flex-row items-center justify-between",
+                                        index !== options?.length - 1 &&
+                                            "border-b border-border",
+                                        isSelected && "bg-primary-lighter",
                                     )}
                                 >
-                                    {option?.label}
-                                </Text>
-                                {selectedValue === option?.value && (
-                                    <DynamicIcon
-                                        name="Check"
-                                        size={18}
-                                        className="text-primary"
-                                    />
-                                )}
-                            </TouchableOpacity>
-                        ))}
+                                    <Text
+                                        className={cn(
+                                            "text-sm",
+                                            isSelected
+                                                ? "text-primary font-bold"
+                                                : "text-foreground font-medium",
+                                        )}
+                                    >
+                                        {option?.label}
+                                    </Text>
+                                    {isSelected && (
+                                        <DynamicIcon
+                                            name="Check"
+                                            size={18}
+                                            className="text-primary"
+                                        />
+                                    )}
+                                </TouchableOpacity>
+                            );
+                        })}
                     </ScrollView>
                 </View>
             )}

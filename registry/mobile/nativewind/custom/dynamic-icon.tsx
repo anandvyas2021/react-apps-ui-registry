@@ -1,4 +1,3 @@
-import React from "react";
 import * as LucideIcons from "lucide-react-native";
 import { cssInterop } from "nativewind";
 
@@ -8,6 +7,7 @@ export interface DynamicIconProps {
     size?: number;
     className?: string;
     color?: string;
+    strokeWidth?: number;
 }
 
 const interopedIcons = new Set<string>();
@@ -17,6 +17,7 @@ export function DynamicIcon({
     className,
     color,
     size = 20,
+    strokeWidth,
 }: DynamicIconProps) {
     // Grab the specific icon from the Lucide object using bracket notation
     const IconComponent = LucideIcons[name as keyof typeof LucideIcons] as any;
@@ -42,5 +43,12 @@ export function DynamicIcon({
     }
 
     // Note: We pass color here as a fallback in case className doesn't dictate it
-    return <IconComponent className={className} size={size} color={color} />;
+    return (
+        <IconComponent
+            className={className}
+            size={size}
+            color={color}
+            strokeWidth={strokeWidth}
+        />
+    );
 }

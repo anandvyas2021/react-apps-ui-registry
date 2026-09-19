@@ -2,14 +2,16 @@ import React, { useMemo, useState } from "react";
 import {
     View,
     Text,
-    TouchableOpacity,
-    ScrollView,
-    StyleSheet,
+    Platform,
     ViewStyle,
+    StyleSheet,
+    ScrollView,
+    TouchableOpacity,
 } from "react-native";
 import { Controller, FieldValues, UseControllerProps } from "react-hook-form";
 
 import { DynamicIcon } from "@/components/custom/dynamic-icon";
+
 import { useTheme } from "@/theme/ThemeProvider";
 import type { ThemeTokens } from "@/theme/tokens";
 
@@ -49,15 +51,22 @@ export function DropdownSelect({
     };
 
     const selectedLabel = useMemo(() => {
-        const selected = options.find((opt) => opt.value === selectedValue);
+        const selected = options?.find((opt) => opt?.value === selectedValue);
         return selected ? selected.label : "";
     }, [selectedValue, options]);
+
+    const dynamicZIndex = isOpen ? 999 : zIndex;
 
     return (
         <View
             style={[
                 styles.container,
-                { zIndex: isOpen ? zIndex + 50 : zIndex },
+                {
+                    zIndex: dynamicZIndex,
+                    // Android requires elevation alongside zIndex to layer above following views
+                    elevation:
+                        Platform.OS === "android" ? dynamicZIndex : undefined,
+                },
                 style,
             ]}
         >
@@ -104,7 +113,7 @@ export function DropdownSelect({
                                     activeOpacity={0.7}
                                     onPress={() => handleSelect(option.value)}
                                     style={[
-                                        styles.optionItem,
+                                        styles?.optionItem,
                                         index !== options.length - 1 &&
                                             styles.optionBorder,
                                         isSelected && styles.optionItemSelected,
@@ -225,14 +234,15 @@ const createStyles = (theme: ThemeTokens) =>
             borderColor: theme.border,
             borderRadius: 12,
             overflow: "hidden",
-            elevation: 5,
+            zIndex: 1000,
+            elevation: Platform.OS === "android" ? 1000 : 10,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.1,
             shadowRadius: 12,
         },
         scrollArea: {
-            maxHeight: 240,
+            maxHeight: 224,
         },
         optionItem: {
             flexDirection: "row",

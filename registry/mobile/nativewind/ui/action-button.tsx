@@ -1,5 +1,5 @@
-import React, { forwardRef } from "react";
-import { TouchableOpacity, Text, View } from "react-native";
+import React from "react";
+import { TouchableOpacity, Text } from "react-native";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { DynamicIcon } from "@/components/custom/dynamic-icon";
@@ -9,7 +9,7 @@ import { ShineGradientWrapper } from "@/components/layout/shine-gradient-wrapper
 import { cn, type IconName } from "@/lib/utils";
 
 const buttonVariants = cva(
-    "flex-row items-center justify-center gap-2 mb-3 w-full border min-h-[52px]",
+    "flex-row items-center justify-center gap-2 mb-3 w-full border min-h-[48px]",
     {
         variants: {
             variant: {
@@ -35,7 +35,7 @@ const buttonVariants = cva(
     },
 );
 
-const textVariants = cva("text-lg font-bold", {
+const textVariants = cva("text-[13px] font-bold", {
     variants: {
         variant: {
             primary: "text-primary-foreground",
@@ -114,7 +114,7 @@ export const ActionButton = React.forwardRef<
                         {icon && iconPosition === "pre" && (
                             <DynamicIcon
                                 name={icon as string}
-                                size={20}
+                                size={18}
                                 className={cn(
                                     textVariants({
                                         variant,
@@ -122,6 +122,7 @@ export const ActionButton = React.forwardRef<
                                     }),
                                     textClassName,
                                 )}
+                                strokeWidth={2.5}
                             />
                         )}
                         <Text
@@ -135,7 +136,7 @@ export const ActionButton = React.forwardRef<
                         {icon && iconPosition === "post" && (
                             <DynamicIcon
                                 name={icon as string}
-                                size={20}
+                                size={18}
                                 className={cn(
                                     textVariants({
                                         variant,
@@ -143,6 +144,7 @@ export const ActionButton = React.forwardRef<
                                     }),
                                     textClassName,
                                 )}
+                                strokeWidth={2.5}
                             />
                         )}
                     </>

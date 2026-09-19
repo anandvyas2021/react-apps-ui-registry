@@ -22,6 +22,7 @@ export interface SectionWrapperProps {
     rightType?: "text" | "navigate" | "chip";
     rightAction?: () => void;
     style?: ViewStyle;
+    contentStyles: ViewStyle;
 }
 
 export function SectionWrapper({
@@ -34,6 +35,7 @@ export function SectionWrapper({
     rightType = "text",
     rightAction,
     style,
+    contentStyles,
 }: SectionWrapperProps) {
     const theme = useTheme();
     const styles = useMemo(() => createStyles(theme), [theme]);
@@ -98,7 +100,12 @@ export function SectionWrapper({
             </View>
 
             {/* Content (Only the children receive the border and padding) */}
-            <View style={[type === "bordered" && styles.borderedContent]}>
+            <View
+                style={[
+                    type === "bordered" && styles.borderedContent,
+                    contentStyles,
+                ]}
+            >
                 {children}
             </View>
         </View>
