@@ -88,7 +88,7 @@ export function DropdownSelect({
             >
                 <Text
                     className={cn(
-                        "text-sm font-medium",
+                        "text-sm",
                         selectedLabel
                             ? "text-foreground"
                             : "text-foreground-disabled",
@@ -137,7 +137,7 @@ export function DropdownSelect({
                                             "text-sm",
                                             isSelected
                                                 ? "text-primary font-bold"
-                                                : "text-foreground font-medium",
+                                                : "text-foreground font-semibold",
                                         )}
                                     >
                                         {option?.label}

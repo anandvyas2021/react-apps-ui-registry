@@ -9,7 +9,7 @@ import { NavigatorHeader } from "./navigator-header";
 import { useTheme } from "@/theme/ThemeProvider";
 import type { ThemeTokens } from "@/theme/tokens";
 
-export interface MainWrapperProps extends ViewProps {
+export interface MainWrapperProps {
     children: React.ReactNode;
     homeHeader?: boolean;
     navigatorHeader?: boolean;

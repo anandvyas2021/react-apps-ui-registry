@@ -9,14 +9,19 @@ export interface HorizontalScrollProps extends ScrollViewProps {
 }
 
 export const HorizontalScroll = forwardRef<ScrollView, HorizontalScrollProps>(
-    ({ children, className, contentClassName, ...props }, ref) => {
+    ({ children, className, contentClassName, style, ...props }, ref) => {
         return (
             <ScrollView
                 ref={ref}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                className={cn("mt-6 mb-5", className)}
-                contentContainerClassName={cn("gap-3 px-4", contentClassName)}
+                // flex-grow-0 prevents the ScrollView from expanding vertically
+                className={cn("my-2 flex-grow-0", className)}
+                style={[{ flexGrow: 0 }, style]}
+                contentContainerClassName={cn(
+                    "flex-row items-center gap-2.5 px-1",
+                    contentClassName,
+                )}
                 {...props}
             >
                 {children}

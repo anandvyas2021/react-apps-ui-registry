@@ -24,6 +24,11 @@ export const HorizontalScroll = forwardRef<ScrollView, HorizontalScrollProps>(
 HorizontalScroll.displayName = "HorizontalScroll";
 
 const styles = StyleSheet.create({
-    scroll: { marginTop: 24, marginBottom: 20 },
-    content: { gap: 12, paddingHorizontal: 16 },
+    scroll: { flexGrow: 0, marginVertical: 8, marginBottom: 10 },
+    content: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 10,
+        paddingHorizontal: 4,
+    },
 });

@@ -196,7 +196,7 @@ const createStyles = (theme: ThemeTokens) =>
             marginBottom: 12,
         },
         baseText: {
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: "700",
         },
         primaryText: {

@@ -84,12 +84,12 @@ export function HomeHeader({
                     <TouchableOpacity
                         activeOpacity={0.9}
                         onPress={() => onItemPress("/notifications")}
-                        className="p-2 items-center justify-center rounded-xl border-[0.5px] border-primary bg-background"
+                        className="p-2 items-center justify-center rounded-xl border-[0.8px] border-white"
                     >
                         <DynamicIcon
                             name="Bell"
                             size={26}
-                            className="text-primary fill-primary"
+                            className="text-white fill-white"
                         />
                         <Animated.View
                             style={[
@@ -103,12 +103,12 @@ export function HomeHeader({
                     <TouchableOpacity
                         activeOpacity={0.8}
                         onPress={() => onItemPress("/profile")}
-                        className="p-2 items-center justify-center rounded-xl border-[0.5px] border-primary bg-background"
+                        className="p-2 items-center justify-center rounded-xl border-[0.8px] border-white"
                     >
                         <DynamicIcon
                             name="User"
                             size={26}
-                            className="text-primary fill-primary"
+                            className="text-white fill-white"
                         />
                     </TouchableOpacity>
                 </View>

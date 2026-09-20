@@ -106,7 +106,7 @@ export const Input = forwardRef<TextInput, InputProps>(
                                     ? {
                                           paddingRight: 16,
                                           borderRightWidth: 1,
-                                          borderRightColor: theme.border,
+                                          borderRightColor: theme.borderMuted,
                                       }
                                     : {},
                             ]}
@@ -195,20 +195,27 @@ Input.displayName = "Input";
 export function ControlledInput<T extends FieldValues>({
     control,
     name,
+    type,
     ...rest
 }: ControlledInputProps<T>) {
     return (
         <Controller
             control={control}
             name={name}
-            render={({ field: { onChange, value }, fieldState: { error } }) => (
-                <Input
-                    value={value as string}
-                    onChangeText={onChange}
-                    error={error?.message}
-                    {...rest}
-                />
-            )}
+            render={({ field: { onChange, value }, fieldState: { error } }) => {
+                // Safe string conversion for React Native TextInput
+                const stringValue =
+                    value !== undefined && value !== null ? String(value) : "";
+                return (
+                    <Input
+                        type={type}
+                        value={stringValue}
+                        onChangeText={onChange}
+                        error={error?.message}
+                        {...rest}
+                    />
+                );
+            }}
         />
     );
 }
@@ -219,8 +226,8 @@ const createStyles = (theme: ThemeTokens) =>
         label: {
             fontSize: 12,
             fontWeight: "500",
-            color: theme.foregroundMuted,
             marginBottom: 8,
+            color: theme.foregroundMuted,
         },
         inputContainer: {
             flexDirection: "row",
@@ -239,16 +246,16 @@ const createStyles = (theme: ThemeTokens) =>
         },
         prefixText: {
             fontSize: 16,
-            fontWeight: "500",
+            fontWeight: "600",
             color: theme.foregroundMuted,
         },
         input: {
             flex: 1,
-            paddingHorizontal: 16,
             paddingRight: 16,
-            fontSize: 16,
-            fontWeight: "500",
-            color: theme.foregroundMuted,
+            paddingVertical: 14,
+            fontSize: 14,
+            fontWeight: "600",
+            color: theme.foreground,
             backgroundColor: theme.surface,
         },
         icon: { paddingHorizontal: 16, color: theme.foregroundMuted },

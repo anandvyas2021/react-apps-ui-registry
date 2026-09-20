@@ -88,7 +88,7 @@ export const Input = forwardRef<TextInput, InputProps>(
         const isDateType = type === "date";
 
         const handleConfirm = (date: Date) => {
-            // Format to DD--MM-YYYY securely avoiding timezone shift bugs
+            // Format to DD-MM-YYYY securely avoiding timezone shift bugs
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, "0");
             const day = String(date.getDate()).padStart(2, "0");
@@ -125,7 +125,7 @@ export const Input = forwardRef<TextInput, InputProps>(
                         <View
                             className={`justify-center pl-4 ${type === "money" ? "" : "pr-4 border-r border-foreground-muted"}`}
                         >
-                            <Text className="text-base font-medium text-foreground-muted">
+                            <Text className="text-base font-semibold text-foreground-muted">
                                 {prefix}
                             </Text>
                         </View>
@@ -136,7 +136,7 @@ export const Input = forwardRef<TextInput, InputProps>(
                     >
                         <TextInput
                             ref={ref}
-                            className={`flex-1 pr-4 py-4 text-base font-medium text-foreground-muted bg-surface ${type === "money" ? "" : "pl-4"}`}
+                            className={`flex-1 pr-4 py-3.5 text-sm font-semibold text-foreground bg-surface ${type === "money" ? "" : "pl-4"}`}
                             placeholder={placeholder}
                             maxLength={maxLength}
                             placeholderTextColor="#64748b"
@@ -182,6 +182,7 @@ export const Input = forwardRef<TextInput, InputProps>(
                         />
                     ) : null}
                 </InputWrapper>
+
                 {hasError ? (
                     <Text className="text-xs mt-1.5 font-medium text-destructive">
                         {error}
@@ -210,20 +211,38 @@ Input.displayName = "Input";
 export function ControlledInput<T extends FieldValues>({
     control,
     name,
+    type,
     ...rest
 }: ControlledInputProps<T>) {
     return (
         <Controller
             control={control}
             name={name}
-            render={({ field: { onChange, value }, fieldState: { error } }) => (
-                <Input
-                    value={value as string}
-                    onChangeText={onChange}
-                    error={error?.message}
-                    {...rest}
-                />
-            )}
+            render={({ field: { onChange, value }, fieldState: { error } }) => {
+                const stringValue =
+                    value !== undefined && value !== null ? String(value) : "";
+
+                // const isNumeric = type === "number" || type === "money";
+                // const handleChangeText = (text: string) => {
+                //     if (isNumeric) {
+                //         // Strip non-numeric characters (allows empty string while user deletes)
+                //         const cleaned = text.replace(/[^0-9.]/g, "");
+                //         const parsed = parseFloat(cleaned);
+                //         onChange(isNaN(parsed) ? 0 : parsed);
+                //     } else {
+                //         onChange(text);
+                //     }
+                // };
+                return (
+                    <Input
+                        type={type}
+                        value={stringValue}
+                        onChangeText={onChange}
+                        error={error?.message}
+                        {...rest}
+                    />
+                );
+            }}
         />
     );
 }

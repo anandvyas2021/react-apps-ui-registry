@@ -265,8 +265,8 @@ const createStyles = (theme: ThemeTokens) =>
             color: theme.foreground,
         },
         optionTextSelected: {
-            color: theme.primary,
             fontWeight: "700",
+            color: theme.primary,
         },
         errorText: {
             color: theme.destructive,

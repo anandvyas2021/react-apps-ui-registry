@@ -94,11 +94,7 @@ export function HomeHeader({
                         onPress={() => onItemPress("/notifications")}
                         style={styles.actionButton}
                     >
-                        <DynamicIcon
-                            name="Bell"
-                            size={26}
-                            color={theme.primary}
-                        />
+                        <DynamicIcon name="Bell" size={26} color={"#ffffff"} />
                         <Animated.View
                             style={[styles.notificationDot, animatedDotStyle]}
                         />
@@ -109,11 +105,7 @@ export function HomeHeader({
                         onPress={() => onItemPress("/profile")}
                         style={styles.actionButton}
                     >
-                        <DynamicIcon
-                            name="User"
-                            size={26}
-                            color={theme.primary}
-                        />
+                        <DynamicIcon name="User" size={26} color={"#ffffff"} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -170,9 +162,9 @@ const createStyles = (theme: ThemeTokens) =>
             alignItems: "center",
             justifyContent: "center",
             borderRadius: 12,
-            borderWidth: 0.5,
-            borderColor: theme.primary,
-            backgroundColor: theme.background,
+            borderWidth: 0.8,
+            borderColor: "#ffffff",
+            // backgroundColor: theme.background,
         },
         notificationDot: {
             position: "absolute",
