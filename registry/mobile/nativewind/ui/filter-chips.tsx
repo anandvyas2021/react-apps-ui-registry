@@ -28,10 +28,10 @@ export function FilterChips({
                         onPress={() => onFilterChange(filter?.value)}
                         activeOpacity={0.7}
                         className={cn(
-                            "max-h-10 px-4 py-2.5 rounded-[18px] border-[1.3px]",
+                            "px-4 py-2.5 rounded-[18px] border-[1.3px]",
                             isActive
                                 ? "border-primary bg-primary-lighter"
-                                : "border-transparent bg-surface-muted ",
+                                : "border-transparent bg-surface-muted",
                         )}
                     >
                         <Text

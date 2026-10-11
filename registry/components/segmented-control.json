@@ -1,0 +1,36 @@
+{
+    "name": "segmented-control",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [
+                "react-native-reanimated",
+                "expo-haptics",
+                "react-hook-form"
+            ],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "segmented-control.tsx",
+                    "url": "mobile/nativewind/ui/segmented-control.tsx",
+                    "target": "components/ui/segmented-control.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [
+                "react-native-reanimated",
+                "expo-haptics",
+                "react-hook-form"
+            ],
+            "registryDependencies": ["dynamic-icon"],
+            "files": [
+                {
+                    "name": "segmented-control.tsx",
+                    "url": "mobile/stylesheet/ui/segmented-control.tsx",
+                    "target": "components/ui/segmented-control.tsx"
+                }
+            ]
+        }
+    }
+}

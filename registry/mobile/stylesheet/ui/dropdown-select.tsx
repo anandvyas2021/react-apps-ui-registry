@@ -94,6 +94,7 @@ export function DropdownSelect({
                     name={isOpen ? "ChevronUp" : "ChevronDown"}
                     size={20}
                     color={theme.foregroundMuted}
+                    strokeWidth={3}
                 />
             </TouchableOpacity>
 
@@ -133,6 +134,7 @@ export function DropdownSelect({
                                             name="Check"
                                             size={18}
                                             color={theme.primary}
+                                            strokeWidth={3}
                                         />
                                     )}
                                 </TouchableOpacity>

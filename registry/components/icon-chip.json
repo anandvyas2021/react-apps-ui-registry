@@ -3,7 +3,7 @@
     "category": "ui",
     "engines": {
         "mobile-nativewind": {
-            "dependencies": [],
+            "dependencies": ["expo-clipboard"],
             "registryDependencies": ["dynamic-icon"],
             "files": [
                 {
@@ -14,7 +14,7 @@
             ]
         },
         "mobile-stylesheet": {
-            "dependencies": [],
+            "dependencies": ["expo-clipboard"],
             "registryDependencies": ["dynamic-icon"],
             "files": [
                 {

@@ -4,7 +4,7 @@
     "engines": {
         "mobile-nativewind": {
             "dependencies": [],
-            "registryDependencies": [],
+            "registryDependencies": ["dynamic-icon"],
             "files": [
                 {
                     "name": "countdown-timer.tsx",
@@ -15,7 +15,7 @@
         },
         "mobile-stylesheet": {
             "dependencies": [],
-            "registryDependencies": [],
+            "registryDependencies": ["dynamic-icon"],
             "files": [
                 {
                     "name": "countdown-timer.tsx",

@@ -10,10 +10,9 @@ import { Controller, FieldValues, UseControllerProps } from "react-hook-form";
 
 import { DynamicIcon } from "@/components/custom/dynamic-icon";
 
-import type { IconName } from "@/lib/utils";
-
 import { useTheme } from "@/theme/ThemeProvider";
 import type { ThemeTokens } from "@/theme/tokens";
+import type { IconName } from "@/lib/utils";
 
 export interface CheckboxOption {
     value: string;

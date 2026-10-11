@@ -1,10 +1,10 @@
 import React, { forwardRef, useMemo } from "react";
 import {
+    TouchableOpacity,
     Text,
+    StyleSheet,
     ViewStyle,
     TextStyle,
-    StyleSheet,
-    TouchableOpacity,
 } from "react-native";
 
 import { DynamicIcon } from "@/components/custom/dynamic-icon";
@@ -17,8 +17,11 @@ import type { IconName } from "@/lib/utils";
 
 export interface ActionButtonProps {
     title: string;
-    icon?: IconName | string;
     variant?: "primary" | "secondary";
+    size?: "sm" | "default" | "lg";
+    fullWidth?: boolean;
+    roundness?: "default" | "full" | "sm" | "none";
+    icon?: IconName | string;
     iconPosition?: "pre" | "post";
     isLoading?: boolean;
     disabled?: boolean;
@@ -27,8 +30,7 @@ export interface ActionButtonProps {
     textStyle?: TextStyle;
     withShine?: boolean;
     hasGradient?: boolean;
-    gradientColors?: [string, string, ...string[]];
-    roundness?: "default" | "full" | "sm" | "none";
+    GradientColors?: [string, string, ...string[]];
 }
 
 export const ActionButton = forwardRef<
@@ -38,8 +40,11 @@ export const ActionButton = forwardRef<
     (
         {
             title,
-            icon,
             variant = "primary",
+            size = "default",
+            fullWidth = true,
+            roundness = "default",
+            icon,
             iconPosition = "post",
             isLoading = false,
             disabled = false,
@@ -48,15 +53,12 @@ export const ActionButton = forwardRef<
             textStyle,
             withShine = false,
             hasGradient = false,
-            gradientColors = ["#3B82F6", "#2563EB", "#1E3A8A"],
-            roundness = "default",
-            ...props
+            GradientColors = ["#8870e6", "#5f84e0", "#5f84e0"],
         },
         ref,
     ) => {
         const theme = useTheme();
         const styles = useMemo(() => createStyles(theme), [theme]);
-
         const isDisabled = disabled || isLoading;
         const isWrapped = (withShine || hasGradient) && !isDisabled;
 
@@ -67,10 +69,25 @@ export const ActionButton = forwardRef<
             none: 0,
         };
         const activeRadius = radiusMap[roundness];
+        const iconSize = size === "sm" ? 14 : size === "lg" ? 20 : 18;
+
+        const sizeStyles = {
+            sm: styles.sizeSm,
+            default: styles.sizeDefault,
+            lg: styles.sizeLg,
+        }[size];
+
+        const textSizeStyles = {
+            sm: styles.textSm,
+            default: styles.textDefault,
+            lg: styles.textLg,
+        }[size];
 
         const buttonStyles = [
             styles.baseButton,
+            sizeStyles,
             { borderRadius: activeRadius },
+            fullWidth ? styles.fullWidth : styles.fitContent,
             variant === "primary"
                 ? styles.primaryButton
                 : styles.secondaryButton,
@@ -83,6 +100,7 @@ export const ActionButton = forwardRef<
 
         const textStylesArray = [
             styles.baseText,
+            textSizeStyles,
             variant === "primary" ? styles.primaryText : styles.secondaryText,
             isDisabled && styles.disabledText,
             textStyle,
@@ -97,11 +115,10 @@ export const ActionButton = forwardRef<
         const buttonContent = (
             <TouchableOpacity
                 ref={ref}
-                activeOpacity={0.8}
+                activeOpacity={0.9}
                 disabled={isDisabled}
                 onPress={onPress}
                 style={buttonStyles}
-                {...props}
             >
                 {isLoading ? (
                     <WaveDotsLoader />
@@ -110,18 +127,16 @@ export const ActionButton = forwardRef<
                         {icon && iconPosition === "pre" && (
                             <DynamicIcon
                                 name={icon as string}
-                                size={18}
+                                size={iconSize}
                                 color={activeColor}
-                                strokeWidth={2.5}
                             />
                         )}
                         <Text style={textStylesArray}>{title}</Text>
                         {icon && iconPosition === "post" && (
                             <DynamicIcon
                                 name={icon as string}
-                                size={18}
+                                size={iconSize}
                                 color={activeColor}
-                                strokeWidth={2.5}
                             />
                         )}
                     </>
@@ -129,13 +144,20 @@ export const ActionButton = forwardRef<
             </TouchableOpacity>
         );
 
-        if (withShine && !isDisabled) {
+        if (isWrapped) {
             return (
                 <ShineGradientWrapper
-                    colors={gradientColors}
+                    colors={GradientColors}
                     isShining={withShine}
                     hasGradient={hasGradient}
-                    style={[styles.wrapper, { borderRadius: activeRadius }]}
+                    style={[
+                        styles.shineWrapper,
+                        { borderRadius: activeRadius },
+                        fullWidth ? styles.fullWidth : styles.fitContent,
+                        size === "sm"
+                            ? { marginBottom: 0 }
+                            : { marginBottom: 12 },
+                    ]}
                 >
                     {buttonContent}
                 </ShineGradientWrapper>
@@ -153,31 +175,50 @@ const createStyles = (theme: ThemeTokens) =>
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
-            gap: 8,
-            width: "100%",
-            marginBottom: 12,
-            minHeight: 48,
             borderWidth: 1,
         },
+        fullWidth: {
+            width: "100%",
+        },
+        fitContent: {
+            alignSelf: "flex-start",
+        },
+        sizeSm: {
+            minHeight: 36,
+            paddingHorizontal: 12,
+            gap: 6,
+            marginBottom: 0,
+        },
+        sizeDefault: {
+            minHeight: 48,
+            paddingHorizontal: 16,
+            gap: 8,
+            marginBottom: 12,
+        },
+        sizeLg: {
+            minHeight: 56,
+            paddingHorizontal: 24,
+            gap: 8,
+            marginBottom: 12,
+        },
         primaryButton: {
+            backgroundColor: theme.primary,
+            borderColor: "transparent",
             shadowColor: theme.primary,
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.2,
             shadowRadius: 4,
             elevation: 2,
-            borderColor: "transparent",
-            backgroundColor: theme.primary,
         },
         secondaryButton: {
-            borderColor: theme.secondaryForeground,
             backgroundColor: theme.secondary,
+            borderColor: theme.secondaryForeground,
         },
         disabledButton: {
+            backgroundColor: theme.surfaceMuted,
             borderColor: "transparent",
-            opacity: 0.5,
             elevation: 0,
             shadowOpacity: 0,
-            backgroundColor: theme.surfaceMuted,
         },
         loadingButton: {
             opacity: 0.8,
@@ -191,21 +232,28 @@ const createStyles = (theme: ThemeTokens) =>
             elevation: 0,
             shadowOpacity: 0,
         },
-        wrapper: {
-            width: "100%",
-            marginBottom: 12,
+        shineWrapper: {
+            overflow: "hidden",
         },
         baseText: {
-            fontSize: 13,
             fontWeight: "700",
+        },
+        textSm: {
+            fontSize: 12,
+        },
+        textDefault: {
+            fontSize: 13,
+        },
+        textLg: {
+            fontSize: 15,
         },
         primaryText: {
             color: theme.primaryForeground,
         },
-        textSecondary: {
+        secondaryText: {
             color: theme.secondaryForeground,
         },
         disabledText: {
-            color: theme.foregroundDisabled,
+            color: theme.foregroundMuted,
         },
     });

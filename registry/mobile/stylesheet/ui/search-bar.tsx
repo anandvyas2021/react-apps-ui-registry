@@ -6,6 +6,7 @@ import {
     TextInputProps,
     StyleSheet,
     ViewStyle,
+    Platform,
 } from "react-native";
 
 import { DynamicIcon } from "@/components/custom/dynamic-icon";
@@ -53,11 +54,13 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
                     {...props}
                 />
 
+                {/* Auto-render Clear button if text exists */}
                 {!!value && value.length > 0 && (
                     <TouchableOpacity
                         onPress={() => onChangeText?.("")}
                         hitSlop={10}
-                        style={styles.iconButton}
+                        activeOpacity={0.7}
+                        style={styles.clearButton}
                     >
                         <DynamicIcon
                             name="XCircle"
@@ -67,13 +70,14 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
                     </TouchableOpacity>
                 )}
 
+                {/* Auto-render Filter button & Divider if onFilterPress is provided */}
                 {onFilterPress && (
                     <>
                         <View style={styles.divider} />
                         <TouchableOpacity
                             onPress={onFilterPress}
                             hitSlop={10}
-                            style={styles.iconButton}
+                            activeOpacity={0.7}
                         >
                             <DynamicIcon
                                 name="SlidersHorizontal"
@@ -97,9 +101,11 @@ const createStyles = (theme: ThemeTokens) =>
             backgroundColor: theme.surfaceMuted,
             borderRadius: 16,
             paddingHorizontal: 16,
-            paddingVertical: 4,
-            borderWidth: 0.5,
+            paddingVertical: Platform.OS === "ios" ? 8 : 4,
+            borderWidth: 1,
             borderColor: theme.border,
+            minHeight: 48,
+            width: "100%",
         },
         searchIcon: {
             marginRight: 12,
@@ -107,11 +113,12 @@ const createStyles = (theme: ThemeTokens) =>
         input: {
             flex: 1,
             fontSize: 14,
-            fontWeight: "700",
+            fontWeight: "500",
             color: theme.foreground,
-            height: "100%",
+            backgroundColor: "transparent",
+            paddingVertical: Platform.OS === "ios" ? 6 : 2,
         },
-        iconButton: {
+        clearButton: {
             marginLeft: 8,
         },
         divider: {

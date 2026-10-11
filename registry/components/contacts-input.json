@@ -1,0 +1,28 @@
+{
+    "name": "contacts-input",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": ["expo-contacts", "react-hook-form"],
+            "registryDependencies": ["action-button", "dynamic-icon"],
+            "files": [
+                {
+                    "name": "contacts-input.tsx",
+                    "url": "mobile/nativewind/ui/contacts-input.tsx",
+                    "target": "components/ui/contacts-input.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": ["expo-contacts", "react-hook-form"],
+            "registryDependencies": ["action-button", "dynamic-icon"],
+            "files": [
+                {
+                    "name": "contacts-input.tsx",
+                    "url": "mobile/stylesheet/ui/contacts-input.tsx",
+                    "target": "components/ui/contacts-input.tsx"
+                }
+            ]
+        }
+    }
+}

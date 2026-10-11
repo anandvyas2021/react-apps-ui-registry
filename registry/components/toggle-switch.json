@@ -3,7 +3,11 @@
     "category": "ui",
     "engines": {
         "mobile-nativewind": {
-            "dependencies": ["react-native-reanimated", "expo-haptics"],
+            "dependencies": [
+                "react-native-reanimated",
+                "react-hook-form",
+                "expo-haptics"
+            ],
             "registryDependencies": ["dynamic-icon"],
             "files": [
                 {
@@ -14,7 +18,11 @@
             ]
         },
         "mobile-stylesheet": {
-            "dependencies": ["react-native-reanimated", "expo-haptics"],
+            "dependencies": [
+                "react-native-reanimated",
+                "react-hook-form",
+                "expo-haptics"
+            ],
             "registryDependencies": ["dynamic-icon"],
             "files": [
                 {

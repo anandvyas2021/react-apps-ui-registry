@@ -1,12 +1,19 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import {
     View,
     Text,
     TouchableOpacity,
     StyleSheet,
-    ViewStyle,
+    type TouchableOpacityProps,
+    type ViewStyle,
 } from "react-native";
-import { Controller, FieldValues, UseControllerProps } from "react-hook-form";
+import {
+    Controller,
+    type Control,
+    type FieldValues,
+    type Path,
+    type UseControllerProps,
+} from "react-hook-form";
 
 import { DynamicIcon } from "@/components/custom/dynamic-icon";
 
@@ -18,6 +25,7 @@ export type RadioIconVariant =
     | "default"
     | "primary"
     | "secondary"
+    | "success"
     | "destructive";
 
 export interface RadioOption {
@@ -26,32 +34,48 @@ export interface RadioOption {
     subtitle?: string;
     badge?: string;
     cornerBadge?: string;
-    rightBlock?: { label?: string; suffix?: string };
+    rightBlock?: {
+        label?: string;
+        suffix?: string;
+        value?: string;
+        type?: "money" | string;
+    };
     iconOptions?: { icon?: IconName | string; variant?: RadioIconVariant };
     disabled?: boolean;
 }
 
-export interface RadioCardProps {
+export interface RadioCardProps extends Omit<TouchableOpacityProps, "onPress"> {
     option: RadioOption;
     isSelected: boolean;
     onSelect: (value: string) => void;
     radioPosition?: "left" | "right";
+    disabled?: boolean;
+    hasError?: boolean;
     style?: ViewStyle;
 }
+
+const formatCurrency = ({ value }: { value: number }) => {
+    if (isNaN(value)) return "";
+    return `₹${value.toLocaleString("en-IN")}`;
+};
 
 export function RadioCard({
     option,
     isSelected,
     onSelect,
     radioPosition = "right",
+    disabled = false,
+    hasError = false,
     style,
+    ...props
 }: RadioCardProps) {
     const theme = useTheme();
     const styles = useMemo(() => createStyles(theme), [theme]);
+    const isDisabled = Boolean(disabled || option?.disabled);
 
     const handlePress = () => {
-        if (option.disabled) return;
-        onSelect(option.value);
+        if (isDisabled) return;
+        onSelect(option?.value);
     };
 
     const RadioCircle = (
@@ -60,8 +84,10 @@ export function RadioCard({
                 styles.radioCircle,
                 isSelected
                     ? styles.radioCircleSelected
-                    : styles.radioCircleUnselected,
-                option.disabled && styles.disabledOpacity,
+                    : hasError
+                      ? styles.radioCircleError
+                      : styles.radioCircleUnselected,
+                option?.disabled && styles.disabledOpacity,
             ]}
         >
             {isSelected && <View style={styles.radioInnerCircle} />}
@@ -69,10 +95,14 @@ export function RadioCard({
     );
 
     const activeVariant = option?.iconOptions?.variant || "default";
-    const variantStyles = {
+    const variantColors: Record<
+        RadioIconVariant,
+        { bg: string; text: string }
+    > = {
         default: { bg: theme.surfaceMuted, text: theme.foreground },
         primary: { bg: `${theme.primary}1A`, text: theme.primary },
-        secondary: { bg: theme.secondary, text: theme.secondaryForeground },
+        secondary: { bg: theme.surface, text: theme.foreground },
+        success: { bg: "rgba(16, 185, 129, 0.1)", text: "#10B981" },
         destructive: { bg: `${theme.destructive}1A`, text: theme.destructive },
     };
 
@@ -80,15 +110,21 @@ export function RadioCard({
         <TouchableOpacity
             activeOpacity={0.75}
             onPress={handlePress}
-            disabled={option.disabled}
+            disabled={isDisabled}
             style={[
                 styles.card,
-                isSelected ? styles.cardSelected : styles.cardUnselected,
-                option.disabled && styles.disabledOpacity,
+                isSelected
+                    ? styles.cardSelected
+                    : hasError
+                      ? styles.cardError
+                      : styles.cardUnselected,
+                isDisabled && styles.cardDisabled,
                 style,
             ]}
+            {...props}
         >
-            {option.cornerBadge && (
+            {/* Top-Right Floating Pill Badge */}
+            {option?.cornerBadge && (
                 <View style={styles.cornerBadgeContainer}>
                     <Text style={styles.cornerBadgeText}>
                         {option.cornerBadge}
@@ -96,35 +132,42 @@ export function RadioCard({
                 </View>
             )}
 
+            {/* Left Zone: Radio / Icon / Titles */}
             <View style={styles.leftZone}>
                 {radioPosition === "left" && (
                     <View style={styles.leftRadio}>{RadioCircle}</View>
                 )}
 
-                {option.iconOptions?.icon && (
+                {option?.iconOptions?.icon && (
                     <View
                         style={[
                             styles.iconContainer,
                             {
                                 backgroundColor:
-                                    variantStyles[activeVariant].bg,
+                                    variantColors[activeVariant].bg,
                             },
                         ]}
                     >
                         <DynamicIcon
                             name={option.iconOptions.icon as string}
                             size={20}
-                            color={variantStyles[activeVariant].text}
+                            color={variantColors[activeVariant].text}
                         />
                     </View>
                 )}
 
                 <View style={styles.titleContainer}>
                     <View style={styles.titleRow}>
-                        <Text style={styles.titleText} numberOfLines={1}>
-                            {option.title}
+                        <Text
+                            style={[
+                                styles.titleText,
+                                isSelected && styles.titleTextSelected,
+                            ]}
+                            numberOfLines={1}
+                        >
+                            {option?.title}
                         </Text>
-                        {option.badge && (
+                        {option?.badge && (
                             <View style={styles.inlineBadge}>
                                 <Text style={styles.inlineBadgeText}>
                                     {option.badge}
@@ -132,7 +175,7 @@ export function RadioCard({
                             </View>
                         )}
                     </View>
-                    {option.subtitle && (
+                    {option?.subtitle && (
                         <Text style={styles.subtitleText} numberOfLines={1}>
                             {option.subtitle}
                         </Text>
@@ -140,8 +183,9 @@ export function RadioCard({
                 </View>
             </View>
 
+            {/* Right Zone: Price Info / Right Radio */}
             <View style={styles.rightZone}>
-                {(option.rightBlock?.label || option.rightBlock?.suffix) && (
+                {(option?.rightBlock?.label || option?.rightBlock?.suffix) && (
                     <View style={styles.rightBlockContainer}>
                         <Text
                             style={[
@@ -149,14 +193,23 @@ export function RadioCard({
                                 isSelected && styles.rightBlockLabelSelected,
                             ]}
                         >
-                            {option.rightBlock.label}
-                            {option.rightBlock.suffix && (
+                            {option?.rightBlock?.type === "money"
+                                ? formatCurrency({
+                                      value: Number(option?.rightBlock?.label),
+                                  })
+                                : option?.rightBlock?.label}
+                            {option?.rightBlock?.suffix && (
                                 <Text style={styles.rightBlockSuffix}>
                                     {" "}
                                     {option.rightBlock.suffix}
                                 </Text>
                             )}
                         </Text>
+                        {option?.rightBlock?.value && (
+                            <Text style={styles.rightBlockValue}>
+                                {option.rightBlock.value}
+                            </Text>
+                        )}
                     </View>
                 )}
 
@@ -168,49 +221,85 @@ export function RadioCard({
 
 export interface RadioGroupProps {
     options: RadioOption[];
-    value: string;
-    onValueChange: (value: string) => void;
+    value?: string;
+    defaultValue?: string;
+    onValueChange?: (value: string) => void;
     radioPosition?: "left" | "right";
     label?: string;
     error?: string;
+    disabled?: boolean;
     style?: ViewStyle;
 }
 
 export function RadioGroup({
-    options,
+    options = [],
     value,
+    defaultValue = "",
     onValueChange,
     radioPosition = "right",
     label,
     error,
+    disabled = false,
     style,
 }: RadioGroupProps) {
     const theme = useTheme();
     const styles = useMemo(() => createStyles(theme), [theme]);
 
+    const isControlled = value !== undefined;
+    const [internalValue, setInternalValue] = useState(defaultValue);
+    const selectedValue = isControlled ? value : internalValue;
+
+    const handleSelect = (newValue: string) => {
+        if (disabled) return;
+        if (!isControlled) {
+            setInternalValue(newValue);
+        }
+        onValueChange?.(newValue);
+    };
+
     return (
         <View style={[styles.groupContainer, style]}>
-            {label && <Text style={styles.groupLabel}>{label}</Text>}
-            {options.map((option) => (
+            {label && (
+                <Text
+                    style={[
+                        styles.groupLabel,
+                        disabled && styles.disabledOpacity,
+                    ]}
+                >
+                    {label}
+                </Text>
+            )}
+
+            {options?.map((option) => (
                 <RadioCard
-                    key={option.value}
+                    key={option?.value}
                     option={option}
-                    isSelected={value === option.value}
-                    onSelect={onValueChange}
+                    isSelected={selectedValue === option?.value}
+                    onSelect={handleSelect}
                     radioPosition={radioPosition}
+                    disabled={disabled}
+                    hasError={Boolean(error)}
                 />
             ))}
+
             {error && <Text style={styles.errorText}>{error}</Text>}
         </View>
     );
 }
 
-export interface ControlledRadioGroupProps<
-    T extends FieldValues,
-> extends UseControllerProps<T> {
+export interface ControlledRadioGroupProps<T extends FieldValues>
+    extends
+        UseControllerProps<T>,
+        Omit<
+            RadioGroupProps,
+            "value" | "defaultValue" | "onValueChange" | "error"
+        > {
+    control: Control<T>;
+    name: Path<T>;
     options: RadioOption[];
     radioPosition?: "left" | "right";
     label?: string;
+    style?: ViewStyle;
 }
 
 export function ControlledRadioGroup<T extends FieldValues>({
@@ -219,6 +308,8 @@ export function ControlledRadioGroup<T extends FieldValues>({
     options,
     radioPosition,
     label,
+    style,
+    ...rest
 }: ControlledRadioGroupProps<T>) {
     return (
         <Controller
@@ -232,11 +323,14 @@ export function ControlledRadioGroup<T extends FieldValues>({
                     radioPosition={radioPosition}
                     label={label}
                     error={error?.message}
+                    style={style}
+                    {...rest}
                 />
             )}
         />
     );
 }
+ControlledRadioGroup.displayName = "ControlledRadioGroup";
 
 const createStyles = (theme: ThemeTokens) =>
     StyleSheet.create({
@@ -268,8 +362,16 @@ const createStyles = (theme: ThemeTokens) =>
             borderColor: theme.border,
         },
         cardSelected: {
-            backgroundColor: `${theme.primary}0D`, // 5% Opacity
+            backgroundColor: `${theme.primary}0D`,
             borderColor: theme.primary,
+        },
+        cardError: {
+            backgroundColor: theme.surface,
+            borderColor: theme.destructive,
+        },
+        cardDisabled: {
+            opacity: 0.5,
+            backgroundColor: theme.surfaceMuted,
         },
         disabledOpacity: {
             opacity: 0.5,
@@ -321,6 +423,9 @@ const createStyles = (theme: ThemeTokens) =>
             fontWeight: "700",
             color: theme.foreground,
         },
+        titleTextSelected: {
+            color: theme.primary,
+        },
         inlineBadge: {
             paddingHorizontal: 8,
             paddingVertical: 2,
@@ -359,6 +464,12 @@ const createStyles = (theme: ThemeTokens) =>
             fontWeight: "600",
             color: theme.foregroundMuted,
         },
+        rightBlockValue: {
+            fontSize: 10,
+            fontWeight: "500",
+            color: theme.foregroundMuted,
+            marginTop: 2,
+        },
         radioCircle: {
             height: 20,
             width: 20,
@@ -374,6 +485,10 @@ const createStyles = (theme: ThemeTokens) =>
         radioCircleSelected: {
             borderColor: theme.primary,
             backgroundColor: theme.primary,
+        },
+        radioCircleError: {
+            borderColor: theme.destructive,
+            backgroundColor: "transparent",
         },
         radioInnerCircle: {
             height: 10,

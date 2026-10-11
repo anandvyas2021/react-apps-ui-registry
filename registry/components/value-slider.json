@@ -1,0 +1,36 @@
+{
+    "name": "value-slider",
+    "category": "ui",
+    "engines": {
+        "mobile-nativewind": {
+            "dependencies": [
+                "@react-native-community/slider",
+                "react-hook-form",
+                "expo-haptics"
+            ],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "value-slider.tsx",
+                    "url": "mobile/nativewind/ui/value-slider.tsx",
+                    "target": "components/ui/value-slider.tsx"
+                }
+            ]
+        },
+        "mobile-stylesheet": {
+            "dependencies": [
+                "@react-native-community/slider",
+                "react-hook-form",
+                "expo-haptics"
+            ],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "name": "value-slider.tsx",
+                    "url": "mobile/stylesheet/ui/value-slider.tsx",
+                    "target": "components/ui/value-slider.tsx"
+                }
+            ]
+        }
+    }
+}

@@ -4,8 +4,8 @@
     "engines": {
         "mobile-nativewind": {
             "dependencies": [
-                "react-hook-form",
-                "react-native-modal-datetime-picker"
+                "react-native-modal-datetime-picker",
+                "react-hook-form"
             ],
             "registryDependencies": ["dynamic-icon"],
             "files": [
@@ -18,8 +18,8 @@
         },
         "mobile-stylesheet": {
             "dependencies": [
-                "react-hook-form",
-                "react-native-modal-datetime-picker"
+                "react-native-modal-datetime-picker",
+                "react-hook-form"
             ],
             "registryDependencies": ["dynamic-icon"],
             "files": [
