@@ -67,9 +67,7 @@ import { ActionButton } from "@/components/ui/action-button";
 
 export default function App() {
   return (
-    <ActionButton onPress="{()"> console.log("Pressed!")}>
-      Click Me
-    </ActionButton>
+    <ActionButton title="Click Me" onPress="{()"> console.log("Pressed!")} />
   );
 }
 ```
